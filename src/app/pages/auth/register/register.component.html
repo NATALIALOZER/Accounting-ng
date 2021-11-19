@@ -1,0 +1,20 @@
+<mat-card-subtitle>Регистрация для получения доступа</mat-card-subtitle>
+<form [formGroup]="form" (submit)="submit()">
+  <mat-form-field fxLayoutAlign="center">
+    <mat-label>Email</mat-label>
+    <input matInput>
+  </mat-form-field>
+  <mat-form-field fxLayoutAlign="center">
+    <mat-label>Пароль</mat-label>
+    <input matInput>
+  </mat-form-field>
+  <mat-form-field fxLayoutAlign="center">
+    <mat-label>Имя</mat-label>
+    <input matInput>
+  </mat-form-field>
+  <mat-checkbox [formControl]="checkAgreeControl">Согласен с правилами</mat-checkbox>
+  <mat-card-actions>
+    <button mat-button>Зарегистрироваться</button>
+  </mat-card-actions>
+  <mat-card-subtitle fxLayoutAlign="center"><p>Уже есть аккаунт?</p><a routerLink="../login">Войти!</a></mat-card-subtitle>
+</form>

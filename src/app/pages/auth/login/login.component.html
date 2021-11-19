@@ -1,0 +1,15 @@
+<mat-card-subtitle>Войдите для работы</mat-card-subtitle>
+<form [formGroup]="form" (submit)="submit()">
+  <mat-form-field fxLayoutAlign="center">
+    <mat-label>Email</mat-label>
+    <input matInput>
+  </mat-form-field>
+  <mat-form-field fxLayoutAlign="center">
+    <mat-label>Пароль</mat-label>
+    <input matInput>
+  </mat-form-field>
+  <mat-card-actions>
+    <button mat-button>Войти</button>
+  </mat-card-actions>
+  <mat-card-subtitle fxLayoutAlign="center"><p>Нет аккаунтв?</p><a routerLink="../register">Зарегестрироваться!</a></mat-card-subtitle>
+</form>
