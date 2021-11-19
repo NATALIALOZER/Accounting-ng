@@ -4,11 +4,9 @@ import {RouterModule, Routes} from '@angular/router';
 import {HomeComponent} from './pages/home/home.component';
 
 
-const authModule = () => import('./pages/auth/auth.module').then(x => x.AuthModule);
-
 const routes: Routes = [
   { path: '', component: HomeComponent},
-  { path: 'auth', loadChildren: authModule },
+  { path: 'auth', loadChildren: () => import('./pages/auth/auth.module').then(x => x.AuthModule) },
   { path: '**', redirectTo: '' }
 ];
 

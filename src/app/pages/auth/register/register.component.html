@@ -12,7 +12,7 @@
     <mat-label>Имя</mat-label>
     <input matInput type="text" placeholder="username" formControlName="username">
   </mat-form-field>
-  <mat-checkbox [formControl]="checkAgreeControl" formControlName="checkRequired">Согласен с правилами</mat-checkbox>
+  <mat-checkbox formControlName="checkRequired">Согласен с правилами</mat-checkbox>
   <mat-card-actions>
     <button mat-button type="submit" [disabled]="form.invalid" >Зарегистрироваться</button>
   </mat-card-actions>
