@@ -2,19 +2,19 @@
 <form [formGroup]="form" (submit)="submit()">
   <mat-form-field fxLayoutAlign="center">
     <mat-label>Email</mat-label>
-    <input matInput>
+    <input matInput type="text" placeholder="email" formControlName="email">
   </mat-form-field>
   <mat-form-field fxLayoutAlign="center">
     <mat-label>Пароль</mat-label>
-    <input matInput>
+    <input matInput type="text" placeholder="password" formControlName="password">
   </mat-form-field>
   <mat-form-field fxLayoutAlign="center">
     <mat-label>Имя</mat-label>
-    <input matInput>
+    <input matInput type="text" placeholder="username" formControlName="username">
   </mat-form-field>
-  <mat-checkbox [formControl]="checkAgreeControl">Согласен с правилами</mat-checkbox>
+  <mat-checkbox [formControl]="checkAgreeControl" formControlName="checkRequired">Согласен с правилами</mat-checkbox>
   <mat-card-actions>
-    <button mat-button>Зарегистрироваться</button>
+    <button mat-button type="submit" [disabled]="form.invalid" >Зарегистрироваться</button>
   </mat-card-actions>
   <mat-card-subtitle fxLayoutAlign="center"><p>Уже есть аккаунт?</p><a routerLink="../login">Войти!</a></mat-card-subtitle>
 </form>

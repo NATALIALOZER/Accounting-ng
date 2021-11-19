@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {Profile} from '../../../shared/models/interfaces';
+
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -8,7 +8,6 @@ import {Profile} from '../../../shared/models/interfaces';
 })
 export class LoginComponent implements OnInit {
   public form!: FormGroup;
-  private submitted: boolean = false;
 
   constructor(
     private formBuilder: FormBuilder
@@ -22,13 +21,6 @@ export class LoginComponent implements OnInit {
   }
 
   public submit(): void {
-    if (this.form.invalid) {
-      return;
-    }
 
-    this.submitted = true;
-
-    const user: Profile = this.form.value;
   }
-
 }
