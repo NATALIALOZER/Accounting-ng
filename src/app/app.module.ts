@@ -6,8 +6,8 @@ import {HomeComponent} from './pages/home/home.component';
 import {HttpClientModule} from '@angular/common/http';
 import {ReactiveFormsModule} from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import {MatButtonToggleModule} from "@angular/material/button-toggle";
-import {FlexLayoutModule} from "@angular/flex-layout";
+import {MatButtonToggleModule} from '@angular/material/button-toggle';
+import {FlexLayoutModule} from '@angular/flex-layout';
 
 @NgModule({
   declarations: [
