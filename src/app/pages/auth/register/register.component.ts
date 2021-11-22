@@ -1,5 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {Profile} from '../../../shared/models/interfaces';
+import {Subject, takeUntil} from 'rxjs';
+import {Router} from '@angular/router';
+import {JsonDBService} from '../../../shared/services/json-db.service';
 
 @Component({
   selector: 'app-register',
@@ -8,9 +12,13 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 })
 export class RegisterComponent implements OnInit {
   public form!: FormGroup;
+  private destroy$: Subject<void> = new Subject<void>();
+
 
   constructor(
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private router: Router,
+    private jsonDBService: JsonDBService
   ) { }
 
   public ngOnInit(): void {
@@ -18,13 +26,31 @@ export class RegisterComponent implements OnInit {
   }
 
   public submit(): void {
+    if (this.form.invalid) {
+      return;
+    }
+    const user: Profile = this.form.value;
+    this.jsonDBService.getUser(user)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe( (response: Profile[] ) => {
+        if (response.length === 0 ) {
+          this.jsonDBService.setUser(user)
+            .pipe(takeUntil(this.destroy$))
+            .subscribe(
+              () =>
+                this.router.navigate(['/auth/login'])
+            );
+        } else {
+          console.log('Этот пользователь уже зарегистрирован');
+        }
+      });
   }
 
   public getForm(): void {
     this.form = this.formBuilder.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6)]],
-      username: ['', [Validators.required]],
+      name: ['', [Validators.required]],
       checkRequired:  [false, [Validators.requiredTrue]]
     });
   }

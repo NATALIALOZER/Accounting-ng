@@ -5,15 +5,16 @@ import {Router} from '@angular/router';
 import {JsonDBService} from '../../../shared/services/json-db.service';
 import {Subject, takeUntil} from 'rxjs';
 
+
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit {
+  public message: string = '';
   public form!: FormGroup;
   private destroy$: Subject<void> = new Subject<void>();
-
 
   constructor(
     private formBuilder: FormBuilder,
@@ -38,20 +39,20 @@ export class LoginComponent implements OnInit {
     this.jsonDBService.getUser(user)
       .pipe(takeUntil(this.destroy$))
       .subscribe( (response: Profile[] ) => {
+        if (response.length === 0 ) {
+          this.handleError('email_error');
+        } else {
           const existUser = response.find( (profile: Profile) => {
-            return profile.password === user.password && profile.username === user.username;
+            return profile.password === user.password && profile.name === user.name;
           });
           if (existUser) {
             this.router.navigate(['/home']);
           } else {
-            this.loginError();
+            this.handleError('password_error');
           }
         }
-      );
-  }
-
-  public loginError(): any {
-    /*Обработка неправильно введенного пароля*/
+      }
+    );
   }
 
   public getForm(): void {
@@ -59,5 +60,19 @@ export class LoginComponent implements OnInit {
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6)]]
     });
+  }
+
+  private handleError(error: string): string {
+    switch (error) {
+      case 'email_error':
+        this.message = 'Пользователя с таким email не существует';
+        break;
+      case 'password_error':
+        this.message = 'Неправильный пароль';
+        break;
+      default:
+        break;
+    }
+    return this.message;
   }
 }

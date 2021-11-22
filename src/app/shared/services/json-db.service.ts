@@ -1,6 +1,6 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {catchError, Observable, throwError} from 'rxjs';
+import {Observable} from 'rxjs';
 import {Profile} from '../models/interfaces';
 
 @Injectable({
@@ -13,13 +13,11 @@ export class JsonDBService {
     private http: HttpClient
   ) { }
 
-  public getUser(user: Profile): Observable<any> {
-    return this.http.get<Profile[]>(`${this.urlApi}users?email=${user.email}`)
-      .pipe(
-        catchError(err => {
-        console.log('Обработка неверного адреса почты');
-        return throwError(err);
-      })
-    );
+  public getUser(user: Profile): Observable<Profile[]> {
+    return this.http.get<Profile[]>(`${this.urlApi}users?email=${user.email}`);
+  }
+
+  public setUser(user: Profile): Observable<Profile[]> {
+    return this.http.post<Profile[]>(`${this.urlApi}users`, user);
   }
 }
