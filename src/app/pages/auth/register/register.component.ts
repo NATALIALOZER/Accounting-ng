@@ -37,8 +37,11 @@ export class RegisterComponent implements OnInit {
           this.jsonDBService.setUser(user)
             .pipe(takeUntil(this.destroy$))
             .subscribe(
-              () =>
-                this.router.navigate(['/auth/login'])
+              (res: Profile) => {
+                const profile = [ `Данные пользователя. email: ${res.email} `, `имя: ${res.name} `, `пароль: ${res.password} `];
+                localStorage.setItem('user', profile.toString());
+                this.router.navigate(['/home']);
+              }
             );
         } else {
           console.log('Этот пользователь уже зарегистрирован');

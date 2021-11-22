@@ -17,7 +17,7 @@ export class JsonDBService {
     return this.http.get<Profile[]>(`${this.urlApi}users?email=${user.email}`);
   }
 
-  public setUser(user: Profile): Observable<Profile[]> {
-    return this.http.post<Profile[]>(`${this.urlApi}users`, user);
+  public setUser(user: Profile): Observable<Profile> {
+    return this.http.post<Profile>(`${this.urlApi}users`, user);
   }
 }
