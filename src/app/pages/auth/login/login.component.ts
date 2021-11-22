@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {Profile} from '../../../shared/models/interfaces';
 import {Router} from '@angular/router';
-import {JsonDBService} from '../../../shared/services/json-db.service';
+import {AuthService} from '../../../shared/services/auth.service';
 import {Subject, takeUntil} from 'rxjs';
 
 
@@ -19,7 +19,7 @@ export class LoginComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private router: Router,
-    private jsonDBService: JsonDBService,
+    private jsonDBService: AuthService,
   ) { }
 
   public ngOnInit(): void {
@@ -40,22 +40,22 @@ export class LoginComponent implements OnInit {
       .pipe(takeUntil(this.destroy$))
       .subscribe( (response: Profile[] ) => {
         if (response.length === 0 ) {
-          this.handleError('email_error');
+          this.handleError('Пользователя с таким email не существует');
         } else {
           const existUser = response.find( (profile: Profile) => {
-            return profile.password === user.password && profile.name === user.name;
+            return profile.password === user.password;
           });
           if (existUser) {
             this.router.navigate(['/home']);
           } else {
-            this.handleError('password_error');
+            this.handleError('Неправильный пароль');
           }
         }
       }
     );
   }
 
-  public getForm(): void {
+  private getForm(): void {
     this.form = this.formBuilder.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6)]]
@@ -63,16 +63,8 @@ export class LoginComponent implements OnInit {
   }
 
   private handleError(error: string): string {
-    switch (error) {
-      case 'email_error':
-        this.message = 'Пользователя с таким email не существует';
-        break;
-      case 'password_error':
-        this.message = 'Неправильный пароль';
-        break;
-      default:
-        break;
-    }
+    this.message = error;
+    setTimeout( () => this.message = '' , 5000);
     return this.message;
   }
 }

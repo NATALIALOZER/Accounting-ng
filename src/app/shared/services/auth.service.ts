@@ -6,7 +6,7 @@ import {Profile} from '../models/interfaces';
 @Injectable({
   providedIn: 'root'
 })
-export class JsonDBService {
+export class AuthService {
   public urlApi = 'http://localhost:3000/';
 
   constructor(
