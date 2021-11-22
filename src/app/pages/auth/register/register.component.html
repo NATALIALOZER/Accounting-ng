@@ -3,14 +3,20 @@
   <mat-form-field fxLayoutAlign="center">
     <mat-label>Email</mat-label>
     <input matInput type="text" placeholder="email" formControlName="email">
+    <mat-error *ngIf="form.get('email')?.hasError('required')">Поле email не должно быть пустым</mat-error>
+    <mat-error *ngIf="form.get('email')?.hasError('email')">Введите коректный email</mat-error>
+
   </mat-form-field>
   <mat-form-field fxLayoutAlign="center">
     <mat-label>Пароль</mat-label>
     <input matInput type="text" placeholder="password" formControlName="password">
+    <mat-error *ngIf="form.get('password')?.hasError('required')">Поле password не должно быть пустым</mat-error>
+    <mat-error *ngIf="form.get('password')?.hasError('minlength')">Пароль должен состоять как минимум из 6 знаков</mat-error>
   </mat-form-field>
   <mat-form-field fxLayoutAlign="center">
     <mat-label>Имя</mat-label>
     <input matInput type="text" placeholder="name" formControlName="name">
+    <mat-error *ngIf="form.get('name')?.hasError('required')">Поле name не должно быть пустым</mat-error>
   </mat-form-field>
   <mat-checkbox formControlName="checkRequired">Согласен с правилами</mat-checkbox>
   <mat-card-actions>
