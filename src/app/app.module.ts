@@ -8,7 +8,13 @@ import {ReactiveFormsModule} from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {MatButtonToggleModule} from '@angular/material/button-toggle';
 import {FlexLayoutModule} from '@angular/flex-layout';
-import {UrlInterceptor} from './shared/services/url.interceptor';
+import {UrlInterceptor} from './shared/interceptor/url.interceptor';
+import {MatToolbarModule} from "@angular/material/toolbar";
+import {MatIconModule} from "@angular/material/icon";
+import {MatButtonModule} from "@angular/material/button";
+import {MatMenuModule} from "@angular/material/menu";
+import {MatSidenavModule} from "@angular/material/sidenav";
+import {MatListModule} from "@angular/material/list";
 
 
 const INTERCEPTOR_PROVIDER: Provider = {
@@ -30,6 +36,12 @@ const INTERCEPTOR_PROVIDER: Provider = {
     BrowserAnimationsModule,
     MatButtonToggleModule,
     FlexLayoutModule,
+    MatToolbarModule,
+    MatIconModule,
+    MatButtonModule,
+    MatMenuModule,
+    MatSidenavModule,
+    MatListModule,
   ],
   providers: [INTERCEPTOR_PROVIDER],
   bootstrap: [AppComponent]
