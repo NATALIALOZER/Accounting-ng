@@ -3,7 +3,7 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {Profile} from '../../../shared/models/interfaces';
 import {Router} from '@angular/router';
 import {AuthService} from '../../../shared/services/auth.service';
-import {Subject, takeUntil} from 'rxjs';
+import {delay, Subject, takeUntil} from 'rxjs';
 
 
 @Component({
@@ -15,6 +15,8 @@ export class LoginComponent implements OnInit {
   public message: string = '';
   public form!: FormGroup;
   private destroy$: Subject<void> = new Subject<void>();
+  /*public message$: Subject<string> = new Subject<string>();*/
+
 
   constructor(
     private formBuilder: FormBuilder,
@@ -66,5 +68,8 @@ export class LoginComponent implements OnInit {
     this.message = error;
     setTimeout( () => this.message = '' , 5000);
     return this.message;
+    /*this.message$.next(error);
+    this.message$.pipe(delay(5000));
+    this.message$.next('');*/
   }
 }
