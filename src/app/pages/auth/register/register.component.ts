@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {Profile} from '../../../shared/models/interfaces';
-import {delay, Subject, takeUntil} from 'rxjs';
+import {Subject, takeUntil} from 'rxjs';
 import {Router} from '@angular/router';
 import {AuthService} from '../../../shared/services/auth.service';
 
@@ -40,7 +40,7 @@ export class RegisterComponent implements OnInit {
             .subscribe(
               (res: Profile) => {
                 localStorage.setItem('user', JSON.stringify(res));
-                this.router.navigate(['/home']);
+                this.router.navigate(['/auth/login']);
               }
             );
         } else {
@@ -58,9 +58,8 @@ export class RegisterComponent implements OnInit {
     });
   }
 
-  private handleError(error: string): string {
+  private handleError(error: string): void {
     this.message = error;
     setTimeout( () => this.message = '' , 5000);
-    return this.message;
   }
 }
