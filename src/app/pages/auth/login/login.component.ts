@@ -18,9 +18,9 @@ export class LoginComponent implements OnInit {
 
 
   constructor(
+    public authService: AuthService,
     private formBuilder: FormBuilder,
     private router: Router,
-    private jsonDBService: AuthService,
   ) { }
 
   public ngOnInit(): void {
@@ -37,7 +37,7 @@ export class LoginComponent implements OnInit {
       return;
     }
     const user: Profile = this.form.value;
-    this.jsonDBService.getUser(user)
+    this.authService.getUser(user)
       .pipe(takeUntil(this.destroy$))
       .subscribe( (response: Profile[] ) => {
         if (response.length === 0 ) {
@@ -47,6 +47,7 @@ export class LoginComponent implements OnInit {
             return profile.password === user.password;
           });
           if (existUser) {
+            localStorage.setItem('user', JSON.stringify(response));
             this.router.navigate(['/home']);
           } else {
             this.handleError('Неправильный пароль');

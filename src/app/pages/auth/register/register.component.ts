@@ -39,7 +39,7 @@ export class RegisterComponent implements OnInit {
             .pipe(takeUntil(this.destroy$))
             .subscribe(
               (res: Profile) => {
-                localStorage.setItem('user', JSON.stringify(res));
+
                 this.router.navigate(['/auth/login']);
               }
             );

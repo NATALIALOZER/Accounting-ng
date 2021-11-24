@@ -20,4 +20,18 @@ export class AuthService {
   public setUser(user: Profile): Observable<Profile> {
     return this.http.post<Profile>(this.baseUrl + 'users', user);
   }
+
+  public getUserData(): Profile[] {
+    const userData = localStorage.getItem('user') as string;
+    return JSON.parse(userData);
+  }
+
+  public isAuthenticated(): boolean {
+    return !!localStorage.getItem('user');
+  }
+
+
+  public signOut(): void {
+    localStorage.removeItem('user');
+  }
 }

@@ -16,6 +16,7 @@ import {MatMenuModule} from '@angular/material/menu';
 import {MatSidenavModule} from '@angular/material/sidenav';
 import {MatListModule} from '@angular/material/list';
 import {environment} from "../environments/environment";
+import {AuthGuard} from "./shared/guards/auth.guard";
 
 
 const INTERCEPTOR_PROVIDER: Provider = {
@@ -44,7 +45,7 @@ const INTERCEPTOR_PROVIDER: Provider = {
     MatSidenavModule,
     MatListModule,
   ],
-  providers: [INTERCEPTOR_PROVIDER, { provide: 'BASE_API_URL', useValue: environment.baseUrl }],
+  providers: [INTERCEPTOR_PROVIDER, { provide: 'BASE_API_URL', useValue: environment.baseUrl }, AuthGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
