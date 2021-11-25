@@ -6,13 +6,26 @@
   margin: 20px 0;
   flex-direction: column
 }
-
 .sidenav-menu{
+  display: flex;
+  flex-direction: column;
+  border-top: lightgrey 1px solid;
+  border-bottom: lightgrey 1px solid;
+  p{
+    padding: 20px;
+    color: darkgrey;
+  }
+  a{
+    font-size: 1.1rem;
+    padding: 20px;
+    cursor: pointer;
+  }
   a:hover {
     background-color: cornflowerblue;
+    color: #EAF1FF;
+    font-weight: 600;
   }
 }
-
 .account-photo{
   width: 100px;
   height: 100px;

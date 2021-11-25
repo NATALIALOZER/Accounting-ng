@@ -30,7 +30,8 @@ export class AuthService {
     return !!localStorage.getItem('user');
   }
 
-  public signOut(): void {
+  public signOut(): boolean {
     localStorage.removeItem('user');
+    return this.isAuthenticated();
   }
 }
