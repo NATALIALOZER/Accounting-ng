@@ -13,3 +13,30 @@
     background-color: cornflowerblue;
   }
 }
+
+@media screen and (min-width: 480px) and (max-width: 720px){
+  .slogan{
+    display: none;
+  }
+  .toolbar-list{
+    display: flex;
+    li{
+      margin: 0 10px;
+    }
+  }
+}
+
+@media screen and (max-width: 480px){
+  .slogan{
+    display: none;
+  }
+  .toolbar-list{
+    display: flex;
+    li{
+      margin: 0 10px;
+    }
+  }
+  .mat-toolbar-row, .mat-toolbar-single-row {
+    padding: 0;
+  }
+}
