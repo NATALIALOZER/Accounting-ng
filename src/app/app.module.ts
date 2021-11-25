@@ -8,15 +8,16 @@ import {ReactiveFormsModule} from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {MatButtonToggleModule} from '@angular/material/button-toggle';
 import {FlexLayoutModule} from '@angular/flex-layout';
-import {UrlInterceptor} from './shared/interceptor/url.interceptor';
+import {UrlInterceptor} from './shared/interceptors/url.interceptor';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatIconModule} from '@angular/material/icon';
 import {MatButtonModule} from '@angular/material/button';
 import {MatMenuModule} from '@angular/material/menu';
 import {MatSidenavModule} from '@angular/material/sidenav';
 import {MatListModule} from '@angular/material/list';
-import {environment} from "../environments/environment";
-import {AuthGuard} from "./shared/guards/auth.guard";
+import {environment} from '../environments/environment';
+import {AuthGuard} from './shared/guards/auth.guard';
+import {SharedModule} from './shared/shared.module';
 
 
 const INTERCEPTOR_PROVIDER: Provider = {
@@ -28,7 +29,7 @@ const INTERCEPTOR_PROVIDER: Provider = {
 @NgModule({
   declarations: [
     AppComponent,
-    HomeComponent
+    HomeComponent,
   ],
   imports: [
     BrowserModule,
@@ -44,6 +45,7 @@ const INTERCEPTOR_PROVIDER: Provider = {
     MatMenuModule,
     MatSidenavModule,
     MatListModule,
+    SharedModule
   ],
   providers: [INTERCEPTOR_PROVIDER, { provide: 'BASE_API_URL', useValue: environment.baseUrl }, AuthGuard],
   bootstrap: [AppComponent]

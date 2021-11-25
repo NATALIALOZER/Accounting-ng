@@ -8,21 +8,17 @@ import {Router} from '@angular/router';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  public screenWidth: number = 0;
+  public isAuthenticated: boolean = false;
 
   constructor(
     public auth: AuthService,
     private router: Router
   ) {
-      this.screenWidth = window.innerWidth;
-      window.onresize = () => {
-        this.screenWidth = window.innerWidth;
-      };
+    this.isAuthenticated = this.auth.isAuthenticated();
   }
 
   public signOut(): void {
     this.router.navigate(['/auth/login']);
     this.auth.signOut();
   }
-
 }

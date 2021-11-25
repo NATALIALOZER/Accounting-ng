@@ -1,3 +1,7 @@
+.container {
+  height: 100vh;
+}
+
 .toolbar-spacer {
   flex: 1 1 auto;
 }
@@ -8,13 +12,13 @@
   }
 }
 
-.sidenav-menu{
-  a:hover {
-    background-color: cornflowerblue;
-  }
+.drawer {
+  min-width:300px;
+  background: #EAF1FF;
 }
 
-@media screen and (min-width: 480px) and (max-width: 720px){
+
+/*@media screen and (min-width: 480px) and (max-width: 720px){
   .slogan{
     display: none;
   }
@@ -39,4 +43,5 @@
   .mat-toolbar-row, .mat-toolbar-single-row {
     padding: 0;
   }
-}
+}*/
+
