@@ -5,13 +5,6 @@
       "email": "user@user.com",
       "password": "12345678",
       "name": "Администратор"
-    },
-    {
-      "email": "user3@dasd.asd",
-      "password": "9874123",
-      "name": "test",
-      "checkRequired": true,
-      "id": 2
     }
   ],
   "bill": {
