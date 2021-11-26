@@ -14,6 +14,7 @@ import {Subject, takeUntil} from 'rxjs';
 export class LoginComponent implements OnInit {
   public message: string = '';
   public form!: FormGroup;
+  public isSubmitted: boolean = false;
   private destroy$: Subject<void> = new Subject<void>();
 
 
@@ -33,29 +34,35 @@ export class LoginComponent implements OnInit {
   }
 
   public submit(): void {
+
     if (this.form.invalid) {
       return;
     }
     const user: Profile = this.form.value;
-    this.authService.getUser(user)
-      .pipe(takeUntil(this.destroy$))
-      .subscribe( (response: Profile[] ) => {
-        if (response.length === 0 ) {
-          this.handleError('Пользователя с таким email не существует');
-        } else {
-          const existUser = response.find( (profile: Profile) => {
-            return profile.password === user.password;
-          });
-          if (existUser) {
-            localStorage.setItem('user', JSON.stringify(response));
-            this.authService.isAuthenticated();
-            this.router.navigate(['/home']);
-          } else {
-            this.handleError('Неправильный пароль');
+    this.isSubmitted = true;
+    setTimeout(() => {
+      this.authService.getUser(user)
+        .pipe(takeUntil(this.destroy$))
+        .subscribe( (response: Profile[] ) => {
+            if (response.length === 0 ) {
+              this.handleError('Такого пользователя не существует');
+            } else {
+              const existUser = response.find( (profile: Profile) => {
+                return profile.password === user.password;
+              });
+              if (existUser) {
+                localStorage.setItem('user', JSON.stringify(response));
+                this.authService.isAuthenticated();
+                this.router.navigate(['/home']);
+              } else {
+                this.handleError('Неправильный пароль');
+              }
+            }
           }
-        }
-      }
-    );
+        );
+      this.isSubmitted = false;
+    }, 2000);
+
   }
 
   private getForm(): void {

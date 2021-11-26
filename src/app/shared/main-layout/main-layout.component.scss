@@ -3,6 +3,10 @@
     min-height: 100vh;
     height: auto;
     overflow: auto;
+    .mat-drawer{
+      width: 25%;
+      background-color: #EAF1FF;
+    }
 
     .mat-drawer-content {
       background-color: #f8f8ff;

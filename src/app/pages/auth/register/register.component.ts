@@ -13,6 +13,7 @@ import {AuthService} from '../../../shared/services/auth.service';
 export class RegisterComponent implements OnInit {
   public form!: FormGroup;
   public message: string = '';
+  public isSubmitted: boolean = false;
   private destroy$: Subject<void> = new Subject<void>();
 
 
@@ -31,22 +32,26 @@ export class RegisterComponent implements OnInit {
       return;
     }
     const user: Profile = this.form.value;
-    this.jsonDBService.getUser(user)
-      .pipe(takeUntil(this.destroy$))
-      .subscribe( (response: Profile[] ) => {
-        if (response.length === 0 ) {
-          this.jsonDBService.setUser(user)
-            .pipe(takeUntil(this.destroy$))
-            .subscribe(
-              (res: Profile) => {
+    this.isSubmitted = true;
+    setTimeout(() => {
+      this.jsonDBService.getUser(user)
+        .pipe(takeUntil(this.destroy$))
+        .subscribe( (response: Profile[] ) => {
+          if (response.length === 0 ) {
+            this.jsonDBService.setUser(user)
+              .pipe(takeUntil(this.destroy$))
+              .subscribe(
+                (res: Profile) => {
 
-                this.router.navigate(['/auth/login']);
-              }
-            );
-        } else {
-          this.handleError('Этот пользователь уже зарегистрирован');
-        }
-      });
+                  this.router.navigate(['/auth/login']);
+                }
+              );
+            this.isSubmitted = false;
+          } else {
+            this.handleError('Этот пользователь уже зарегистрирован');
+          }
+        });
+    }, 2000);
   }
 
   private getForm(): void {
