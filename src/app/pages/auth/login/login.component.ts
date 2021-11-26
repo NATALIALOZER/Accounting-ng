@@ -49,7 +49,7 @@ export class LoginComponent implements OnInit {
           if (existUser) {
             localStorage.setItem('user', JSON.stringify(response));
             this.authService.isAuthenticated();
-            this.router.navigate(['/home']);
+            this.router.navigate(['/billing-page']);
           } else {
             this.handleError('Неправильный пароль');
           }
