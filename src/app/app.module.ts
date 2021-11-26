@@ -18,6 +18,7 @@ import {MatListModule} from '@angular/material/list';
 import {environment} from '../environments/environment';
 import {AuthGuard} from './shared/guards/auth.guard';
 import {SharedModule} from './shared/shared.module';
+import {MaterialModule} from "./shared/material.module";
 
 
 const INTERCEPTOR_PROVIDER: Provider = {
@@ -37,15 +38,9 @@ const INTERCEPTOR_PROVIDER: Provider = {
     ReactiveFormsModule,
     HttpClientModule,
     BrowserAnimationsModule,
-    MatButtonToggleModule,
     FlexLayoutModule,
-    MatToolbarModule,
-    MatIconModule,
-    MatButtonModule,
-    MatMenuModule,
-    MatSidenavModule,
-    MatListModule,
-    SharedModule
+    SharedModule,
+    MaterialModule
   ],
   providers: [INTERCEPTOR_PROVIDER, { provide: 'BASE_API_URL', useValue: environment.baseUrl }, AuthGuard],
   bootstrap: [AppComponent]
