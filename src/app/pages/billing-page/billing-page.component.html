@@ -2,12 +2,12 @@
   <div class="title" fxLayout="row" fxLayoutAlign="space-between center">
     <h1>Страница счета</h1>
     <button (click)="resetTables()" mat-icon-button class="toolbar-icon">
-      <mat-icon>update</mat-icon>
+      <mat-icon>refresh</mat-icon>
     </button>
   </div>
-  <div fxLayout="row" fxLayoutAlign="space-evenly start" fxLayoutGap="15px" *ngIf="!loading; else loader">
-    <app-current-account-balance fxFlex="50" [dataSource]="dataSource" [currentBalance]="currentBalance"></app-current-account-balance>
-    <app-current-exchange-rate fxFlex="50" [dataSource]="dataSource"></app-current-exchange-rate>
+  <div [ngStyle]="{'flex-direction': 'column'}" [ngStyle.gt-sm]="{'flex-direction': 'row'}" class="tables-layout" *ngIf="!loading; else loader">
+    <app-current-account-balance [ngStyle]="{'width': '100%'}" [ngStyle.gt-sm]="{'width': '50%'}" [dataSource]="dataSource" [currentBalance]="currentBalance"></app-current-account-balance>
+    <app-current-exchange-rate [ngStyle]="{'width': '100%'}" [ngStyle.gt-sm]="{'width': '50%'}" [dataSource]="dataSource"></app-current-exchange-rate>
   </div>
   <ng-template #loader>
     <div fxLayout="row" fxLayoutAlign="center center">Loading...</div>

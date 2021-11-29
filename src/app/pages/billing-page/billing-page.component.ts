@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { BehaviorSubject, Subject, takeUntil } from 'rxjs';
-import { Balance, Bill, rateApiData, rateTableData } from '../../shared/models/interfaces';
+import { Subject, takeUntil } from 'rxjs';
+import { Bill, rateApiData, rateTableData } from '../../shared/models/interfaces';
 import { RateApiService } from '../../shared/services/rate-api.service';
 import { DbProfileInfoService } from '../../shared/services/db-profile-info.service';
 
