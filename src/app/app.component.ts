@@ -16,11 +16,6 @@ export class AppComponent {
     private sanitizer: DomSanitizer
   ) {
     this.matIconRegistry.addSvgIcon(
-      `usd`,
-      this.sanitizer.bypassSecurityTrustResourceUrl(`assets/usd.svg`)
-    );
-
-    this.matIconRegistry.addSvgIcon(
       `uah`,
       this.sanitizer.bypassSecurityTrustResourceUrl(`assets/uah.svg`)
     );

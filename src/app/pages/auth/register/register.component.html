@@ -25,6 +25,8 @@
   </mat-card-actions>
   <mat-card-subtitle fxLayoutAlign="center"><p>Уже есть аккаунт?</p><a routerLink="../login">Войти!</a></mat-card-subtitle>
 </form>
-<div *ngIf="!isSubmitted; else loader"></div>
-<ng-template #loader><mat-spinner></mat-spinner></ng-template>
+<div fxLayout="row" fxLayoutAlign="center">
+  <div *ngIf="!isSubmitted; else loader"></div>
+  <ng-template #loader><mat-spinner></mat-spinner></ng-template>
+</div>
 

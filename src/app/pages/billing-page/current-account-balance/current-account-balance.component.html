@@ -1,20 +1,23 @@
 <mat-card >
   <mat-card-subtitle>Счет</mat-card-subtitle>
-  <mat-card-content *ngIf="!isSubmitted; else loader">
-    <span fxLayout="row" class="value-space" >
+  <mat-card-content *ngFor="let item of dataSource" >
+    <span fxLayout="row" class="value-space" *ngIf="item.currency === 'EUR'">
       <mat-icon>euro</mat-icon>
-      <span>{{balance.EUR}}</span>
+      <span >
+        {{item.rate * currentBalance}}
+      </span>
     </span>
-    <span fxLayout="row" class="value-space">
-      <mat-icon svgIcon="usd"></mat-icon>
-      <span>{{balance.USD}}</span>
+    <span fxLayout="row" class="value-space" *ngIf="item.currency === 'USD'">
+      <mat-icon>attach_money</mat-icon>
+      <span >
+        {{item.rate * currentBalance}}
+      </span>
     </span>
-    <span fxLayout="row" class="value-space">
+    <span fxLayout="row" class="value-space" *ngIf="item.currency === 'UAH'">
       <mat-icon svgIcon="uah"></mat-icon>
-      <span>{{balance.UAH}}</span>
+      <span >
+        {{item.rate * currentBalance}}
+      </span>
     </span>
   </mat-card-content>
-  <ng-template #loader>
-    <div fxLayout="row" fxLayoutAlign="center center"><mat-spinner></mat-spinner></div>
-  </ng-template>
 </mat-card>

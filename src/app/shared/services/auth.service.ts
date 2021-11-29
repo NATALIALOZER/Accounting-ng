@@ -1,7 +1,7 @@
 import {Inject, Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
-import {Profile} from '../models/interfaces';
+import { Profile } from '../models/interfaces';
 
 @Injectable({
   providedIn: 'root'
@@ -35,4 +35,4 @@ export class AuthService {
     return this.isAuthenticated();
   }
 }
- 
+

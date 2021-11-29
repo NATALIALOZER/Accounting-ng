@@ -28,3 +28,8 @@ export interface Balance {
   USD: number;
   UAH: number;
 }
+
+export interface Bill {
+  value: number;
+  currency: string;
+}

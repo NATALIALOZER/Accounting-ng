@@ -1,14 +1,17 @@
 <div fxLayout="column" fxLayoutAlign="start" class="layout">
   <div class="title" fxLayout="row" fxLayoutAlign="space-between center">
     <h1>Страница счета</h1>
-    <button (click)="resetChildTables()" mat-icon-button class="toolbar-icon">
+    <button (click)="resetTables()" mat-icon-button class="toolbar-icon">
       <mat-icon>update</mat-icon>
     </button>
   </div>
-  <div fxLayout="row" fxLayoutAlign="space-evenly start" fxLayoutGap="15px">
-    <app-current-account-balance fxFlex="50" [resetTableSubject]="resetTableSubject"></app-current-account-balance>
-    <app-current-exchange-rate fxFlex="50" [resetTableSubject]="resetTableSubject"></app-current-exchange-rate>
+  <div fxLayout="row" fxLayoutAlign="space-evenly start" fxLayoutGap="15px" *ngIf="!loading; else loader">
+    <app-current-account-balance fxFlex="50" [dataSource]="dataSource" [currentBalance]="currentBalance"></app-current-account-balance>
+    <app-current-exchange-rate fxFlex="50" [dataSource]="dataSource"></app-current-exchange-rate>
   </div>
+  <ng-template #loader>
+    <div fxLayout="row" fxLayoutAlign="center center">Loading...</div>
+  </ng-template>
 </div>
 
 
