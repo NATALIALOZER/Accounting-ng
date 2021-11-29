@@ -6,7 +6,7 @@
     </button>
   </div>
   <div [ngStyle]="{'flex-direction': 'column'}" [ngStyle.gt-sm]="{'flex-direction': 'row'}" class="tables-layout" *ngIf="!loading; else loader">
-    <app-current-account-balance [ngStyle]="{'width': '100%'}" [ngStyle.gt-sm]="{'width': '50%'}" [dataSource]="dataSource" [currentBalance]="currentBalance"></app-current-account-balance>
+    <app-current-account-balance [ngStyle]="{'width': '100%'}" [ngStyle.gt-sm]="{'width': '50%'}" [rate]="rate" [currentBalance]="currentBalance"></app-current-account-balance>
     <app-current-exchange-rate [ngStyle]="{'width': '100%'}" [ngStyle.gt-sm]="{'width': '50%'}" [dataSource]="dataSource"></app-current-exchange-rate>
   </div>
   <ng-template #loader>

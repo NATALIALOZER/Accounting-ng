@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { rateTableData } from '../../../shared/models/interfaces';
+import { RateTableData } from '../../../shared/models/interfaces';
 
 
 @Component({
@@ -8,7 +8,7 @@ import { rateTableData } from '../../../shared/models/interfaces';
   styleUrls: ['./current-exchange-rate.component.scss']
 })
 export class CurrentExchangeRateComponent {
-  @Input() public dataSource: rateTableData[] = [];
+  @Input() public dataSource: RateTableData[] = [];
 
   public displayedColumns: string[] = ['currency', 'rate', 'date'];
 

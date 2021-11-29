@@ -1,8 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subject, takeUntil } from 'rxjs';
-import { Bill, rateApiData, rateTableData } from '../../shared/models/interfaces';
 import { RateApiService } from '../../shared/services/rate-api.service';
-import { DbProfileInfoService } from '../../shared/services/db-profile-info.service';
+import { RateApiData, RateTableData } from '../../shared/models/interfaces';
 
 @Component({
   selector: 'app-home',
@@ -11,13 +10,13 @@ import { DbProfileInfoService } from '../../shared/services/db-profile-info.serv
 })
 export class BillingPageComponent implements OnInit, OnDestroy {
   public loading: boolean = false;
-  public dataSource!: rateTableData[];
+  public dataSource!: RateTableData[];
   public currentBalance: number = 0;
+  public rate: any;
   private destroy$: Subject<void> = new Subject<void>();
 
   constructor(
-    private rateApiService: RateApiService,
-    private profileInfoService: DbProfileInfoService
+    private rateApiService: RateApiService
   ) {}
 
   public ngOnInit(): void {
@@ -31,7 +30,6 @@ export class BillingPageComponent implements OnInit, OnDestroy {
 
   public resetTables(): void {
     this.loading = true;
-    this.getBalance();
     this.getRate();
   }
 
@@ -39,22 +37,13 @@ export class BillingPageComponent implements OnInit, OnDestroy {
     this.rateApiService.getRate()
       .pipe(takeUntil(this.destroy$))
       .subscribe(
-        (response: rateApiData) => {
+        (response: RateApiData) => {
           this.dataSource = [
             {currency: 'EUR', rate: response.rates.EUR, date: response.date},
             {currency: 'USD', rate: response.rates.USD, date: response.date},
             {currency: 'UAH', rate: response.rates.UAH, date: response.date}
           ];
-        }
-      );
-  }
-
-  private getBalance(): void {
-    this.profileInfoService.getUserBalance()
-      .pipe(takeUntil(this.destroy$))
-      .subscribe(
-        (res: Bill) => {
-          this.currentBalance = res.value;
+          this.rate = response.rates;
           this.loading = false;
         }
       );

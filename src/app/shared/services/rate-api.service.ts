@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { rateApiData } from '../models/interfaces';
+import { RateApiData } from '../models/interfaces';
 import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
@@ -14,7 +14,7 @@ export class RateApiService {
     private http: HttpClient
   ) { }
 
-  public getRate(): Observable<rateApiData> {
-    return this.http.get<rateApiData>(this.urlApi);
+  public getRate(): Observable<RateApiData> {
+    return this.http.get<RateApiData>(this.urlApi);
   }
 }

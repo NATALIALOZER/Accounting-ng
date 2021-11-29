@@ -5,7 +5,7 @@ export interface Profile {
   name?: string;
 }
 
-export interface rateApiData {
+export interface RateApiData {
   success: boolean;
   timestamp: number;
   base: string;
@@ -17,7 +17,7 @@ export interface rateApiData {
   };
 }
 
-export interface rateTableData {
+export interface RateTableData {
   currency: string;
   rate: number;
   date: string;
@@ -31,5 +31,13 @@ export interface Balance {
 
 export interface Bill {
   value: number;
+  currency: string;
+}
+
+
+export interface CurrencyInfo {
+  customIcon?: string;
+  icon: string;
+  balance: number;
   currency: string;
 }
