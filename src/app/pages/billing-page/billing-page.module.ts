@@ -8,6 +8,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTableModule } from '@angular/material/table';
+import { MaterialModule } from '../../shared/material.module';
 
 @NgModule({
   declarations: [
@@ -19,9 +20,7 @@ import { MatTableModule } from '@angular/material/table';
     CommonModule,
     BillingPageRoutingModule,
     FlexLayoutModule,
-    MatCardModule,
-    MatIconModule,
-    MatTableModule,
+    MaterialModule
   ]
 })
 export class BillingPageModule { }

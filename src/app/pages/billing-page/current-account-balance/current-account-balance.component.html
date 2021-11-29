@@ -1,17 +1,20 @@
 <mat-card >
   <mat-card-subtitle>Счет</mat-card-subtitle>
-  <mat-card-content>
-    <span fxLayout="row" class="value-space">
+  <mat-card-content *ngIf="!isSubmitted; else loader">
+    <span fxLayout="row" class="value-space" >
       <mat-icon>euro</mat-icon>
-      <span>Value</span>
+      <span>{{balance.EUR}}</span>
     </span>
     <span fxLayout="row" class="value-space">
-      dollar
-      <span>Value</span>
+      <mat-icon svgIcon="usd"></mat-icon>
+      <span>{{balance.USD}}</span>
     </span>
     <span fxLayout="row" class="value-space">
-      uah
-      <span>Value</span>
+      <mat-icon svgIcon="uah"></mat-icon>
+      <span>{{balance.UAH}}</span>
     </span>
   </mat-card-content>
+  <ng-template #loader>
+    <div fxLayout="row" fxLayoutAlign="center center"><mat-spinner></mat-spinner></div>
+  </ng-template>
 </mat-card>

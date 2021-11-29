@@ -8,6 +8,8 @@ import {MatMenuModule} from '@angular/material/menu';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import { MatCardModule } from '@angular/material/card';
+import { MatTableModule } from '@angular/material/table';
 
 const COMPONENTS = [
   MatIconModule,
@@ -17,7 +19,9 @@ const COMPONENTS = [
   MatSidenavModule,
   MatListModule,
   MatButtonToggleModule,
-  MatProgressSpinnerModule
+  MatProgressSpinnerModule,
+  MatCardModule,
+  MatTableModule,
 ];
 
 @NgModule({

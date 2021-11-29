@@ -1,26 +1,55 @@
-import { Component } from '@angular/core';
-
-export interface IPeriodicElement {
-  currency: string;
-  position: number;
-  rate: number;
-  date: string;
-}
-
-const ELEMENT_DATA: IPeriodicElement[] = [
-  {position: 1, currency: 'Hydrogen', rate: 1.0079, date: 'H'},
-  {position: 2, currency: 'Helium', rate: 4.0026, date: 'He'},
-  {position: 3, currency: 'Lithium', rate: 6.941, date: 'Li'},
-];
+import { Component, Input, OnInit } from '@angular/core';
+import { RateApiService } from '../../../shared/services/rate-api.service';
+import { rateApiData, rateTableData } from '../../../shared/models/interfaces';
+import { BehaviorSubject, Subject, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'app-current-exchange-rate',
   templateUrl: './current-exchange-rate.component.html',
   styleUrls: ['./current-exchange-rate.component.scss']
 })
-export class CurrentExchangeRateComponent {
+export class CurrentExchangeRateComponent implements OnInit {
+  @Input() public resetTableSubject: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
 
-  public displayedColumns: string[] = ['position', 'currency', 'rate', 'date'];
-  public dataSource = ELEMENT_DATA;
+  public displayedColumns: string[] = ['currency', 'rate', 'date'];
+  public dataSource!: rateTableData[];
+  public isSubmitted: boolean = false;
+  private destroy$: Subject<void> = new Subject<void>();
 
+  constructor(
+    private rateApiService: RateApiService
+  ) {
+  }
+
+  public ngOnInit(): void {
+    this.resetTableSubject.subscribe(response => {
+      if (response) {
+        this.getRate();
+      }
+    });
+  }
+
+
+  public getRate(): void {
+    this.isSubmitted = true;
+    setTimeout(() => {
+      this.rateApiService.getRate()
+        .pipe(takeUntil(this.destroy$))
+        .subscribe(
+          (response: rateApiData) => {
+            this.dataSource = [
+              {currency: 'EUR', rate: response.rates.EUR, date: response.date},
+              {currency: 'USD', rate: response.rates.USD, date: response.date},
+              {currency: 'UAH', rate: response.rates.UAH, date: response.date}
+            ];
+          }
+        );
+      this.isSubmitted = false;
+    }, 1000);
+  }
+
+  public ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
 }

@@ -1,6 +1,8 @@
 import {Component} from '@angular/core';
 import {AuthService} from './shared/services/auth.service';
 import {Router} from '@angular/router';
+import { MatIconRegistry } from '@angular/material/icon';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-root',
@@ -9,10 +11,20 @@ import {Router} from '@angular/router';
 })
 export class AppComponent {
 
-
   constructor(
-    public auth: AuthService,
-  ) {}
+    private matIconRegistry: MatIconRegistry,
+    private sanitizer: DomSanitizer
+  ) {
+    this.matIconRegistry.addSvgIcon(
+      `usd`,
+      this.sanitizer.bypassSecurityTrustResourceUrl(`assets/usd.svg`)
+    );
+
+    this.matIconRegistry.addSvgIcon(
+      `uah`,
+      this.sanitizer.bypassSecurityTrustResourceUrl(`assets/uah.svg`)
+    );
+  }
 
 
 }
