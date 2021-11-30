@@ -10,6 +10,8 @@ import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import { MatCardModule } from '@angular/material/card';
 import { MatTableModule } from '@angular/material/table';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
 
 const COMPONENTS = [
   MatIconModule,
@@ -22,6 +24,8 @@ const COMPONENTS = [
   MatProgressSpinnerModule,
   MatCardModule,
   MatTableModule,
+  MatFormFieldModule,
+  MatInputModule
 ];
 
 @NgModule({

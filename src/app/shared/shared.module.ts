@@ -7,23 +7,25 @@ import {SidenavComponent} from './main-layout/components/sidenav/sidenav.compone
 import {MaterialModule} from './material.module';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { RouterModule } from '@angular/router';
+import { FilterPipe } from './pipes/filter.pipe';
 
 @NgModule({
   declarations: [
     SidenavComponent,
     MainLayoutComponent,
-    HeaderComponent
+    HeaderComponent,
+    FilterPipe
   ],
   imports: [
     CommonModule,
-    AppRoutingModule,
     MaterialModule,
     FlexLayoutModule,
     RouterModule
   ]
   ,
   exports: [
-    SidenavComponent
+    SidenavComponent,
+    FilterPipe
   ]
 })
 export class SharedModule { }

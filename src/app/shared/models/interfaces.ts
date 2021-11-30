@@ -46,7 +46,7 @@ export interface EventInfo {
   id: number;
   type: string;
   amount: number;
-  category: number | string;
+  category: string;
   date: string;
   description?: string;
 }

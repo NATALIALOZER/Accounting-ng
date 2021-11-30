@@ -9,4 +9,5 @@ import { EventInfo, RateTableData } from '../../../shared/models/interfaces';
 export class TableComponent {
   @Input() public dataSource: EventInfo[] = [];
   public displayedColumns: string[] = ['id', 'amount', 'date', 'category', 'type', 'action'];
+  public search: string = '';
 }

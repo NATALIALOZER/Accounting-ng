@@ -5,9 +5,6 @@ import { CurrentAccountBalanceComponent } from './current-account-balance/curren
 import { BillingPageComponent } from './billing-page.component';
 import { BillingPageRoutingModule } from './billing-page-routing.module';
 import { FlexLayoutModule } from '@angular/flex-layout';
-import { MatCardModule } from '@angular/material/card';
-import { MatIconModule } from '@angular/material/icon';
-import { MatTableModule } from '@angular/material/table';
 import { MaterialModule } from '../../shared/material.module';
 
 @NgModule({
