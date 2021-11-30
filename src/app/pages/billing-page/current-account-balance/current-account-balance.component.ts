@@ -13,6 +13,7 @@ export class CurrentAccountBalanceComponent implements OnInit, OnDestroy {
   @Input() public currentBalance!: number;
   public array: CurrencyInfo[] = [];
   public icons: string[] = [];
+  public customIcons: string[] = [];
   public balances: number[] = [];
   private destroy$: Subject<void> = new Subject<void>();
 
@@ -42,10 +43,12 @@ export class CurrentAccountBalanceComponent implements OnInit, OnDestroy {
   }
 
   private createArrays(rate: number): void {
-    this.array = [{ currency: 'euro', icon: 'euro', balance: rate * this.rate.EUR },
-      { currency: 'usd', icon: 'attach_money', balance: rate * this.rate.USD},
-      { currency: 'uah', icon: '', balance: rate * this.rate.UAH}];
+    this.array = [
+      { currency: 'euro', icon: 'euro', balance: rate * this.rate.EUR, customIcon: '' },
+      { currency: 'usd', icon: 'attach_money', balance: rate * this.rate.USD, customIcon: ''},
+      { currency: 'uah', icon: '', balance: rate * this.rate.UAH, customIcon: 'uah'}];
     this.icons = this.array.map(elem =>  elem.icon );
+    this.customIcons = this.array.map(elem =>  elem.customIcon );
     this.balances = this.array.map( elem => elem.balance);
   }
 }

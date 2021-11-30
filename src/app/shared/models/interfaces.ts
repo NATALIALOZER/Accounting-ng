@@ -36,7 +36,7 @@ export interface Bill {
 
 
 export interface CurrencyInfo {
-  customIcon?: string;
+  customIcon: string;
   icon: string;
   balance: number;
   currency: string;
