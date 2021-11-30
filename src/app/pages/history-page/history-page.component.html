@@ -3,7 +3,12 @@
     <h1>Страница истории</h1>
   </div>
   <div fxLayout="column">
-   <app-chart></app-chart>
-   <app-table [dataSource]="dataSource"></app-table>
+    <app-chart></app-chart>
+    <app-table [dataSource]="dataSource"></app-table>
+    <div fxLayout="row" fxLayoutAlign="space-between" class="card-action">
+      <button mat-stroked-button color="primary"> Добавить </button>
+      <mat-paginator #paginator pageSize=4 hidePageSize
+                     showFirstLastButtons></mat-paginator>
+    </div>
   </div>
 </div>

@@ -6,3 +6,9 @@
   padding-bottom: 5px;
   margin-bottom: 15px;
 }
+.card-action{
+  margin-top: 10px;
+  mat-paginator{
+    background-color: transparent;
+  }
+}
