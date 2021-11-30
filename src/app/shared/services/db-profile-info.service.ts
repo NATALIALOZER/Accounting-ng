@@ -1,5 +1,5 @@
 import { Inject, Injectable } from '@angular/core';
-import { Bill } from '../models/interfaces';
+import { Bill, Category, EventInfo } from '../models/interfaces';
 import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 
@@ -16,5 +16,14 @@ export class DbProfileInfoService {
   public getUserBalance(): Observable<Bill> {
     return this.http.get<Bill>(this.baseUrl + `bill`);
   }
+
+  public getUserEvents(): Observable<EventInfo[]> {
+    return this.http.get<EventInfo[]>(this.baseUrl + `events`);
+  }
+
+  public getCategories(): Observable<Category[]> {
+    return this.http.get<Category[]>(this.baseUrl + `categories`);
+  }
+
 }
 

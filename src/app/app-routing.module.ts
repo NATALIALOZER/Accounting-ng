@@ -7,7 +7,8 @@ import { MainLayoutComponent } from './shared/main-layout/main-layout.component'
 
 const routes: Routes = [
   { path: '', component: MainLayoutComponent, canActivate: [AuthGuard], children: [
-      { path: 'billing-page', loadChildren: () => import('./pages/billing-page/billing-page.module').then(x => x.BillingPageModule)}
+      { path: 'billing-page', loadChildren: () => import('./pages/billing-page/billing-page.module').then(x => x.BillingPageModule)},
+      { path: 'history-page', loadChildren: () => import('./pages/history-page/history-page.module').then(x => x.HistoryPageModule)}
     ]},
   { path: 'auth', loadChildren: () => import('./pages/auth/auth.module').then(x => x.AuthModule) },
   { path: '**', redirectTo: '' }

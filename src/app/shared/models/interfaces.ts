@@ -41,3 +41,18 @@ export interface CurrencyInfo {
   balance: number;
   currency: string;
 }
+
+export interface EventInfo {
+  id: number;
+  type: string;
+  amount: number;
+  category: number | string;
+  date: string;
+  description?: string;
+}
+
+export interface Category {
+  capacity: number;
+  name: string;
+  id: number;
+}
