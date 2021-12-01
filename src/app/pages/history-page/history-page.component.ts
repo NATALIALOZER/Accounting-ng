@@ -49,6 +49,7 @@ export class HistoryPageComponent implements OnInit {
         );
         this.data = res.map(i => {
           i.category = categoryName[i.category];
+          (i.type === 'income') ? (i.type = 'Доход') : (i.type = 'Расход') ;
           return i;
         });
         this.dataSource = new MatTableDataSource<EventInfo>(this.data);

@@ -16,9 +16,10 @@ export class ChartComponent implements OnInit {
 
   public getData (): void {
     const chartOptions = this.data.filter( (item: EventInfo) =>
-        item.type === 'outcome').map( i => { return {name: i.category, y: i.amount}; });
+        item.type === 'Расход').map( i => { return {name: i.category, y: i.amount}; });
     const options: any = {
       chart: {
+        backgroundColor: 'rgba(0,0,0,0)',
         plotBackgroundColor: null,
         plotBorderWidth: null,
         plotShadow: false,
@@ -45,14 +46,15 @@ export class ChartComponent implements OnInit {
           dataLabels: {
             connectorWidth: 0,
             enabled: true,
-            format: '{point.name} {point.percentage:.1f} %'
+            format: '{point.name} {point.percentage:.1f} %',
+            color: 'white'
           },
           borderWidth: 0,
           shadow: false,
         }
       },
       series: [{
-        name: 'Events',
+        name: 'Категория',
         colorByPoint: true,
         data: chartOptions
       }]
