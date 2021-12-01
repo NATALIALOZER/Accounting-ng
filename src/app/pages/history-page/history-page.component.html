@@ -2,8 +2,8 @@
   <div class="title" fxLayout="row" fxLayoutAlign="space-between center">
     <h1>Страница истории</h1>
   </div>
-  <div fxLayout="column">
-    <app-chart></app-chart>
+  <div fxLayout="column" *ngIf="dataSource; else loading">
+    <app-chart [data]="data"></app-chart>
     <app-table [dataSource]="dataSource"></app-table>
     <div fxLayout="row" fxLayoutAlign="space-between" class="card-action">
       <button mat-stroked-button color="primary"> Добавить </button>
@@ -11,4 +11,7 @@
                      showFirstLastButtons></mat-paginator>
     </div>
   </div>
+  <ng-template #loading>
+    <p class="text-center">Loading...</p>
+  </ng-template>
 </div>

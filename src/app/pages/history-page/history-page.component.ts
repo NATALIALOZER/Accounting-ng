@@ -15,15 +15,12 @@ export class HistoryPageComponent implements OnInit {
   public dataSource!: MatTableDataSource<EventInfo>;
   public data: EventInfo[] = [];
   private destroy$: Subject<void> = new Subject<void>();
-  private categoryName!: { [p: string]: string; [p: number]: string };
-
 
   constructor(
     private profileInfoService: DbProfileInfoService
   ) { }
 
   public ngOnInit(): void {
-    this.getCategories();
     this.getEvents();
   }
 
@@ -32,32 +29,30 @@ export class HistoryPageComponent implements OnInit {
     this.destroy$.complete();
   }
 
-
   private getEvents(): void {
     this.profileInfoService.getUserEvents()
       .pipe(takeUntil(this.destroy$))
       .subscribe(
         (response: EventInfo[]) => {
-          response.forEach( item => {
-            item.category = this.categoryName[item.category];
-          });
-          this.data = response;
-          this.dataSource = new MatTableDataSource(this.data);
-          this.dataSource.paginator = this.paginator;
-          });
+          this.getCategories(response);
+        });
   }
 
-
-  private getCategories(): void {
-    this.profileInfoService.getCategories().subscribe(
+  private getCategories(res: EventInfo[]): any {
+    return this.profileInfoService.getCategories().subscribe(
       (response: Category[]) => {
-        this.categoryName = response.reduce(
+        const categoryName: { [p: string]: string; [p: number]: string } = response.reduce(
           (results, current) => ({
             ...results,
             [current.id]: current.name
-          }),
-          {}
+          }), {}
         );
+        this.data = res.map(i => {
+          i.category = categoryName[i.category];
+          return i;
+        });
+        this.dataSource = new MatTableDataSource<EventInfo>(this.data);
+        this.dataSource.paginator = this.paginator;
       });
   }
 }

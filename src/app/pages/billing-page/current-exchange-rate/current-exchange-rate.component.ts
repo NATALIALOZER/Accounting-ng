@@ -9,7 +9,5 @@ import { RateTableData } from '../../../shared/models/interfaces';
 })
 export class CurrentExchangeRateComponent {
   @Input() public dataSource: RateTableData[] = [];
-
   public displayedColumns: string[] = ['currency', 'rate', 'date'];
-
 }

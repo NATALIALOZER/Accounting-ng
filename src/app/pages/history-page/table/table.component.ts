@@ -9,13 +9,13 @@ import { MatSort } from '@angular/material/sort';
   templateUrl: './table.component.html',
   styleUrls: ['./table.component.scss']
 })
-export class TableComponent implements OnChanges {
+export class TableComponent implements OnInit {
   @Input() public dataSource!: MatTableDataSource<EventInfo>;
   @ViewChild(MatSort, {static: true}) public sort!: MatSort;
   public displayedColumns: string[] = ['id', 'amount', 'date', 'category', 'type', 'action'];
   public search: string = '';
 
-  public ngOnChanges(): void {
+  public ngOnInit(): void {
     if (this.dataSource) {
       this.dataSource.sort = this.sort;
     }
