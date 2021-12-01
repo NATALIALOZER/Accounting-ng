@@ -5,11 +5,11 @@
   <div fxLayout="column" *ngIf="dataSource; else loading">
     <app-chart [data]="data"></app-chart>
     <app-table [dataSource]="dataSource"></app-table>
-    <div fxLayout="row" fxLayoutAlign="space-between" class="card-action">
-      <button mat-stroked-button color="primary"> Добавить </button>
-      <mat-paginator #paginator pageSize=4 hidePageSize
-                     showFirstLastButtons></mat-paginator>
-    </div>
+  </div>
+  <div fxLayout="row" fxLayoutAlign="space-between" class="card-action">
+    <button mat-stroked-button color="primary"> Добавить </button>
+    <mat-paginator #paginator pageSize=4 hidePageSize
+                   showFirstLastButtons></mat-paginator>
   </div>
   <ng-template #loading>
     <p class="text-center">Loading...</p>
