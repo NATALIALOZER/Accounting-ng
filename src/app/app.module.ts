@@ -11,7 +11,6 @@ import { environment } from '../environments/environment';
 import { AuthGuard } from './shared/guards/auth.guard';
 import { SharedModule } from './shared/shared.module';
 import { MaterialModule } from './shared/material.module';
-import { EventPageComponent } from './pages/event-page/event-page.component';
 
 
 const INTERCEPTOR_PROVIDER: Provider = {
@@ -22,8 +21,7 @@ const INTERCEPTOR_PROVIDER: Provider = {
 
 @NgModule({
   declarations: [
-    AppComponent,
-    EventPageComponent,
+    AppComponent
   ],
   imports: [
     BrowserModule,
