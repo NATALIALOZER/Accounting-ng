@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {Profile} from '../../../shared/models/interfaces';
+import {IProfile} from '../../../shared/models/interfaces';
 import {Router} from '@angular/router';
 import {AuthService} from '../../../shared/services/auth.service';
 import {Subject, takeUntil} from 'rxjs';
@@ -38,16 +38,16 @@ export class LoginComponent implements OnInit {
     if (this.form.invalid) {
       return;
     }
-    const user: Profile = this.form.value;
+    const user: IProfile = this.form.value;
     this.isSubmitted = true;
     setTimeout(() => {
       this.authService.getUser(user)
         .pipe(takeUntil(this.destroy$))
-        .subscribe( (response: Profile[] ) => {
+        .subscribe( (response: IProfile[] ) => {
             if (response.length === 0 ) {
               this.handleError('Такого пользователя не существует');
             } else {
-              const existUser = response.find( (profile: Profile) => {
+              const existUser = response.find( (profile: IProfile) => {
                 return profile.password === user.password;
               });
               if (existUser) {

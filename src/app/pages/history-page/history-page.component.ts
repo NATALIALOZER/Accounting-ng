@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Subject, takeUntil } from 'rxjs';
 import { DbProfileInfoService } from '../../shared/services/db-profile-info.service';
-import { Category, EventInfo } from '../../shared/models/interfaces';
+import { ICategory, IEventInfo } from '../../shared/models/interfaces';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 
@@ -12,8 +12,9 @@ import { MatPaginator } from '@angular/material/paginator';
 })
 export class HistoryPageComponent implements OnInit {
   @ViewChild('paginator') public paginator!: MatPaginator;
-  public dataSource!: MatTableDataSource<EventInfo>;
-  public data: EventInfo[] = [];
+  public dataSource!: MatTableDataSource<IEventInfo>;
+  public data: IEventInfo[] = [];
+  public categoriesArray: ICategory[] = [];
   private destroy$: Subject<void> = new Subject<void>();
 
   constructor(
@@ -21,6 +22,7 @@ export class HistoryPageComponent implements OnInit {
   ) { }
 
   public ngOnInit(): void {
+    this.getCategories();
     this.getEvents();
   }
 
@@ -33,27 +35,15 @@ export class HistoryPageComponent implements OnInit {
     this.profileInfoService.getUserEvents()
       .pipe(takeUntil(this.destroy$))
       .subscribe(
-        (response: EventInfo[]) => {
-          this.getCategories(response);
+        (response: IEventInfo[]) => {
+          this.data = response;
+          this.dataSource = new MatTableDataSource<IEventInfo>(this.data);
+          this.dataSource.paginator = this.paginator;
         });
   }
 
-  private getCategories(res: EventInfo[]): any {
-    return this.profileInfoService.getCategories().subscribe(
-      (response: Category[]) => {
-        const categoryName: { [p: string]: string; [p: number]: string } = response.reduce(
-          (results, current) => ({
-            ...results,
-            [current.id]: current.name
-          }), {}
-        );
-        this.data = res.map(i => {
-          i.category = categoryName[i.category];
-          (i.type === 'income') ? (i.type = 'Доход') : (i.type = 'Расход') ;
-          return i;
-        });
-        this.dataSource = new MatTableDataSource<EventInfo>(this.data);
-        this.dataSource.paginator = this.paginator;
-      });
+  private getCategories(): void {
+    this.profileInfoService.getCategories().subscribe(
+      (response: ICategory[]) => this.categoriesArray = response);
   }
 }

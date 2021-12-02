@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { EventInfo } from '../../../shared/models/interfaces';
+import { IEventInfo } from '../../../shared/models/interfaces';
 import * as Highcharts from 'highcharts';
 
 @Component({
@@ -8,16 +8,15 @@ import * as Highcharts from 'highcharts';
   styleUrls: ['./chart.component.scss']
 })
 export class ChartComponent implements OnInit {
-  @Input() public data: EventInfo[] = [];
+  @Input() public data: IEventInfo[] = [];
 
   public ngOnInit(): void {
       this.getData();
   }
 
   public getData (): void {
-    const chartOptions = this.data.filter( (item: EventInfo) =>
-        item.type === 'Расход').map( i => {
-          return {name: i.category, y: i.amount}; });
+    const chartOptions = this.data.filter( (item: IEventInfo) =>
+      item.type === 'outcome').map( i => { return {name: i.category, y: i.amount}; });
     const options: any = {
       chart: {
         backgroundColor: 'rgba(0,0,0,0)',

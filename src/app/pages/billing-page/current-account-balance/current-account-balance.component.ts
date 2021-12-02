@@ -1,5 +1,5 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
-import { Bill, CurrencyInfo } from '../../../shared/models/interfaces';
+import { IBill, ICurrencyInfo } from '../../../shared/models/interfaces';
 import { Subject, takeUntil } from 'rxjs';
 import { DbProfileInfoService } from '../../../shared/services/db-profile-info.service';
 
@@ -11,7 +11,7 @@ import { DbProfileInfoService } from '../../../shared/services/db-profile-info.s
 export class CurrentAccountBalanceComponent implements OnInit, OnDestroy {
   @Input() public rate: any;
   @Input() public currentBalance!: number;
-  public array: CurrencyInfo[] = [];
+  public array: ICurrencyInfo[] = [];
   public icons: string[] = [];
   public customIcons: string[] = [];
   public balances: number[] = [];
@@ -37,7 +37,7 @@ export class CurrentAccountBalanceComponent implements OnInit, OnDestroy {
     this.profileInfoService.getUserBalance()
       .pipe(takeUntil(this.destroy$))
       .subscribe(
-        (res: Bill) => {
+        (res: IBill) => {
           this.createArrays(res.value);
         });
   }

@@ -2,9 +2,9 @@
   <div class="title" fxLayout="row" fxLayoutAlign="space-between center">
     <h1>Страница истории</h1>
   </div>
-  <div fxLayout="column" *ngIf="dataSource; else loading">
+  <div fxLayout="column" *ngIf="dataSource && categoriesArray; else loading">
     <app-chart [data]="data"></app-chart>
-    <app-table [dataSource]="dataSource"></app-table>
+    <app-table [dataSource]="dataSource" [categoriesArray] = categoriesArray></app-table>
   </div>
   <div fxLayout="row" fxLayoutAlign="space-between" class="card-action">
     <button mat-raised-button color="primary"> Добавить событие </button>

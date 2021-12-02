@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { DbProfileInfoService } from '../../shared/services/db-profile-info.service';
 import { Observable, switchMap } from 'rxjs';
-import { EventInfo } from '../../shared/models/interfaces';
+import { IEventInfo } from '../../shared/models/interfaces';
 
 @Component({
   selector: 'app-event-page',
@@ -10,7 +10,7 @@ import { EventInfo } from '../../shared/models/interfaces';
   styleUrls: ['./event-page.component.scss']
 })
 export class EventPageComponent implements OnInit {
-  public events$!: Observable<EventInfo[]>;
+  public events$!: Observable<IEventInfo[]>;
   private selectedId!: number;
 
 

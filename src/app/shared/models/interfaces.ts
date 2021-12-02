@@ -1,57 +1,52 @@
-export interface Profile {
+export interface IProfile {
   id?: number;
   email: string;
   password: string;
   name?: string;
 }
 
-export interface RateApiData {
-  success: boolean;
-  timestamp: number;
-  base: string;
-  date: string;
-  rates: {
-    EUR: number;
-    USD: number;
-    UAH: number;
-  };
-}
-
-export interface RateTableData {
-  currency: string;
-  rate: number;
-  date: string;
-}
-
-export interface Balance {
+export interface IBalance {
   EUR: number;
   USD: number;
   UAH: number;
 }
 
-export interface Bill {
+export interface IRateApiData {
+  success: boolean;
+  timestamp: number;
+  base: string;
+  date: string;
+  rates: IBalance;
+}
+
+export interface IRateTableData {
+  currency: string;
+  rate: number;
+  date: string;
+}
+
+export interface IBill {
   value: number;
   currency: string;
 }
 
-
-export interface CurrencyInfo {
+export interface ICurrencyInfo {
   customIcon: string;
   icon: string;
   balance: number;
   currency: string;
 }
 
-export interface EventInfo {
+export interface IEventInfo {
   id: number;
   type: string;
   amount: number;
-  category: string;
+  category: string | number;
   date: string;
   description?: string;
 }
 
-export interface Category {
+export interface ICategory {
   capacity: number;
   name: string;
   id: number;
