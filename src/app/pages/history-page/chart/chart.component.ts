@@ -16,7 +16,8 @@ export class ChartComponent implements OnInit {
 
   public getData (): void {
     const chartOptions = this.data.filter( (item: EventInfo) =>
-        item.type === 'Расход').map( i => { return {name: i.category, y: i.amount}; });
+        item.type === 'Расход').map( i => {
+          return {name: i.category, y: i.amount}; });
     const options: any = {
       chart: {
         backgroundColor: 'rgba(0,0,0,0)',

@@ -1,7 +1,7 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { DbProfileInfoService } from '../../shared/services/db-profile-info.service';
-import { Observable, Subject, switchMap, takeUntil } from 'rxjs';
+import { Observable, switchMap } from 'rxjs';
 import { EventInfo } from '../../shared/models/interfaces';
 
 @Component({
@@ -9,9 +9,8 @@ import { EventInfo } from '../../shared/models/interfaces';
   templateUrl: './event-page.component.html',
   styleUrls: ['./event-page.component.scss']
 })
-export class EventPageComponent implements OnInit, OnDestroy {
+export class EventPageComponent implements OnInit {
   public events$!: Observable<EventInfo[]>;
-  private destroy$: Subject<void> = new Subject<void>();
   private selectedId!: number;
 
 
@@ -25,10 +24,6 @@ export class EventPageComponent implements OnInit, OnDestroy {
     this.events$.subscribe(res => console.log(res));
   }
 
-  public ngOnDestroy(): void {
-    this.destroy$.next();
-    this.destroy$.complete();
-  }
 
   private getEvents(): void {
     this.events$ = this.route.paramMap.pipe(
@@ -37,12 +32,5 @@ export class EventPageComponent implements OnInit, OnDestroy {
         return this.profileInfoService.getEventById(this.selectedId);
       })
     );
-    /*this.profileInfoService.getUserEvents()
-      .pipe(takeUntil(this.destroy$))
-      .subscribe(
-        (response: EventInfo[]) => {
-          this.events =  response;
-        }
-      );*/
   }
 }
