@@ -21,6 +21,10 @@ export class DbProfileInfoService {
     return this.http.get<EventInfo[]>(this.baseUrl + `events`);
   }
 
+  public getEventById(id: number): Observable<EventInfo[]> {
+    return this.http.get<EventInfo[]>(this.baseUrl + `events/${id}`);
+  }
+
   public getCategories(): Observable<Category[]> {
     return this.http.get<Category[]>(this.baseUrl + `categories`);
   }
