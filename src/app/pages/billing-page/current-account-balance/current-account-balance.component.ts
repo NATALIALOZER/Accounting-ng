@@ -17,11 +17,9 @@ export class CurrentAccountBalanceComponent implements OnInit, OnDestroy {
   public balances: number[] = [];
   private destroy$: Subject<void> = new Subject<void>();
 
-
   constructor(
     private profileInfoService: DbProfileInfoService
-  ) {
-  }
+  ) {}
 
   public ngOnInit(): void {
     this.getBalance();
@@ -31,7 +29,6 @@ export class CurrentAccountBalanceComponent implements OnInit, OnDestroy {
     this.destroy$.next();
     this.destroy$.complete();
   }
-
 
   private getBalance(): void {
     this.profileInfoService.getUserBalance()

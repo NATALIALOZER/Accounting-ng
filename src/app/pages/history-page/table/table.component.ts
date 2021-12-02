@@ -1,5 +1,5 @@
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
-import { ICategory, IEventInfo} from '../../../shared/models/interfaces';
+import { ICategory, IEventInfo } from '../../../shared/models/interfaces';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
 
@@ -28,11 +28,9 @@ export class TableComponent implements OnInit {
     }
   }
 
-  public getName(category: number): string {
-    let nameOfCategory = '';
-    const item = this.categoriesArray.find( i => i.id === category);
-    nameOfCategory = (item) ? item.name : 'noname';
-    return nameOfCategory;
+  public getName(category: string): string {
+    const item = this.categoriesArray.find( i => i.id === +category);
+    return (item) ? item.name : 'noname';
   }
 
   public getColor(type: string): string {

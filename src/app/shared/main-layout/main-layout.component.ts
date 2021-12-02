@@ -7,5 +7,4 @@ import { Component } from '@angular/core';
 })
 export class MainLayoutComponent {
   public toggle: boolean = true;
-
 }

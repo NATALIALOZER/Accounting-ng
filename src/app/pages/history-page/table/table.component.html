@@ -10,38 +10,30 @@
         <th mat-header-cell *matHeaderCellDef class="layout-text"> # </th>
         <td mat-cell *matCellDef="let element"> {{element.id}} </td>
       </ng-container>
-
       <ng-container matColumnDef="amount">
         <th mat-header-cell *matHeaderCellDef class="layout-text"> Сумма </th>
         <td mat-cell *matCellDef="let element"> {{element.amount}} </td>
       </ng-container>
-
       <ng-container matColumnDef="date">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> Дата </th>
         <td mat-cell *matCellDef="let element"> {{element.date}} </td>
       </ng-container>
-
       <ng-container matColumnDef="category">
         <th mat-header-cell *matHeaderCellDef class="layout-text"> Категория </th>
         <td mat-cell *matCellDef="let element"> {{ getName(element.category)}} </td>
       </ng-container>
-
       <ng-container matColumnDef="type">
         <th mat-header-cell *matHeaderCellDef class="layout-text"> Тип </th>
         <td mat-cell *matCellDef="let element" [ngClass]="element.type==='income' ? 'blue' : 'red'"> {{ getColor(element.type) }} </td>
       </ng-container>
-
       <ng-container matColumnDef="action">
         <th mat-header-cell *matHeaderCellDef class="layout-text"> Действие </th>
         <td mat-cell *matCellDef="let element">
           <button mat-stroked-button color="primary" [routerLink]="['/event', element.id ]"> Открыть </button>
         </td>
       </ng-container>
-
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
       <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
     </table>
-
   </mat-card-content>
-
 </mat-card>

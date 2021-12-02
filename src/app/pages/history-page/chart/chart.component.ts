@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { IEventInfo } from '../../../shared/models/interfaces';
+import { ICategory, IEventInfo } from '../../../shared/models/interfaces';
 import * as Highcharts from 'highcharts';
 
 @Component({
@@ -8,6 +8,7 @@ import * as Highcharts from 'highcharts';
   styleUrls: ['./chart.component.scss']
 })
 export class ChartComponent implements OnInit {
+  @Input() public categoriesArray: ICategory[] = [];
   @Input() public data: IEventInfo[] = [];
 
   public ngOnInit(): void {
@@ -15,8 +16,20 @@ export class ChartComponent implements OnInit {
   }
 
   public getData (): void {
-    const chartOptions = this.data.filter( (item: IEventInfo) =>
-      item.type === 'outcome').map( i => { return {name: i.category, y: i.amount}; });
+    const dataOutcome = this.data.filter( (item: IEventInfo) => item.type === 'outcome');
+    const result: {[key: string]: number}  = {};
+    const chartOptions = [];
+    for (const element of dataOutcome) {
+      if (result[element.category] == undefined) {
+        result[element.category] = 0;
+        result[element.category] += element.amount;
+      }
+    }
+    for (const item in result) {
+      if (item) {
+        chartOptions.push({name: this.getName(+item), y: result[item]});
+      }
+    }
     const options: any = {
       chart: {
         backgroundColor: 'rgba(0,0,0,0)',
@@ -61,4 +74,10 @@ export class ChartComponent implements OnInit {
     };
     Highcharts.chart('container', options);
   }
+
+  public getName(category: number): string {
+    const item = this.categoriesArray.find( i => i.id === category);
+    return (item) ? item.name : 'noname';
+  }
+
 }

@@ -3,15 +3,14 @@
     <h1>Страница истории</h1>
   </div>
   <div fxLayout="column" *ngIf="dataSource && categoriesArray; else loading">
-    <app-chart [data]="data"></app-chart>
+    <app-chart [data]="data" [categoriesArray] = categoriesArray></app-chart>
     <app-table [dataSource]="dataSource" [categoriesArray] = categoriesArray></app-table>
   </div>
   <div fxLayout="row" fxLayoutAlign="space-between" class="card-action" [ngStyle]="{'display' : dataSource && categoriesArray ? 'flex' : 'none'}">
     <button mat-raised-button color="primary"> Добавить событие </button>
-    <mat-paginator #paginator pageSize=4 hidePageSize
-                   showFirstLastButtons></mat-paginator>
+    <mat-paginator #paginator pageSize=4 hidePageSize showFirstLastButtons></mat-paginator>
   </div>
   <ng-template #loading>
-    <p class="text-center">Loading...</p>
+    <div fxLayout="row" fxLayoutAlign="center center"><p class="text-center">Loading...</p></div>
   </ng-template>
 </div>

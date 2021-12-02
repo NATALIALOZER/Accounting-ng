@@ -1,7 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { IRateTableData } from '../../../shared/models/interfaces';
 
-
 @Component({
   selector: 'app-current-exchange-rate',
   templateUrl: './current-exchange-rate.component.html',

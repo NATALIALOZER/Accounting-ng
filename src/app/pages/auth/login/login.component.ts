@@ -34,7 +34,6 @@ export class LoginComponent implements OnInit {
   }
 
   public submit(): void {
-
     if (this.form.invalid) {
       return;
     }
