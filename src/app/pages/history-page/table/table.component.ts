@@ -1,6 +1,5 @@
-import { AfterViewInit, ChangeDetectorRef, Component, Input, OnChanges, OnInit, ViewChild } from '@angular/core';
-import { ICategory, IEventInfo, IRateTableData } from '../../../shared/models/interfaces';
-import { MatPaginator } from '@angular/material/paginator';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import { ICategory, IEventInfo} from '../../../shared/models/interfaces';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
 
@@ -32,15 +31,11 @@ export class TableComponent implements OnInit {
   public getName(category: number): string {
     let nameOfCategory = '';
     const item = this.categoriesArray.find( i => i.id === category);
-    (item) ?  nameOfCategory = item.name :  nameOfCategory = 'noname';
+    nameOfCategory = (item) ? item.name : 'noname';
     return nameOfCategory;
   }
 
   public getColor(type: string): string {
     return type === 'income' ? 'Доход' : 'Расход';
-    /*let name = '';
-    type === 'income' ? ({name = 'Доход'; }) : name = 'Расход';
-
-    return name;*/
   }
 }
