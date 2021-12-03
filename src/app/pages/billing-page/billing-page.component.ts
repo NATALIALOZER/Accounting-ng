@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subject, takeUntil } from 'rxjs';
 import { RateApiService } from '../../shared/services/rate-api.service';
-import { IRateApiData, IRateTableData } from '../../shared/models/interfaces';
+import { IBalance, IRateApiData, IRateTableData } from '../../shared/models/interfaces';
 
 @Component({
   selector: 'app-home',
@@ -11,8 +11,7 @@ import { IRateApiData, IRateTableData } from '../../shared/models/interfaces';
 export class BillingPageComponent implements OnInit, OnDestroy {
   public loading: boolean = false;
   public dataSource!: IRateTableData[];
-  public currentBalance: number = 0;
-  public rate: any;
+  public rate!: IBalance;
   private destroy$: Subject<void> = new Subject<void>();
 
   constructor(

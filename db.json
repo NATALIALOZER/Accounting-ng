@@ -7,6 +7,7 @@
       "name": "Администратор"
     }
   ],
+
   "bill": {
     "value": 100200,
     "currency": "EUR"

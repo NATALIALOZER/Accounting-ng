@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { ICategory, IEventInfo } from '../../../shared/models/interfaces';
+import { ICategory, IChartData, IEventInfo } from '../../../shared/models/interfaces';
 import * as Highcharts from 'highcharts';
 
 @Component({
@@ -10,23 +10,15 @@ import * as Highcharts from 'highcharts';
 export class ChartComponent implements OnInit {
   @Input() public categoriesArray: ICategory[] = [];
   @Input() public data: IEventInfo[] = [];
+  public chartData: IChartData[] = [];
 
   public ngOnInit(): void {
+      this.calculateChartData();
       this.getData();
+
   }
 
-  public getData (): void {
-    const dataOutcome = this.data.filter( (item: IEventInfo) => item.type === 'outcome');
-    const result: {[key: string]: number}  = {};
-    const chartOptions = [];
-    for (const element of dataOutcome) {
-      !result[element.category] ? result[element.category] = element.amount : result[element.category] += element.amount;
-    }
-    for (const item in result) {
-      if (item) {
-        chartOptions.push({name: this.getName(+item), y: result[item]});
-      }
-    }
+  private getData (): void {
     const options: any = {
       chart: {
         backgroundColor: 'rgba(0,0,0,0)',
@@ -66,15 +58,23 @@ export class ChartComponent implements OnInit {
       series: [{
         name: 'Категория',
         colorByPoint: true,
-        data: chartOptions
+        data: this.chartData
       }]
     };
     Highcharts.chart('container', options);
   }
 
-  public getName(category: number): string {
-    const item = this.categoriesArray.find( i => i.id === category);
-    return (item) ? item.name : 'noname';
+  private calculateChartData(): void {
+    this.chartData = [];
+    this.categoriesArray.forEach((cat: ICategory) => {
+      const catEvent = this.data.filter((e: IEventInfo) => e.category === cat.id && e.type === 'outcome');
+      this.chartData.push({
+        name: cat.name,
+        y: catEvent.reduce((total, e) => {
+          total += e.amount;
+          return total;
+        }, 0)
+      });
+    });
   }
-
 }

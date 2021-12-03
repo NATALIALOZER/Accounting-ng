@@ -5,8 +5,8 @@
       <mat-icon>refresh</mat-icon>
     </button>
   </div>
-  <div fxLayout="row" fxFlex='100' class="tables-layout" *ngIf="!loading; else loader">
-    <app-current-account-balance fxFlex="50" [rate]="rate" [currentBalance]="currentBalance"></app-current-account-balance>
+  <div fxLayout="row" fxFlex='100' class="tables-layout" *ngIf="dataSource && rate; else loader">
+    <app-current-account-balance fxFlex="50" [rate]="rate"></app-current-account-balance>
     <app-current-exchange-rate fxFlex="50" [dataSource]="dataSource"></app-current-exchange-rate>
   </div>
   <ng-template #loader>

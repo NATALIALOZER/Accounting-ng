@@ -51,3 +51,8 @@ export interface ICategory {
   name: string;
   id: number;
 }
+
+export interface IChartData {
+  name: string;
+  y: number;
+}

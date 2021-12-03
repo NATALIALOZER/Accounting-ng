@@ -1,5 +1,5 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
-import { IBill, ICurrencyInfo } from '../../../shared/models/interfaces';
+import { IBalance, IBill, ICurrencyInfo } from '../../../shared/models/interfaces';
 import { Subject, takeUntil } from 'rxjs';
 import { DbProfileInfoService } from '../../../shared/services/db-profile-info.service';
 
@@ -9,8 +9,7 @@ import { DbProfileInfoService } from '../../../shared/services/db-profile-info.s
   styleUrls: ['./current-account-balance.component.scss']
 })
 export class CurrentAccountBalanceComponent implements OnInit, OnDestroy {
-  @Input() public rate: any;
-  @Input() public currentBalance!: number;
+  @Input() public rate!: IBalance;
   public array: ICurrencyInfo[] = [];
   public icons: string[] = [];
   public customIcons: string[] = [];
@@ -44,8 +43,8 @@ export class CurrentAccountBalanceComponent implements OnInit, OnDestroy {
       { currency: 'euro', icon: 'euro', balance: rate * this.rate.EUR, customIcon: '' },
       { currency: 'usd', icon: 'attach_money', balance: rate * this.rate.USD, customIcon: ''},
       { currency: 'uah', icon: '', balance: rate * this.rate.UAH, customIcon: 'uah'}];
-    this.icons = this.array.map(elem =>  elem.icon );
-    this.customIcons = this.array.map(elem =>  elem.customIcon );
+    this.icons = this.array.map(elem => elem.icon );
+    this.customIcons = this.array.map(elem => elem.customIcon );
     this.balances = this.array.map( elem => elem.balance);
   }
 }
