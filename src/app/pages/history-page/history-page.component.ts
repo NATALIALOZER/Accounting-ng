@@ -41,9 +41,10 @@ export class HistoryPageComponent implements OnInit {
           this.dataSource.paginator = this.paginator;
         });
   }
-
+  
   private getCategories(): void {
-    this.profileInfoService.getCategories().subscribe(
-      (response: ICategory[]) => this.categoriesArray = response);
+    this.profileInfoService.getCategories()
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((response: ICategory[]) => this.categoriesArray = response);
   }
 }

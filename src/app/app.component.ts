@@ -1,6 +1,4 @@
 import {Component} from '@angular/core';
-import {AuthService} from './shared/services/auth.service';
-import {Router} from '@angular/router';
 import { MatIconRegistry } from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';
 
@@ -20,6 +18,4 @@ export class AppComponent {
       this.sanitizer.bypassSecurityTrustResourceUrl(`assets/uah.svg`)
     );
   }
-
-
 }

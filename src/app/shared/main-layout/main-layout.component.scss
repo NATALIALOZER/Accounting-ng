@@ -1,7 +1,6 @@
 :host{
   ::ng-deep .mat-drawer-container{
-    min-height: 100vh;
-    height: auto;
+    min-height: calc(100vh - 64px);
     overflow: auto;
     .mat-drawer{
       min-width: 320px;
@@ -9,7 +8,6 @@
     }
     .mat-drawer-content {
       background-color: #f8f8ff;
-      min-height: 100vh;
     }
   }
 }
