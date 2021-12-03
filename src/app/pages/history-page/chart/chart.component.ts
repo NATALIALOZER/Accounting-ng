@@ -16,8 +16,8 @@ export class ChartComponent implements OnInit {
   }
 
   public getData (): void {
-    const dataOutcome = this.data.filter((item: IEventInfo) => item.type === 'outcome');
-    const result: { [key: string]: number } = {};
+    const dataOutcome = this.data.filter( (item: IEventInfo) => item.type === 'outcome');
+    const result: {[key: string]: number}  = {};
     const chartOptions = [];
     for (const element of dataOutcome) {
       !result[element.category] ? result[element.category] = element.amount : result[element.category] += element.amount;
@@ -27,6 +27,50 @@ export class ChartComponent implements OnInit {
         chartOptions.push({name: this.getName(+item), y: result[item]});
       }
     }
+
+    const options: any = {
+      chart: {
+        backgroundColor: 'rgba(0,0,0,0)',
+        plotBackgroundColor: null,
+        plotBorderWidth: null,
+        plotShadow: false,
+        type: 'pie'
+      },
+      credits: {
+        enabled: false
+      },
+      title: {
+        text: ''
+      },
+      tooltip: {
+        pointFormat: '{series.name} {point.percentage:.1f}%'
+      },
+      accessibility: {
+        point: {
+          valueSuffix: '%'
+        }
+      },
+      plotOptions: {
+        pie: {
+          allowPointSelect: true,
+          cursor: 'pointer',
+          dataLabels: {
+            connectorWidth: 0,
+            enabled: true,
+            format: '{point.name} {point.percentage:.1f} %',
+            color: 'white'
+          },
+          borderWidth: 0,
+          shadow: false,
+        }
+      },
+      series: [{
+        name: 'Категория',
+        colorByPoint: true,
+        data: chartOptions
+      }]
+    };
+    Highcharts.chart('container', options);
   }
 
   public getName(category: number): string {
