@@ -27,7 +27,6 @@ export class ChartComponent implements OnInit {
         chartOptions.push({name: this.getName(+item), y: result[item]});
       }
     }
-
     const options: any = {
       chart: {
         backgroundColor: 'rgba(0,0,0,0)',
