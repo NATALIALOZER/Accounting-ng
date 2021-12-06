@@ -28,8 +28,6 @@ export class HistoryPageComponent implements OnInit {
 
   public ngOnInit(): void {
     this.getEventQueryParam();
-    this.getCategories();
-    this.getEvents();
   }
 
   public ngOnDestroy(): void {
@@ -38,9 +36,17 @@ export class HistoryPageComponent implements OnInit {
   }
 
   public getEventQueryParam(): void {
-    this.activatedRoute.queryParams.subscribe(params => {
+    this.activatedRoute.queryParams
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(params => {
       this.eventId = params['event'];
+      this.getCategories();
     });
+  }
+
+  public back(): void {
+    this.router.navigate([], {queryParams: {event: null}, queryParamsHandling: 'merge'});
+    this.eventId = 0;
   }
 
   private getEvents(): void {
@@ -57,6 +63,9 @@ export class HistoryPageComponent implements OnInit {
   private getCategories(): void {
     this.profileInfoService.getCategories()
       .pipe(takeUntil(this.destroy$))
-      .subscribe((response: ICategory[]) => this.categoriesArray = response);
+      .subscribe((response: ICategory[]) => {
+        this.categoriesArray = response;
+        this.getEvents();
+      });
   }
 }

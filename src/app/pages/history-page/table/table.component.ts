@@ -51,7 +51,6 @@ export class TableComponent implements OnInit {
 
   public setEvent(id: number): void {
     const queryParams: Params = { event: id };
-
     this.router.navigate(
       [],
       {

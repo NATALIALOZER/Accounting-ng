@@ -1,11 +1,17 @@
 <div fxLayout="column" fxLayoutAlign="start" class="layout">
-  <div class="title" fxLayout="row" fxLayoutAlign="space-between center">
+  <div class="title" fxLayout="row" fxLayoutAlign="start center" *ngIf="!eventId; else eventTitle">
     <h1>Страница истории</h1>
   </div>
+  <ng-template #eventTitle>
+    <div class="title" fxLayout="row" fxLayoutAlign="start center">
+      <button mat-button class="arrow-button" (click)="back()"><mat-icon>keyboard_backspace</mat-icon></button>
+      <h1>Страница записи № {{eventId}}</h1>
+    </div>
+  </ng-template>
   <ng-container *ngIf="eventId; then eventBlock else historyStatBlock">
   </ng-container>
   <ng-template #eventBlock>
-    <app-event></app-event>
+    <app-event [id]="eventId"></app-event>
   </ng-template>
   <ng-template #historyStatBlock>
     <div fxLayout="column" *ngIf="dataSource && categoriesArray; else loading">
