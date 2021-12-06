@@ -32,12 +32,11 @@ export class EventComponent implements OnInit, OnDestroy {
     return item ? item.name : 'noname';
   }
 
-  public getEvent(id: number): void {
+  private getEvent(id: number): void {
     this.profileInfoService.getEventById(id)
       .pipe(takeUntil(this.destroy$))
       .subscribe( response => {
         this.event = response;
       });
   }
-
 }

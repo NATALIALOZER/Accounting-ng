@@ -4,7 +4,7 @@ import { DbProfileInfoService } from '../../shared/services/db-profile-info.serv
 import { ICategory, IEventInfo } from '../../shared/models/interfaces';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
-import { ActivatedRoute, Params, Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-history-page',
@@ -35,18 +35,18 @@ export class HistoryPageComponent implements OnInit, OnDestroy {
     this.destroy$.complete();
   }
 
-  public getEventQueryParam(): void {
-    this.activatedRoute.queryParams
-      .pipe(takeUntil(this.destroy$))
-      .subscribe(params => {
-      this.eventId = params['event'];
-      this.getCategories();
-    });
-  }
-
   public back(): void {
     this.router.navigate([], {queryParams: {event: null}, queryParamsHandling: 'merge'});
     this.eventId = 0;
+  }
+
+  private getEventQueryParam(): void {
+    this.activatedRoute.queryParams
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(params => {
+        this.eventId = params['event'];
+        this.getCategories();
+      });
   }
 
   private getEvents(): void {

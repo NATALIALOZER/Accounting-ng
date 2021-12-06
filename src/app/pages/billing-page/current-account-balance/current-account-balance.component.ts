@@ -7,5 +7,5 @@ import { IRateTableData } from '../../../shared/models/interfaces';
   styleUrls: ['./current-account-balance.component.scss']
 })
 export class CurrentAccountBalanceComponent {
-  @Input() public data!: IRateTableData[];
+  @Input() public data: IRateTableData[] = [];
 }
