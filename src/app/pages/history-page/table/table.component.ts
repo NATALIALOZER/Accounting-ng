@@ -34,7 +34,6 @@ export class TableComponent implements OnInit {
     }
   }
 
-
   public getName(category: string): string {
     const item = this.categoriesArray.find( i => i.id === +category);
     return item ? item.name : 'noname';

@@ -1,7 +1,5 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
-import { IBalance, IBill, ICurrencyInfo, IRateTableData } from '../../../shared/models/interfaces';
-import { Subject, takeUntil } from 'rxjs';
-import { DbProfileInfoService } from '../../../shared/services/db-profile-info.service';
+import { Component, Input } from '@angular/core';
+import { IRateTableData } from '../../../shared/models/interfaces';
 
 @Component({
   selector: 'app-current-account-balance',
