@@ -8,7 +8,7 @@ import { environment } from '../../../environments/environment';
   providedIn: 'root'
 })
 export class RateApiService {
-  private urlApi = environment.urlRateApi;
+  private urlApi = environment.baseUrl + 'rateApi';
 
   constructor(
     private http: HttpClient

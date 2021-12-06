@@ -7,7 +7,17 @@
       "name": "Администратор"
     }
   ],
-
+  "rateApi": {
+    "success": true,
+    "timestamp": 0,
+    "base": "base",
+    "date": "06.12.2021",
+    "rates": {
+      "EUR": 1,
+      "USD": 1.13,
+      "UAH": 30.91
+    }
+  },
   "bill": {
     "value": 100200,
     "currency": "EUR"
