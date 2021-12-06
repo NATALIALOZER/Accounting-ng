@@ -33,9 +33,6 @@ export class BillingPageComponent implements OnInit, OnDestroy {
   public resetTables(): void {
     this.loading = true;
     this.getBalance();
-    setTimeout(() => {
-      this.getRate();
-    }, 500);
   }
 
   private getBalance(): void {
@@ -44,7 +41,7 @@ export class BillingPageComponent implements OnInit, OnDestroy {
       .subscribe(
         (res: IBill) => {
           this.value = res.value;
-          this.loading = false;
+          this.getRate();
         });
   }
 
@@ -65,7 +62,7 @@ export class BillingPageComponent implements OnInit, OnDestroy {
               currency: 'UAH', rate: response.rates.UAH, date: response.date, icon: '',
               balance: this.value * response.rates.UAH, customIcon: 'uah'},
           ];
-        }
-      );
+          this.loading = false;
+        });
   }
 }
