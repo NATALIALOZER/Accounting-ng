@@ -25,5 +25,9 @@ export class DbProfileInfoService {
     return this.http.get<ICategory[]>(this.baseUrl + `categories`);
   }
 
+  public getEventById(id: number): Observable<IEventInfo> {
+    return this.http.get<IEventInfo>(this.baseUrl + `events/${id}`);
+  }
+
 }
 

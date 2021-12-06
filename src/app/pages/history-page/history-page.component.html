@@ -11,7 +11,7 @@
   <ng-container *ngIf="eventId; then eventBlock else historyStatBlock">
   </ng-container>
   <ng-template #eventBlock>
-    <app-event [id]="eventId"></app-event>
+    <app-event [id]="eventId" [categoriesArray] = categoriesArray></app-event>
   </ng-template>
   <ng-template #historyStatBlock>
     <div fxLayout="column" *ngIf="dataSource && categoriesArray; else loading">

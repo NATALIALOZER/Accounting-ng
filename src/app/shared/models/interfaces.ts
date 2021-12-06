@@ -33,13 +33,6 @@ export interface IBill {
   currency: string;
 }
 
-export interface ICurrencyInfo {
-  customIcon: string;
-  icon: string;
-  balance: number;
-  currency: string;
-}
-
 export interface IEventInfo {
   id: number;
   type: string;

@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { Subject, takeUntil } from 'rxjs';
 import { DbProfileInfoService } from '../../shared/services/db-profile-info.service';
 import { ICategory, IEventInfo } from '../../shared/models/interfaces';
@@ -11,7 +11,7 @@ import { ActivatedRoute, Params, Router } from '@angular/router';
   templateUrl: './history-page.component.html',
   styleUrls: ['./history-page.component.scss']
 })
-export class HistoryPageComponent implements OnInit {
+export class HistoryPageComponent implements OnInit, OnDestroy {
   @ViewChild('paginator') public paginator!: MatPaginator;
   public dataSource!: MatTableDataSource<IEventInfo>;
   public data: IEventInfo[] = [];

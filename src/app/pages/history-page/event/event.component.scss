@@ -1,24 +1,20 @@
-
 .title{
   border-bottom: solid 1px rgba(0,0,0,.12);
   padding-bottom: 5px;
   margin-bottom: 15px;
 }
-
-
 .event-card{
   display: flex;
   flex-direction: column;
-  margin-top: 20px;
+  margin: 20px 0;
+  padding: 30px 40px;
 }
-
 .red{
-  color: red;
+  mat-card-title{color: red;}
   box-shadow: 7px 7px 4px 5px rgba(255,29,80,0.32);
 }
-
 .blue{
-  color: #3F51B5;
+  mat-card-title{color: #3F51B5;}
   box-shadow: 7px 7px 4px 5px rgba(47,59,255,0.24);
 }
 
