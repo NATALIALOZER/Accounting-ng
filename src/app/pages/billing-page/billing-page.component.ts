@@ -1,7 +1,8 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subject, takeUntil } from 'rxjs';
 import { RateApiService } from '../../shared/services/rate-api.service';
-import { IBalance, IRateApiData, IRateTableData } from '../../shared/models/interfaces';
+import { IBill, IRateApiData, IRateTableData } from '../../shared/models/interfaces';
+import { DbProfileInfoService } from '../../shared/services/db-profile-info.service';
 
 @Component({
   selector: 'app-home',
@@ -11,11 +12,13 @@ import { IBalance, IRateApiData, IRateTableData } from '../../shared/models/inte
 export class BillingPageComponent implements OnInit, OnDestroy {
   public loading: boolean = false;
   public dataSource!: IRateTableData[];
-  public rate!: IBalance;
+  public value: number = 0;
   private destroy$: Subject<void> = new Subject<void>();
 
+
   constructor(
-    private rateApiService: RateApiService
+    private rateApiService: RateApiService,
+    private profileInfoService: DbProfileInfoService
   ) {}
 
   public ngOnInit(): void {
@@ -29,7 +32,20 @@ export class BillingPageComponent implements OnInit, OnDestroy {
 
   public resetTables(): void {
     this.loading = true;
-    this.getRate();
+    this.getBalance();
+    setTimeout(() => {
+      this.getRate();
+    }, 500);
+  }
+
+  private getBalance(): void {
+    this.profileInfoService.getUserBalance()
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(
+        (res: IBill) => {
+          this.value = res.value;
+          this.loading = false;
+        });
   }
 
   private getRate(): void {
@@ -38,12 +54,17 @@ export class BillingPageComponent implements OnInit, OnDestroy {
       .subscribe(
         (response: IRateApiData) => {
           this.dataSource = [
-            {currency: 'EUR', rate: response.rates.EUR, date: response.date},
-            {currency: 'USD', rate: response.rates.USD, date: response.date},
-            {currency: 'UAH', rate: response.rates.UAH, date: response.date}
+            {
+              currency: 'EUR', rate: response.rates.EUR, date: response.date, icon: 'euro',
+              balance: this.value * response.rates.EUR, customIcon: ''},
+            {
+              currency: 'USD', rate: response.rates.USD, date: response.date, icon: 'attach_money',
+              balance: this.value * response.rates.USD, customIcon: ''
+            },
+            {
+              currency: 'UAH', rate: response.rates.UAH, date: response.date, icon: '',
+              balance: this.value * response.rates.UAH, customIcon: 'uah'},
           ];
-          this.rate = response.rates;
-          this.loading = false;
         }
       );
   }

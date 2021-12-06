@@ -23,6 +23,9 @@ export interface IRateTableData {
   currency: string;
   rate: number;
   date: string;
+  icon: string;
+  balance: number;
+  customIcon: string;
 }
 
 export interface IBill {
