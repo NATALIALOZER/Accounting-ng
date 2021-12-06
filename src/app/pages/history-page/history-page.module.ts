@@ -8,12 +8,14 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { MaterialModule } from '../../shared/material.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from '../../shared/shared.module';
+import { EventComponent } from './event/event.component';
 
 @NgModule({
   declarations: [
     HistoryPageComponent,
     ChartComponent,
     TableComponent,
+    EventComponent,
   ],
   imports: [
     CommonModule,

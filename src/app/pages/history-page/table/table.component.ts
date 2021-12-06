@@ -2,6 +2,7 @@ import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { ICategory, IEventInfo } from '../../../shared/models/interfaces';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 
 @Component({
   selector: 'app-table',
@@ -15,6 +16,11 @@ export class TableComponent implements OnInit {
   public displayedColumns: string[] = ['id', 'amount', 'date', 'category', 'type', 'action'];
   public search: string = '';
 
+  constructor(
+    private router: Router,
+    private activatedRoute: ActivatedRoute,
+  ) {
+  }
 
   public ngOnInit(): void {
     this.dataSource.data.forEach( i => i.category = this.getName(i.category + ''));
@@ -41,5 +47,17 @@ export class TableComponent implements OnInit {
 
   public getColor(type: string): string {
     return type === 'income' ? 'Доход' : 'Расход';
+  }
+
+  public setEvent(id: number): void {
+    const queryParams: Params = { event: id };
+
+    this.router.navigate(
+      [],
+      {
+        relativeTo: this.activatedRoute,
+        queryParams,
+        queryParamsHandling: 'merge',
+      });
   }
 }

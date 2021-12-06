@@ -4,6 +4,7 @@ import { DbProfileInfoService } from '../../shared/services/db-profile-info.serv
 import { ICategory, IEventInfo } from '../../shared/models/interfaces';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 
 @Component({
   selector: 'app-history-page',
@@ -15,13 +16,18 @@ export class HistoryPageComponent implements OnInit {
   public dataSource!: MatTableDataSource<IEventInfo>;
   public data: IEventInfo[] = [];
   public categoriesArray: ICategory[] = [];
+  public eventId: number = 0;
   private destroy$: Subject<void> = new Subject<void>();
 
+
   constructor(
-    private profileInfoService: DbProfileInfoService
+    private profileInfoService: DbProfileInfoService,
+    private router: Router,
+    private activatedRoute: ActivatedRoute
   ) { }
 
   public ngOnInit(): void {
+    this.getEventQueryParam();
     this.getCategories();
     this.getEvents();
   }
@@ -29,6 +35,12 @@ export class HistoryPageComponent implements OnInit {
   public ngOnDestroy(): void {
     this.destroy$.next();
     this.destroy$.complete();
+  }
+
+  public getEventQueryParam(): void {
+    this.activatedRoute.queryParams.subscribe(params => {
+      this.eventId = params['event'];
+    });
   }
 
   private getEvents(): void {
@@ -41,7 +53,7 @@ export class HistoryPageComponent implements OnInit {
           this.dataSource.paginator = this.paginator;
         });
   }
-  
+
   private getCategories(): void {
     this.profileInfoService.getCategories()
       .pipe(takeUntil(this.destroy$))
