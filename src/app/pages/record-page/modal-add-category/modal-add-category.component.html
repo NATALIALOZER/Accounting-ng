@@ -1,1 +1,19 @@
-<p>modal-add-category works!</p>
+<h1 mat-dialog-title>Добавить категорию</h1>
+<div mat-dialog-content>
+  <form [formGroup]="form" (submit)="add()">
+    <mat-form-field fxLayoutAlign="center">
+      <mat-error *ngIf="form.get('name')?.hasError('required')">Введите название</mat-error>
+      <mat-label>Введите название</mat-label>
+      <input matInput type="text" placeholder="name" formControlName="name">
+    </mat-form-field>
+    <mat-form-field fxLayoutAlign="center">
+      <mat-error *ngIf="form.get('capacity')?.hasError('required')">Необходимо указать лимит</mat-error>
+      <mat-label>Введите лимит</mat-label>
+      <input matInput type="text" placeholder="capacity" formControlName="capacity">
+    </mat-form-field>
+    <div fxLayout="row" fxLayoutAlign="flex-end">
+      <button mat-button mat-raised-button color="primary" type="submit" [disabled]="form.invalid">Добавить</button>
+      <button mat-button (click)="closeDialog()">Закрыть</button>
+    </div>
+  </form>
+</div>

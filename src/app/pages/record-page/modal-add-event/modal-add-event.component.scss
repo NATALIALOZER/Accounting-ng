@@ -1,7 +1,20 @@
-form{
-  min-width: 500px;
-  .mat-form-field{
-    width: 100%;
-    display: inline-block !important;
+::ng-deep .mat-dialog-container {
+  form {
+    min-width: 500px;
+    .mat-form-field {
+      width: 100%;
+      display: inline-block !important;
+    }
+
+    .cat-field {
+      ::ng-deep .mat-form-field-flex {
+        background-color: transparent;
+        padding: 0;
+
+        .mat-form-field-infix {
+          padding: 0;
+        }
+      }
+    }
   }
 }

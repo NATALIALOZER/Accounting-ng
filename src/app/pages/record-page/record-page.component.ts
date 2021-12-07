@@ -6,6 +6,7 @@ import { DbProfileInfoService } from '../../shared/services/db-profile-info.serv
 import { MatSort } from '@angular/material/sort';
 import { MatDialog } from '@angular/material/dialog';
 import { ModalAddEventComponent } from './modal-add-event/modal-add-event.component';
+import { ModalAddCategoryComponent } from './modal-add-category/modal-add-category.component';
 
 @Component({
   selector: 'app-record-page',
@@ -33,8 +34,12 @@ export class RecordPageComponent implements OnInit {
     this.destroy$.complete();
   }
 
-  public openDialog(): void {
+  public openAddEventDialog(): void {
     this.dialog.open(ModalAddEventComponent);
+  }
+
+  public openAddCatDialog(): void {
+    this.dialog.open(ModalAddCategoryComponent);
   }
 
   private getCat(): void {

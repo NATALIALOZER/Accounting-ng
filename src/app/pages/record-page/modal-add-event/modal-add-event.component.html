@@ -1,7 +1,7 @@
 <h1 mat-dialog-title>Добавить событие</h1>
 <div mat-dialog-content>
   <form [formGroup]="form" (submit)="add()">
-    <mat-form-field appearance="fill">
+    <mat-form-field appearance="fill" class="cat-field">
       <mat-label>Выберите категорию</mat-label>
       <mat-select formControlName="category">
         <mat-option value="one">Дом</mat-option>
@@ -10,22 +10,26 @@
       </mat-select>
     </mat-form-field>
     <div>
-      <p>Выберите тип: </p>
+      <span class="type-field-label">Выберите тип: </span><br>
       <mat-radio-group formControlName="type">
         <mat-radio-button value="income">Доход</mat-radio-button>
         <mat-radio-button value="outcome">Расход</mat-radio-button>
       </mat-radio-group>
     </div>
-    <mat-form-field fxLayoutAlign="center"><mat-label>Введите сумму</mat-label>
-      <input matInput type="text" placeholder="amount" formControlName="amount">
+    <br>
+    <mat-form-field fxLayoutAlign="center">
+      <mat-error *ngIf="form.get('amount')?.hasError('required')">Введите сумму</mat-error>
+      <mat-label>Введите сумму</mat-label>
+      <input matInput type="number" placeholder="amount" formControlName="amount">
     </mat-form-field>
     <mat-form-field fxLayoutAlign="center">
+      <mat-error *ngIf="form.get('description')?.hasError('required')">Введите описание</mat-error>
       <mat-label>Введите описание</mat-label>
       <input matInput type="text" placeholder="description" formControlName="description">
     </mat-form-field>
-    <mat-card-actions fxLayout="row" fxLayoutAlign="flex-end">
+    <div fxLayout="row" fxLayoutAlign="flex-end">
       <button mat-button mat-raised-button color="primary" type="submit" [disabled]="form.invalid">Добавить</button>
       <button mat-button (click)="closeDialog()">Закрыть</button>
-    </mat-card-actions>
+    </div>
   </form>
 </div>

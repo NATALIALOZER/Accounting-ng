@@ -53,6 +53,3 @@ export interface IChartData {
   y: number;
 }
 
-export interface IDialogFormData {
-
-}

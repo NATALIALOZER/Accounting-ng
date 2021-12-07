@@ -1,6 +1,5 @@
-import { Component, Inject, OnInit } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { IDialogFormData } from '../../../shared/models/interfaces';
+import { Component, OnInit } from '@angular/core';
+import { MatDialogRef } from '@angular/material/dialog';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
@@ -12,7 +11,6 @@ export class ModalAddEventComponent implements OnInit {
   public form!: FormGroup;
 
   constructor(
-    @Inject(MAT_DIALOG_DATA) public data: IDialogFormData,
     private formBuilder: FormBuilder,
     private dialogRef: MatDialogRef<ModalAddEventComponent>
   ) {}
