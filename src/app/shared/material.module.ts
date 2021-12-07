@@ -14,6 +14,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 
 const COMPONENTS = [
   MatIconModule,
@@ -29,7 +30,8 @@ const COMPONENTS = [
   MatFormFieldModule,
   MatInputModule,
   MatPaginatorModule,
-  MatSortModule
+  MatSortModule,
+  MatCheckboxModule
 ];
 
 @NgModule({

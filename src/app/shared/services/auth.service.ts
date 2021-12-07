@@ -1,6 +1,6 @@
-import {Inject, Injectable} from '@angular/core';
-import {HttpClient} from '@angular/common/http';
-import {Observable} from 'rxjs';
+import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
 import { IProfile } from '../models/interfaces';
 
 @Injectable({
@@ -9,16 +9,15 @@ import { IProfile } from '../models/interfaces';
 export class AuthService {
 
   constructor(
-    private http: HttpClient,
-    @Inject('BASE_API_URL') private baseUrl: string
+    private http: HttpClient
   ) { }
 
   public getUser(user: IProfile): Observable<IProfile[]> {
-    return this.http.get<IProfile[]>(this.baseUrl + `users?email=${user.email}`);
+    return this.http.get<IProfile[]>(`users?email=${user.email}`);
   }
 
   public setUser(user: IProfile): Observable<IProfile> {
-    return this.http.post<IProfile>(this.baseUrl + 'users', user);
+    return this.http.post<IProfile>('users', user);
   }
 
   public getUserData(): IProfile[] {

@@ -2,20 +2,18 @@ import {NgModule, Provider } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FlexLayoutModule } from '@angular/flex-layout';
-import { UrlInterceptor } from './shared/interceptors/url.interceptor';
-import { environment } from '../environments/environment';
+import { BaseUrlInterceptor} from './shared/interceptors/baseUrl.interceptor';
 import { AuthGuard } from './shared/guards/auth.guard';
 import { SharedModule } from './shared/shared.module';
 import { MaterialModule } from './shared/material.module';
 
-
 const INTERCEPTOR_PROVIDER: Provider = {
-  provide: 'HTTP_INTERCEPTORS',
-  useClass: UrlInterceptor,
+  provide: HTTP_INTERCEPTORS,
+  useClass: BaseUrlInterceptor,
   multi: true
 };
 
@@ -27,13 +25,13 @@ const INTERCEPTOR_PROVIDER: Provider = {
     BrowserModule,
     AppRoutingModule,
     ReactiveFormsModule,
-    HttpClientModule,
     BrowserAnimationsModule,
     FlexLayoutModule,
     SharedModule,
-    MaterialModule
+    MaterialModule,
+    HttpClientModule
   ],
-  providers: [INTERCEPTOR_PROVIDER, { provide: 'BASE_API_URL', useValue: environment.baseUrl }, AuthGuard],
+  providers: [AuthGuard, INTERCEPTOR_PROVIDER],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
