@@ -15,6 +15,9 @@ import { MatInputModule } from '@angular/material/input';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatSelectModule } from '@angular/material/select';
+import { MatRadioModule } from '@angular/material/radio';
 
 const COMPONENTS = [
   MatIconModule,
@@ -31,7 +34,10 @@ const COMPONENTS = [
   MatInputModule,
   MatPaginatorModule,
   MatSortModule,
-  MatCheckboxModule
+  MatCheckboxModule,
+  MatDialogModule,
+  MatSelectModule,
+  MatRadioModule
 ];
 
 @NgModule({

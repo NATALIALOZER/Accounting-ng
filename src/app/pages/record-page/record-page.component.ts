@@ -4,6 +4,8 @@ import { ICategory } from '../../shared/models/interfaces';
 import { Subject, takeUntil } from 'rxjs';
 import { DbProfileInfoService } from '../../shared/services/db-profile-info.service';
 import { MatSort } from '@angular/material/sort';
+import { MatDialog } from '@angular/material/dialog';
+import { ModalAddEventComponent } from './modal-add-event/modal-add-event.component';
 
 @Component({
   selector: 'app-record-page',
@@ -18,7 +20,8 @@ export class RecordPageComponent implements OnInit {
   private destroy$: Subject<void> = new Subject<void>();
 
   constructor(
-    private profileInfoService: DbProfileInfoService
+    private profileInfoService: DbProfileInfoService,
+    public dialog: MatDialog
   ) { }
 
   public ngOnInit(): void {
@@ -28,6 +31,10 @@ export class RecordPageComponent implements OnInit {
   public ngOnDestroy(): void {
     this.destroy$.next();
     this.destroy$.complete();
+  }
+
+  public openDialog(): void {
+    this.dialog.open(ModalAddEventComponent);
   }
 
   private getCat(): void {
