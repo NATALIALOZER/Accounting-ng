@@ -7,7 +7,7 @@ import { environment } from '../../../environments/environment';
 export class BaseUrlInterceptor implements HttpInterceptor {
   private baseUrl = environment.baseUrl;
   public intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    if (request.url !== 'assets/uah.svg') {
+    if (request.responseType !== 'text') {
       const apiReq = request.clone({ url: `${this.baseUrl}${request.url}`});
       return next.handle(apiReq);
     } else {
