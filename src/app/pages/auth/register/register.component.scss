@@ -1,12 +1,13 @@
-::ng-deep .mat-form-field-wrapper {
-  width: 100%;
-}
 form{
   margin-bottom: 10px;
+  ::ng-deep .mat-form-field-wrapper {
+    width: 100%;
+  }
+  span.mat-error{
+    background-color: red;
+    color: #EAF1FF;
+    padding: 10px 20px;
+    margin-bottom: 20px;
+  }
 }
-span.mat-error{
-  background-color: red;
-  color: #EAF1FF;
-  padding: 10px 20px;
-  margin-bottom: 20px;
-}
+

@@ -1,14 +1,15 @@
 .main{
   height: 100vh;
   background-color: #F8F8FF;
+  mat-card{
+    padding: 40px 30px;
+    height: 550px;
+    width: 360px;
+    min-width: 300px;
+    background-color: #F8F8FF;
+    .title{
+      margin-bottom: 20px;
+    }
+  }
 }
-mat-card{
-  padding: 40px 30px;
-  height: 550px;
-  width: 360px;
-  min-width: 300px;
-  background-color: #F8F8FF;
-}
-.title{
-  margin-bottom: 20px;
-}
+

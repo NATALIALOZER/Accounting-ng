@@ -16,7 +16,6 @@ export class RegisterComponent implements OnInit {
   public isSubmitted: boolean = false;
   private destroy$: Subject<void> = new Subject<void>();
 
-
   constructor(
     private formBuilder: FormBuilder,
     private router: Router,

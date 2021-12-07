@@ -1,16 +1,18 @@
 .layout-text{
+  ::ng-deep .mat-sort-header-container {
+    display:flex;
+    justify-content:center;
+  }
   text-align: center;
+  .red{
+    color: #f44336;
+  }
+  .blue{
+    color: #3F51B5;
+  }
 }
-.red{
-  color: #f44336;
-}
-.blue{
-  color: #3F51B5;
-}
-.filter_field{
+
+.filter-field{
   width: 100%;
 }
-::ng-deep .mat-sort-header-container {
-  display:flex;
-  justify-content:center;
-}
+

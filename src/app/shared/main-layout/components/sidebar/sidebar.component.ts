@@ -4,10 +4,10 @@ import { AuthService } from '../../../services/auth.service';
 
 @Component({
   selector: 'app-sidenav',
-  templateUrl: './sidenav.component.html',
-  styleUrls: ['./sidenav.component.scss']
+  templateUrl: './sidebar.component.html',
+  styleUrls: ['./sidebar.component.scss']
 })
-export class SidenavComponent {
+export class SidebarComponent {
   public name: string = '';
   public email: string = '';
 
