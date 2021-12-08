@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-import { MatDialogRef } from '@angular/material/dialog';
+import { Component, Inject, NgIterable, OnInit } from '@angular/core';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { IEventInfo } from '../../../shared/models/interfaces';
+import { ICategory, IEventInfo } from '../../../shared/models/interfaces';
 import { DbProfileInfoService } from '../../../shared/services/db-profile-info.service';
 import { Subject, takeUntil } from 'rxjs';
 
@@ -14,11 +14,11 @@ export class ModalAddEventComponent implements OnInit {
   public form!: FormGroup;
   private destroy$: Subject<void> = new Subject<void>();
 
-
   constructor(
     private formBuilder: FormBuilder,
     private profileInfoService: DbProfileInfoService,
-    private dialogRef: MatDialogRef<ModalAddEventComponent>
+    private dialogRef: MatDialogRef<ModalAddEventComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: NgIterable<ICategory>
   ) {}
 
   public closeDialog(): void {
@@ -26,6 +26,7 @@ export class ModalAddEventComponent implements OnInit {
   }
 
   public ngOnInit(): void {
+    console.log(this.data)
     this.getForm();
   }
 

@@ -35,11 +35,20 @@ export class RecordPageComponent implements OnInit {
   }
 
   public openAddEventDialog(): void {
-    this.dialog.open(ModalAddEventComponent);
+    this.dialog.open<ModalAddEventComponent>(ModalAddEventComponent, {
+      data: this.dataSource.data
+    });
   }
 
   public openAddCatDialog(): void {
-    this.dialog.open(ModalAddCategoryComponent);
+    const dialogRef = this.dialog.open<ModalAddCategoryComponent>(ModalAddCategoryComponent, {
+      data: this.dataSource.data
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.getCat();
+      }
+    });
   }
 
   /*public edit(id: number): void {
@@ -57,9 +66,7 @@ export class RecordPageComponent implements OnInit {
       .pipe(takeUntil(this.destroy$))
       .subscribe(
         (response: ICategory[]) => {
-          this.data = response;
-          this.dataSource = new MatTableDataSource<ICategory>(this.data);
-          this.dataSource.sort = this.sort;
+          this.dataSource = new MatTableDataSource<ICategory>(response);
         });
   }
 }

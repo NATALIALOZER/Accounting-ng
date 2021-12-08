@@ -1,12 +1,10 @@
 <h1 mat-dialog-title>Добавить событие</h1>
 <div mat-dialog-content>
   <form [formGroup]="form" (submit)="add()">
-    <mat-form-field appearance="fill" class="cat-field">
+    <mat-form-field appearance="fill" class="cat-field" >
       <mat-label>Выберите категорию</mat-label>
       <mat-select formControlName="category">
-        <mat-option value="1">Дом</mat-option>
-        <mat-option value="2">Еда</mat-option>
-        <mat-option value="3">Машина</mat-option>
+        <mat-option *ngFor="let cat of data" value="{{cat.id}}">{{cat.name}}</mat-option>
       </mat-select>
     </mat-form-field>
     <div>

@@ -37,6 +37,16 @@
       "id": 3,
       "name": "Машина",
       "capacity": 7000
+    },
+    {
+      "name": "test",
+      "capacity": "1000",
+      "id": 4
+    },
+    {
+      "name": "asdD",
+      "capacity": 34232423,
+      "id": 5
     }
   ],
   "events": [
@@ -92,6 +102,13 @@
       "name": "Тест",
       "capacity": "1000",
       "id": 7
+    },
+    {
+      "category": "2",
+      "type": "income",
+      "amount": 1000,
+      "description": "test",
+      "id": 8
     }
   ]
 }

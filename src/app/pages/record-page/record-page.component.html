@@ -8,17 +8,17 @@
   </div>
   <mat-card>
     <mat-card-content>
-      <table mat-table [dataSource]="dataSource" matSort class="layout-text">
+      <table mat-table [dataSource]="dataSource" class="layout-text">
         <ng-container matColumnDef="id">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header> # </th>
+          <th mat-header-cell *matHeaderCellDef> # </th>
           <td mat-cell *matCellDef="let element"> {{element.id}} </td>
         </ng-container>
         <ng-container matColumnDef="name">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header> Название категории</th>
+          <th mat-header-cell *matHeaderCellDef> Название категории</th>
           <td mat-cell *matCellDef="let element"> {{ element.name }} </td>
         </ng-container>
         <ng-container matColumnDef="capacity">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header> Лимит </th>
+          <th mat-header-cell *matHeaderCellDef> Лимит </th>
           <td mat-cell *matCellDef="let element"> {{element.capacity}} </td>
         </ng-container>
         <ng-container matColumnDef="action">
