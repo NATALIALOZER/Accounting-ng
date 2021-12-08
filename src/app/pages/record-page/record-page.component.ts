@@ -42,6 +42,16 @@ export class RecordPageComponent implements OnInit {
     this.dialog.open(ModalAddCategoryComponent);
   }
 
+  /*public edit(id: number): void {
+    this.profileInfoService.patchCategory(id, )
+  }*/
+
+  public delete(id: number): void {
+    this.profileInfoService.deleteCategory(id).subscribe(
+      () => this.getCat()
+    );
+  }
+
   private getCat(): void {
     this.profileInfoService.getCategories()
       .pipe(takeUntil(this.destroy$))

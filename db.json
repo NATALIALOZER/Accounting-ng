@@ -37,11 +37,6 @@
       "id": 3,
       "name": "Машина",
       "capacity": 7000
-    },
-    {
-      "name": "Тест",
-      "capacity": "1000",
-      "id": 4
     }
   ],
   "events": [

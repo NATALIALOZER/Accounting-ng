@@ -35,5 +35,13 @@ export class DbProfileInfoService {
   public postNewCategory(data: ICategory): Observable<object> {
     return this.http.post('categories', data);
   }
+
+  public patchCategory(id: number, data: ICategory): Observable<object> {
+    return this.http.patch<ICategory>(`categories/${id}`, data);
+  }
+
+  public deleteCategory(id: number): Observable<object> {
+    return this.http.delete<ICategory>(`categories/${id}`);
+  }
 }
 
