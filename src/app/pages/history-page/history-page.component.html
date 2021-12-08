@@ -19,7 +19,7 @@
       <app-table [dataSource]="dataSource" [categoriesArray] = categoriesArray></app-table>
     </div>
     <div fxLayout="row" fxLayoutAlign="space-between" class="card-action" [ngStyle]="{'display' : dataSource && categoriesArray && !eventId? 'flex' : 'none'}">
-      <button mat-raised-button color="primary"> Добавить событие </button>
+      <button mat-raised-button color="primary" (click)="openAddEventDialog()"> Добавить событие </button>
       <mat-paginator #paginator pageSize=4 hidePageSize showFirstLastButtons></mat-paginator>
     </div>
     <ng-template #loading>

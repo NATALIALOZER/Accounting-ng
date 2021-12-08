@@ -26,7 +26,6 @@ export class ModalAddEventComponent implements OnInit {
   }
 
   public ngOnInit(): void {
-    console.log(this.data)
     this.getForm();
   }
 
@@ -40,8 +39,9 @@ export class ModalAddEventComponent implements OnInit {
       return;
     }
     const event: IEventInfo = this.form.value;
-    this.profileInfoService.postNewEvent(event).pipe(takeUntil(this.destroy$)).subscribe();
-    this.closeDialog();
+    const dateFormat = new Date();
+    event.date = String(`${dateFormat.getDate()}.${dateFormat.getMonth() + 1}.${dateFormat.getFullYear()} ${dateFormat.getHours()}:${dateFormat.getMinutes()}:${dateFormat.getSeconds()}`);
+    this.profileInfoService.postNewEvent(event).pipe(takeUntil(this.destroy$)).subscribe(() => this.closeDialog());
   }
 
   private getForm(): void {

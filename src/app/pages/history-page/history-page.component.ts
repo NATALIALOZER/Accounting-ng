@@ -5,6 +5,8 @@ import { ICategory, IEventInfo } from '../../shared/models/interfaces';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { ActivatedRoute, Router } from '@angular/router';
+import { ModalAddEventComponent } from '../record-page/modal-add-event/modal-add-event.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-history-page',
@@ -23,7 +25,8 @@ export class HistoryPageComponent implements OnInit, OnDestroy {
   constructor(
     private profileInfoService: DbProfileInfoService,
     private router: Router,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
+    private dialog: MatDialog
   ) { }
 
   public ngOnInit(): void {
@@ -33,6 +36,12 @@ export class HistoryPageComponent implements OnInit, OnDestroy {
   public ngOnDestroy(): void {
     this.destroy$.next();
     this.destroy$.complete();
+  }
+
+  public openAddEventDialog(): void {
+    this.dialog.open<ModalAddEventComponent>(ModalAddEventComponent, {
+      data: this.categoriesArray
+    });
   }
 
   public back(): void {

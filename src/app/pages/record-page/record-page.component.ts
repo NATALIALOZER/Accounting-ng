@@ -1,9 +1,8 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { ICategory } from '../../shared/models/interfaces';
 import { Subject, takeUntil } from 'rxjs';
 import { DbProfileInfoService } from '../../shared/services/db-profile-info.service';
-import { MatSort } from '@angular/material/sort';
 import { MatDialog } from '@angular/material/dialog';
 import { ModalAddEventComponent } from './modal-add-event/modal-add-event.component';
 import { ModalAddCategoryComponent } from './modal-add-category/modal-add-category.component';
@@ -14,7 +13,6 @@ import { ModalAddCategoryComponent } from './modal-add-category/modal-add-catego
   styleUrls: ['./record-page.component.scss']
 })
 export class RecordPageComponent implements OnInit {
-  @ViewChild(MatSort, {static: true}) public sort!: MatSort;
   public dataSource!: MatTableDataSource<ICategory>;
   public data: ICategory[] = [];
   public displayedColumns: string[] = ['id', 'name', 'capacity', 'action'];
@@ -22,7 +20,7 @@ export class RecordPageComponent implements OnInit {
 
   constructor(
     private profileInfoService: DbProfileInfoService,
-    public dialog: MatDialog
+    private dialog: MatDialog
   ) { }
 
   public ngOnInit(): void {
@@ -52,8 +50,8 @@ export class RecordPageComponent implements OnInit {
   }
 
   /*public edit(id: number): void {
-    this.profileInfoService.patchCategory(id, )
-  }*/
+     this.profileInfoService.patchCategory(id, )
+   }*/
 
   public delete(id: number): void {
     this.profileInfoService.deleteCategory(id).subscribe(
