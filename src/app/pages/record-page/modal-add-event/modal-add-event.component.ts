@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { IEventInfo } from '../../../shared/models/interfaces';
+import { DbProfileInfoService } from '../../../shared/services/db-profile-info.service';
+import { Subject, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'app-modal-add-event',
@@ -9,9 +12,12 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 })
 export class ModalAddEventComponent implements OnInit {
   public form!: FormGroup;
+  private destroy$: Subject<void> = new Subject<void>();
+
 
   constructor(
     private formBuilder: FormBuilder,
+    private profileInfoService: DbProfileInfoService,
     private dialogRef: MatDialogRef<ModalAddEventComponent>
   ) {}
 
@@ -23,8 +29,18 @@ export class ModalAddEventComponent implements OnInit {
     this.getForm();
   }
 
+  public ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
+
   public add(): void {
-    console.log(this.form);
+    if (this.form.invalid) {
+      return;
+    }
+    const event: IEventInfo = this.form.value;
+    this.profileInfoService.postNewEvent(event).pipe(takeUntil(this.destroy$)).subscribe();
+    this.closeDialog();
   }
 
   private getForm(): void {

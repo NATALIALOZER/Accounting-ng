@@ -1,8 +1,7 @@
-import { Inject, Injectable } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { IBill, ICategory, IEventInfo } from '../models/interfaces';
 import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
-import { environment } from '../../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -27,6 +26,14 @@ export class DbProfileInfoService {
 
   public getEventById(id: number): Observable<IEventInfo> {
     return this.http.get<IEventInfo>(`events/${id}`);
+  }
+
+  public postNewEvent(data: IEventInfo): Observable<object> {
+    return this.http.post('events', data);
+  }
+
+  public postNewCategory(data: ICategory): Observable<object> {
+    return this.http.post('categories', data);
   }
 }
 
