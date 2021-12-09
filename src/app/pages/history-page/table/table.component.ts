@@ -16,6 +16,7 @@ export class TableComponent implements OnInit {
   public displayedColumns: string[] = ['id', 'amount', 'date', 'category', 'type', 'action'];
   public search: string = '';
 
+
   constructor(
     private router: Router,
     private activatedRoute: ActivatedRoute,
@@ -23,16 +24,14 @@ export class TableComponent implements OnInit {
   }
 
   public ngOnInit(): void {
-    this.dataSource.data.forEach( i => i.category = this.getName(i.category + ''));
     if (this.dataSource) {
       this.dataSource.sort = this.sort;
     }
   }
 
-
   public applyFilter(): void {
     this.dataSource.filterPredicate = (data: {category: string | number}, filterValue: string) => {
-      const dataStr = data.category + '';
+      const dataStr = this.getName(data.category as string);
       return dataStr.trim().toLowerCase().indexOf(filterValue) !== -1;
     };
     this.dataSource.filter = this.search.trim().toLowerCase();
