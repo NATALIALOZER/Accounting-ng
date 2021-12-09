@@ -34,9 +34,9 @@
       "id": 2
     },
     {
-      "id": 3,
       "name": "Машина",
-      "capacity": 7000
+      "capacity": "7000",
+      "id": 3
     }
   ],
   "events": [

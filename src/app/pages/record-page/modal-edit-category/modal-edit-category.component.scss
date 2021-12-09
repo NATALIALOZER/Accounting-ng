@@ -1,0 +1,19 @@
+::ng-deep .mat-dialog-container {
+  form {
+    min-width: 300px;
+    .mat-form-field {
+      width: 100%;
+      display: inline-block !important;
+      padding: 10px 0;
+    }
+    .cat-field {
+      ::ng-deep .mat-form-field-flex {
+        background-color: transparent;
+        padding: 0;
+        .mat-form-field-infix {
+          padding: .4375em 0;
+        }
+      }
+    }
+  }
+}

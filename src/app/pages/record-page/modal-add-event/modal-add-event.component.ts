@@ -5,7 +5,7 @@ import { ICategory, IEventInfo } from '../../../shared/models/interfaces';
 import { DbProfileInfoService } from '../../../shared/services/db-profile-info.service';
 import { Subject, takeUntil } from 'rxjs';
 import * as moment from 'moment';
-import 'moment/locale/ru'; // without this line it didn't work
+import 'moment/locale/ru';
 moment.locale('ru');
 
 @Component({

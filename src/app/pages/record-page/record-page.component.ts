@@ -6,6 +6,7 @@ import { DbProfileInfoService } from '../../shared/services/db-profile-info.serv
 import { MatDialog } from '@angular/material/dialog';
 import { ModalAddEventComponent } from './modal-add-event/modal-add-event.component';
 import { ModalAddCategoryComponent } from './modal-add-category/modal-add-category.component';
+import { ModalEditCategoryComponent } from './modal-edit-category/modal-edit-category.component';
 
 @Component({
   selector: 'app-record-page',
@@ -41,6 +42,20 @@ export class RecordPageComponent implements OnInit {
   public openAddCatDialog(): void {
     const dialogRef = this.dialog.open<ModalAddCategoryComponent>(ModalAddCategoryComponent, {
       data: this.dataSource.data
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.getCat();
+      }
+    });
+  }
+
+  public openEditCatDialog(id: number): void {
+    const dialogRef = this.dialog.open<ModalEditCategoryComponent>(ModalEditCategoryComponent, {
+      data: {
+        categories: this.dataSource.data,
+        currentCategory: id
+      }
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result) {

@@ -5,18 +5,23 @@ import { RecordPageRoutingModule } from './record-page-routing.module';
 import { SharedModule } from '../../shared/shared.module';
 import { MaterialModule } from '../../shared/material.module';
 import { FlexLayoutModule } from '@angular/flex-layout';
+import { ModalEditCategoryComponent } from './modal-edit-category/modal-edit-category.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 
 @NgModule({
   declarations: [
-    RecordPageComponent
+    RecordPageComponent,
+    ModalEditCategoryComponent
   ],
   imports: [
     CommonModule,
     RecordPageRoutingModule,
     SharedModule,
     MaterialModule,
-    FlexLayoutModule
+    FlexLayoutModule,
+    FormsModule,
+    ReactiveFormsModule
   ]
 })
 export class RecordPageModule { }
