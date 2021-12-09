@@ -29,6 +29,7 @@ export class TableComponent implements OnInit {
     }
   }
 
+
   public applyFilter(): void {
     this.dataSource.filterPredicate = (data: {category: string | number}, filterValue: string) => {
       const dataStr = data.category + '';

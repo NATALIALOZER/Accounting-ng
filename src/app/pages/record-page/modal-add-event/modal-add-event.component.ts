@@ -4,6 +4,9 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ICategory, IEventInfo } from '../../../shared/models/interfaces';
 import { DbProfileInfoService } from '../../../shared/services/db-profile-info.service';
 import { Subject, takeUntil } from 'rxjs';
+import * as moment from 'moment';
+import 'moment/locale/ru'; // without this line it didn't work
+moment.locale('ru');
 
 @Component({
   selector: 'app-modal-add-event',
@@ -39,8 +42,7 @@ export class ModalAddEventComponent implements OnInit {
       return;
     }
     const event: IEventInfo = this.form.value;
-    const dateFormat = new Date();
-    event.date = String(`${dateFormat.getDate()}.${dateFormat.getMonth() + 1}.${dateFormat.getFullYear()} ${dateFormat.getHours()}:${dateFormat.getMinutes()}:${dateFormat.getSeconds()}`);
+    event.date = String(`${moment().format('l')} ${moment().format('LTS')}`);
     this.profileInfoService.postNewEvent(event)
       .pipe(takeUntil(this.destroy$))
       .subscribe(() => this.closeDialog(true));
