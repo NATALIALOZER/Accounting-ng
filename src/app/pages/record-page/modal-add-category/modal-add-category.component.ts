@@ -1,6 +1,6 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { MatDialogRef } from '@angular/material/dialog';
 import { Subject, takeUntil } from 'rxjs';
 import { DbProfileInfoService } from '../../../shared/services/db-profile-info.service';
 
@@ -16,13 +16,10 @@ export class ModalAddCategoryComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private profileInfoService: DbProfileInfoService,
-    private dialogRef: MatDialogRef<ModalAddCategoryComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: { id: number, name: string } = { id: 0, name: ''}
+    private dialogRef: MatDialogRef<ModalAddCategoryComponent>
   ) {}
 
-  public closeDialog(): void {
-    let addedCategory: boolean = false;
-    if (this.form.status === 'VALID') { addedCategory = true; }
+  public closeDialog(addedCategory: boolean = false): void {
     this.dialogRef.close(addedCategory);
   }
 
@@ -40,13 +37,14 @@ export class ModalAddCategoryComponent implements OnInit {
       return;
     }
     this.profileInfoService.postNewCategory(this.form.value)
-      .pipe(takeUntil(this.destroy$)).subscribe(() => this.closeDialog());
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(() => this.closeDialog(true));
   }
 
   private getForm(): void {
     this.form = this.formBuilder.group({
       name: ['', [Validators.required]],
-      capacity: [ '', [Validators.required]],
+      capacity: [ '', [Validators.required, Validators.pattern('^[0-9]+$')]],
     });
   }
 }

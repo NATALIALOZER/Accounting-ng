@@ -21,8 +21,8 @@ export class ModalAddEventComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: NgIterable<ICategory>
   ) {}
 
-  public closeDialog(): void {
-    this.dialogRef.close();
+  public closeDialog(addedEvent: boolean = false): void {
+    this.dialogRef.close(addedEvent);
   }
 
   public ngOnInit(): void {
@@ -41,14 +41,16 @@ export class ModalAddEventComponent implements OnInit {
     const event: IEventInfo = this.form.value;
     const dateFormat = new Date();
     event.date = String(`${dateFormat.getDate()}.${dateFormat.getMonth() + 1}.${dateFormat.getFullYear()} ${dateFormat.getHours()}:${dateFormat.getMinutes()}:${dateFormat.getSeconds()}`);
-    this.profileInfoService.postNewEvent(event).pipe(takeUntil(this.destroy$)).subscribe(() => this.closeDialog());
+    this.profileInfoService.postNewEvent(event)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(() => this.closeDialog(true));
   }
 
   private getForm(): void {
     this.form = this.formBuilder.group({
       category: ['', [Validators.required]],
       type: [ 'income', [Validators.required]],
-      amount: ['', [Validators.required]],
+      amount: ['', [Validators.required, Validators.pattern('^[0-9]+$')]],
       description: ['', [Validators.required]]
     });
   }

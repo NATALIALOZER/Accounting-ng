@@ -39,8 +39,13 @@ export class HistoryPageComponent implements OnInit, OnDestroy {
   }
 
   public openAddEventDialog(): void {
-    this.dialog.open<ModalAddEventComponent>(ModalAddEventComponent, {
+    const dialogRef = this.dialog.open<ModalAddEventComponent>(ModalAddEventComponent, {
       data: this.categoriesArray
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.getEvents();
+      }
     });
   }
 

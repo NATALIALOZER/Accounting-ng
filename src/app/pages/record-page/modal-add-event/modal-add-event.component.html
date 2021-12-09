@@ -17,8 +17,9 @@
     <br>
     <mat-form-field fxLayoutAlign="center">
       <mat-error *ngIf="form.get('amount')?.hasError('required')">Введите сумму</mat-error>
+      <mat-error *ngIf="form.get('amount')?.hasError('pattern')">Необходимо указать данные в виде цифр</mat-error>
       <mat-label>Введите сумму</mat-label>
-      <input matInput type="number" placeholder="amount" formControlName="amount">
+      <input matInput type="text" placeholder="amount" formControlName="amount">
     </mat-form-field>
     <mat-form-field fxLayoutAlign="center">
       <mat-error *ngIf="form.get('description')?.hasError('required')">Введите описание</mat-error>
