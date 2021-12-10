@@ -28,19 +28,19 @@ export class DbProfileInfoService {
     return this.http.get<IEventInfo>(`events/${id}`);
   }
 
-  public postNewEvent(data: IEventInfo): Observable<object> {
-    return this.http.post('events', data);
+  public postNewEvent(data: IEventInfo): Observable<IEventInfo> {
+    return this.http.post<IEventInfo>('events', data);
   }
 
-  public postNewCategory(data: ICategory): Observable<object> {
-    return this.http.post('categories', data);
+  public postNewCategory(data: ICategory): Observable<ICategory> {
+    return this.http.post<ICategory>('categories', data);
   }
 
-  public patchCategory(data: ICategory ): Observable<object> {
+  public patchCategory(data: ICategory ): Observable<ICategory> {
     return this.http.patch<ICategory>(`categories/${data.id}`, data);
   }
 
-  public deleteCategory(id: number): Observable<object> {
+  public deleteCategory(id: number): Observable<ICategory> {
     return this.http.delete<ICategory>(`categories/${id}`);
   }
 }

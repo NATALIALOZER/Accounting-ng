@@ -1,4 +1,4 @@
-import { Component, Inject, NgIterable, OnInit } from '@angular/core';
+import { Component, Inject , OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Subject, takeUntil } from 'rxjs';
 import { DbProfileInfoService } from '../../../shared/services/db-profile-info.service';
@@ -41,7 +41,7 @@ export class ModalEditCategoryComponent implements OnInit {
     if (this.form.invalid) {
       return;
     }
-    const cat = this.data.categories.find(i => i.name === this.form.value.originalName) as ICategory;
+    const cat = this.data.categories.find(category => category.name === this.form.value.originalName) as ICategory;
     const body = { name: this.form.value.name, capacity: this.form.value.capacity, id: cat.id };
     this.profileInfoService.patchCategory( body )
       .pipe(takeUntil(this.destroy$))

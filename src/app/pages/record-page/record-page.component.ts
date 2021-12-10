@@ -17,7 +17,7 @@ import { ModalDeleteCategoryComponent } from './modal-delete-category/modal-dele
 export class RecordPageComponent implements OnInit {
   public dataSource!: MatTableDataSource<ICategory>;
   public data: ICategory[] = [];
-  public displayedColumns: string[] = ['id', 'name', 'capacity', 'action'];
+  public displayedColumns: string[] = ['position', 'name', 'capacity', 'action'];
   private destroy$: Subject<void> = new Subject<void>();
 
   constructor(
@@ -59,10 +59,12 @@ export class RecordPageComponent implements OnInit {
       }
     });
     dialogRef.afterClosed().subscribe(result => {
+      console.log(result)
       if (result) {
         this.getCat();
       }
-    });
+    }
+    );
   }
 
   public openDeleteCatDialog(id: number): void {

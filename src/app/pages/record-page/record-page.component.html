@@ -9,9 +9,9 @@
   <mat-card>
     <mat-card-content>
       <table mat-table [dataSource]="dataSource" class="layout-text">
-        <ng-container matColumnDef="id">
+        <ng-container matColumnDef="position">
           <th mat-header-cell *matHeaderCellDef> # </th>
-          <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+          <td mat-cell *matCellDef="let element; let i = index;"> {{ i + 1 }} </td>
         </ng-container>
         <ng-container matColumnDef="name">
           <th mat-header-cell *matHeaderCellDef> Название категории</th>

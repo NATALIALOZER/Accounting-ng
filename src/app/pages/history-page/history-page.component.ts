@@ -19,6 +19,7 @@ export class HistoryPageComponent implements OnInit, OnDestroy {
   public data: IEventInfo[] = [];
   public categoriesArray: ICategory[] = [];
   public eventId: number = 0;
+
   private destroy$: Subject<void> = new Subject<void>();
 
 

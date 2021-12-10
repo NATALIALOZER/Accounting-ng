@@ -1,5 +1,5 @@
 <h3 mat-dialog-title>Вы уверены, что хотите удалить категорию?</h3>
 <div fxLayout="row" fxLayoutAlign="flex-end">
-  <button mat-button mat-raised-button color="primary" type="submit" (click)="delete()">Удалить</button>
-  <button mat-button (click)="closeDialog()">Закрыть</button>
+  <div class="space"><button mat-button mat-raised-button color="primary" (click)="delete()">Удалить</button></div>
+  <div><button mat-button type="button" (click)="closeDialog()">Закрыть</button></div>
 </div>

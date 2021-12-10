@@ -27,16 +27,15 @@
       ::ng-deep tbody tr:last-child td{
         border-bottom-width: 0;
       }
-      ::ng-deep .mat-sort-header-container {
-        display:flex;
-        justify-content:center;
-      }
       .mat-stroked-button {
         border: 0;
         min-width: 10px;
         padding: 0;
       }
     }
+  }
+  th.mat-header-cell {
+    text-align: center;
   }
 }
 

@@ -38,7 +38,8 @@ export class ModalAddCategoryComponent implements OnInit {
     }
     this.profileInfoService.postNewCategory(this.form.value)
       .pipe(takeUntil(this.destroy$))
-      .subscribe(() => this.closeDialog(true));
+      .subscribe(() =>
+        this.closeDialog(true));
   }
 
   private getForm(): void {

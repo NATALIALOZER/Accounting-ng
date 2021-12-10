@@ -3,6 +3,7 @@ import { ICategory, IEventInfo } from '../../../shared/models/interfaces';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
 import { ActivatedRoute, Params, Router } from '@angular/router';
+import { DbProfileInfoService } from '../../../shared/services/db-profile-info.service';
 
 @Component({
   selector: 'app-table',
@@ -19,6 +20,7 @@ export class TableComponent implements OnInit {
 
   constructor(
     private router: Router,
+    private profileInfoService: DbProfileInfoService,
     private activatedRoute: ActivatedRoute,
   ) {
   }
@@ -35,6 +37,7 @@ export class TableComponent implements OnInit {
       return dataStr.trim().toLowerCase().indexOf(filterValue) !== -1;
     };
     this.dataSource.filter = this.search.trim().toLowerCase();
+    this.dataSource.sort = this.sort;
     if (this.dataSource.paginator) {
       this.dataSource.paginator.firstPage();
     }
