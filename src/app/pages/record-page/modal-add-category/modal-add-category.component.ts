@@ -19,10 +19,6 @@ export class ModalAddCategoryComponent implements OnInit {
     private dialogRef: MatDialogRef<ModalAddCategoryComponent>
   ) {}
 
-  public closeDialog(addedCategory: boolean = false): void {
-    this.dialogRef.close(addedCategory);
-  }
-
   public ngOnInit(): void {
     this.getForm();
   }
@@ -30,6 +26,10 @@ export class ModalAddCategoryComponent implements OnInit {
   public ngOnDestroy(): void {
     this.destroy$.next();
     this.destroy$.complete();
+  }
+
+  public closeDialog(addedCategory: boolean = false): void {
+    this.dialogRef.close(addedCategory);
   }
 
   public add(): void {

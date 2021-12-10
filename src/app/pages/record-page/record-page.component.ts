@@ -7,6 +7,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { ModalAddEventComponent } from './modal-add-event/modal-add-event.component';
 import { ModalAddCategoryComponent } from './modal-add-category/modal-add-category.component';
 import { ModalEditCategoryComponent } from './modal-edit-category/modal-edit-category.component';
+import { ModalDeleteCategoryComponent } from './modal-delete-category/modal-delete-category.component';
 
 @Component({
   selector: 'app-record-page',
@@ -64,14 +65,15 @@ export class RecordPageComponent implements OnInit {
     });
   }
 
-  /*public edit(id: number): void {
-     this.profileInfoService.patchCategory(id, )
-   }*/
-
-  public delete(id: number): void {
-    this.profileInfoService.deleteCategory(id).subscribe(
-      () => this.getCat()
-    );
+  public openDeleteCatDialog(id: number): void {
+    const dialogRef = this.dialog.open<ModalDeleteCategoryComponent>(ModalDeleteCategoryComponent, {});
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.profileInfoService.deleteCategory(id).subscribe(
+          () => this.getCat()
+        );
+      }
+    });
   }
 
   private getCat(): void {
