@@ -37,16 +37,6 @@
       "name": "Еда",
       "capacity": 10000,
       "id": 2
-    },
-    {
-      "name": "Спорт",
-      "capacity": "20000",
-      "id": 6
-    },
-    {
-      "name": "Сад",
-      "capacity": "5000",
-      "id": 7
     }
   ],
   "events": [

@@ -28,7 +28,7 @@ export class ModalEditCategoryComponent implements OnInit {
   }
 
   public ngOnInit(): void {
-    this.currentCat = this.data.categories.find( i => i.id === this.data.currentCategory) as ICategory;
+    this.currentCat = this.data.categories.find( category => category.id === this.data.currentCategory) as ICategory;
     this.getForm();
   }
 
@@ -41,16 +41,15 @@ export class ModalEditCategoryComponent implements OnInit {
     if (this.form.invalid) {
       return;
     }
-    const cat = this.data.categories.find(category => category.name === this.form.value.originalName) as ICategory;
-    const body = { name: this.form.value.name, capacity: this.form.value.capacity, id: cat.id };
-    this.profileInfoService.patchCategory( body )
+    this.form.value.id = (this.data.categories.find(category => category.name === this.form.value.id) as ICategory).id;
+    this.profileInfoService.patchCategory( this.form.value )
       .pipe(takeUntil(this.destroy$))
       .subscribe(() => this.closeDialog(true));
   }
 
   private getForm(): void {
     this.form = this.formBuilder.group({
-      originalName: [this.currentCat.name, [Validators.required]],
+      id: [this.currentCat.name, [Validators.required]],
       name: [this.currentCat.name, [Validators.required]],
       capacity: [ this.currentCat.capacity, [Validators.required, Validators.pattern('^[0-9]+$')]],
     });
