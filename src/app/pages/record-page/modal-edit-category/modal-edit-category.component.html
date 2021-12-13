@@ -3,7 +3,7 @@
   <form [formGroup]="form" (submit)="edit()">
     <mat-form-field appearance="fill" class="cat-field" >
       <mat-label>Выберите категорию</mat-label>
-      <mat-select formControlName="id">
+      <mat-select formControlName="currentCategory" (selectionChange)="changeValue($event.value)">
         <mat-option *ngFor="let cat of data.categories" value="{{cat.name}}">{{cat.name}}</mat-option>
       </mat-select>
     </mat-form-field>

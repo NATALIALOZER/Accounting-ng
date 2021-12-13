@@ -20,7 +20,7 @@ export class ModalEditCategoryComponent implements OnInit {
     private formBuilder: FormBuilder,
     private profileInfoService: DbProfileInfoService,
     private dialogRef: MatDialogRef<ModalEditCategoryComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: { categories: ICategory[], currentCategory: number},
+    @Inject(MAT_DIALOG_DATA) public data: { categories: ICategory[], currentCategory: ICategory},
   ) {}
 
   public closeDialog(editCategory: boolean = false): void {
@@ -28,8 +28,7 @@ export class ModalEditCategoryComponent implements OnInit {
   }
 
   public ngOnInit(): void {
-    this.currentCat = this.data.categories.find( category => category.id === this.data.currentCategory) as ICategory;
-    this.getForm();
+    this.buildForm();
   }
 
   public ngOnDestroy(): void {
@@ -37,21 +36,33 @@ export class ModalEditCategoryComponent implements OnInit {
     this.destroy$.complete();
   }
 
+
+  public changeValue(value: any): void {
+    const currentValue = this.data.categories.find(category => category.name === value) as ICategory;
+    this.form.patchValue({
+      name: currentValue.name,
+      capacity: currentValue.capacity
+    });
+  }
+
   public edit(): void {
     if (this.form.invalid) {
       return;
     }
-    this.form.value.id = (this.data.categories.find(category => category.name === this.form.value.id) as ICategory).id;
-    this.profileInfoService.updateCategory( this.form.value )
+    this.profileInfoService.updateCategory({
+      id: this.data.currentCategory.id,
+      name: this.form.value.name,
+      capacity: +this.form.value.capacity} )
       .pipe(takeUntil(this.destroy$))
       .subscribe(() => this.closeDialog(true));
   }
 
-  private getForm(): void {
+  private buildForm(): void {
     this.form = this.formBuilder.group({
-      id: [this.currentCat.name, [Validators.required]],
-      name: [this.currentCat.name, [Validators.required]],
-      capacity: [ this.currentCat.capacity, [Validators.required, Validators.pattern('^[0-9]+$')]],
+      currentCategory: [this.data.currentCategory.name, [Validators.required]],
+      name: [this.data.currentCategory.name, [Validators.required]],
+      capacity: [ this.data.currentCategory.capacity, [Validators.required, Validators.pattern('^[0-9]+$')]],
     });
   }
+
 }

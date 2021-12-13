@@ -25,7 +25,7 @@ export class LoginComponent implements OnInit {
   ) { }
 
   public ngOnInit(): void {
-    this.getForm();
+    this.buildForm();
   }
 
   public ngOnDestroy(): void {
@@ -64,7 +64,7 @@ export class LoginComponent implements OnInit {
 
   }
 
-  private getForm(): void {
+  private buildForm(): void {
     this.form = this.formBuilder.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6)]]

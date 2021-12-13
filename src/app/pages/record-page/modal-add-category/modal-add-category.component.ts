@@ -20,7 +20,7 @@ export class ModalAddCategoryComponent implements OnInit {
   ) {}
 
   public ngOnInit(): void {
-    this.getForm();
+    this.buildForm();
   }
 
   public ngOnDestroy(): void {
@@ -43,7 +43,7 @@ export class ModalAddCategoryComponent implements OnInit {
         this.closeDialog(true));
   }
 
-  private getForm(): void {
+  private buildForm(): void {
     this.form = this.formBuilder.group({
       name: ['', [Validators.required]],
       capacity: [ '', [Validators.required, Validators.pattern('^[0-9]+$')]],

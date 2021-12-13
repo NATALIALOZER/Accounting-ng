@@ -29,7 +29,7 @@ export class ModalAddEventComponent implements OnInit {
   }
 
   public ngOnInit(): void {
-    this.getForm();
+    this.buildForm();
   }
 
   public ngOnDestroy(): void {
@@ -49,7 +49,7 @@ export class ModalAddEventComponent implements OnInit {
       .subscribe(() => this.closeDialog(true));
   }
 
-  private getForm(): void {
+  private buildForm(): void {
     this.form = this.formBuilder.group({
       category: ['', [Validators.required]],
       type: [ 'income', [Validators.required]],
