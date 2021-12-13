@@ -37,9 +37,10 @@ export class ModalEditCategoryComponent implements OnInit {
   }
 
 
-  public changeValue(value: any): void {
+  public changeValue(value: string): void {
     const currentValue = this.data.categories.find(category => category.name === value) as ICategory;
     this.form.patchValue({
+      id: currentValue.id,
       name: currentValue.name,
       capacity: currentValue.capacity
     });
@@ -50,7 +51,7 @@ export class ModalEditCategoryComponent implements OnInit {
       return;
     }
     this.profileInfoService.updateCategory({
-      id: this.data.currentCategory.id,
+      id: this.form.value.id,
       name: this.form.value.name,
       capacity: +this.form.value.capacity} )
       .pipe(takeUntil(this.destroy$))
@@ -59,6 +60,7 @@ export class ModalEditCategoryComponent implements OnInit {
 
   private buildForm(): void {
     this.form = this.formBuilder.group({
+      id: [this.data.currentCategory.id],
       currentCategory: [this.data.currentCategory.name, [Validators.required]],
       name: [this.data.currentCategory.name, [Validators.required]],
       capacity: [ this.data.currentCategory.capacity, [Validators.required, Validators.pattern('^[0-9]+$')]],

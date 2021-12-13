@@ -1,8 +1,7 @@
-import { Component, Inject, NgIterable } from '@angular/core';
+import { Component, Inject } from '@angular/core';
 import { Subject } from 'rxjs';
 import { DbProfileInfoService } from '../../../shared/services/db-profile-info.service';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { ICategory } from '../../../shared/models/interfaces';
 
 @Component({
   selector: 'app-modal-delete-category',
