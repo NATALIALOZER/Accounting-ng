@@ -1,9 +1,27 @@
 .layout-text{
-  ::ng-deep .mat-sort-header-container {
-    display:flex;
-    justify-content:center;
+  th.mat-header-cell, tr.mat-cell {
+    text-align: start;
+    justify-content:flex-start;
   }
-  text-align: center;
+  .mat-column-type{
+    min-width: 100px;
+    width: 250px;
+  }
+  .mat-column-date{
+    min-width: 100px;
+    width: 350px;
+  }
+  .mat-column-category{
+    min-width: 100px;
+    width: 250px;
+  }
+  .mat-column-type{
+    min-width: 100px;
+    width: 250px;
+  }
+  .mat-column-action{
+    width: 150px;
+  }
   .red{
     color: #f44336;
   }
@@ -11,12 +29,9 @@
     color: #3F51B5;
   }
 }
-
 .filter-field{
   width: 100%;
 }
 
-th.mat-header-cell {
-  text-align: center;
-}
+
 

@@ -92,6 +92,22 @@
       "description": "Высадка роз",
       "date": "13.12.2021 15:59:03",
       "id": 6
+    },
+    {
+      "category": 2,
+      "type": "outcome",
+      "amount": 1000,
+      "description": "test",
+      "date": "13.12.2021 16:10:01",
+      "id": 7
+    },
+    {
+      "category": 4,
+      "type": "outcome",
+      "amount": 1000,
+      "description": "test",
+      "date": "13.12.2021 16:11:50",
+      "id": 8
     }
   ]
 }
