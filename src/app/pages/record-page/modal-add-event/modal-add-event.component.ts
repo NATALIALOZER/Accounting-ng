@@ -41,10 +41,9 @@ export class ModalAddEventComponent implements OnInit {
     if (this.form.invalid) {
       return;
     }
-    const event: IEventInfo = this.form.value;
-    event.amount = +event.amount;
-    event.category = +event.category;
-    event.date = String(`${moment().format('l')} ${moment().format('LTS')}`);
+    const event: IEventInfo = { ...this.form.value,
+      amount: +this.form.value.amount,
+      category: +this.form.value.category};
     this.profileInfoService.createEvent(event)
       .pipe(takeUntil(this.destroy$))
       .subscribe(() => this.closeDialog(true));
@@ -55,7 +54,8 @@ export class ModalAddEventComponent implements OnInit {
       category: ['', [Validators.required]],
       type: [ 'income', [Validators.required]],
       amount: [ '', [Validators.required, Validators.pattern('^[0-9]+$')]],
-      description: ['', [Validators.required]]
+      description: ['', [Validators.required]],
+      date: [moment(new Date()).format('DD.MM.YYYY HH:mm:ss')]
     });
   }
 }
