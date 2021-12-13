@@ -15,7 +15,6 @@ export class ChartComponent implements OnInit {
   public ngOnInit(): void {
       this.calculateChartData();
       this.getData();
-
   }
 
   private getData (): void {

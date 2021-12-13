@@ -36,6 +36,7 @@ export class ModalAddCategoryComponent implements OnInit {
     if (this.form.invalid) {
       return;
     }
+    this.form.value.capacity = +this.form.value.capacity;
     this.profileInfoService.postNewCategory(this.form.value)
       .pipe(takeUntil(this.destroy$))
       .subscribe(() =>

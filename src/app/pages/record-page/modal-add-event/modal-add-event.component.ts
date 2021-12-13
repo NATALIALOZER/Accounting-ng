@@ -42,6 +42,8 @@ export class ModalAddEventComponent implements OnInit {
       return;
     }
     const event: IEventInfo = this.form.value;
+    event.amount = +event.amount;
+    event.category = +event.category;
     event.date = String(`${moment().format('l')} ${moment().format('LTS')}`);
     this.profileInfoService.postNewEvent(event)
       .pipe(takeUntil(this.destroy$))
@@ -52,7 +54,7 @@ export class ModalAddEventComponent implements OnInit {
     this.form = this.formBuilder.group({
       category: ['', [Validators.required]],
       type: [ 'income', [Validators.required]],
-      amount: ['', [Validators.required, Validators.pattern('^[0-9]+$')]],
+      amount: [ '', [Validators.required, Validators.pattern('^[0-9]+$')]],
       description: ['', [Validators.required]]
     });
   }

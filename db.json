@@ -37,6 +37,11 @@
       "name": "Еда",
       "capacity": 10000,
       "id": 2
+    },
+    {
+      "name": "Сад",
+      "capacity": 1300,
+      "id": 4
     }
   ],
   "events": [
@@ -81,20 +86,12 @@
       "description": "Заправка + проход ТО"
     },
     {
-      "category": "1",
+      "category": 4,
       "type": "outcome",
-      "amount": "1000",
-      "description": "Тест",
-      "date": "9.12.2021 18:05:00",
+      "amount": 1000,
+      "description": "test",
+      "date": "13.12.2021 12:05:21",
       "id": 6
-    },
-    {
-      "category": "2",
-      "type": "outcome",
-      "amount": "500",
-      "description": "Поход в кафе",
-      "date": "10.12.2021 17:44:42",
-      "id": 7
     }
   ]
 }
