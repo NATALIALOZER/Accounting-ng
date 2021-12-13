@@ -1,5 +1,8 @@
 mat-card{
-  padding-bottom: 40px;
+  padding-bottom: 30px;
+  mat-card-subtitle{
+    margin-left: 25px;
+  }
   table {
     width: 100%;
     .mat-column-rate{

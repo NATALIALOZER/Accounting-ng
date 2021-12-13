@@ -59,7 +59,6 @@ export class RecordPageComponent implements OnInit {
       }
     });
     dialogRef.afterClosed().subscribe(result => {
-      console.log(result)
       if (result) {
         this.getCat();
       }
@@ -67,8 +66,10 @@ export class RecordPageComponent implements OnInit {
     );
   }
 
-  public openDeleteCatDialog(id: number): void {
-    const dialogRef = this.dialog.open<ModalDeleteCategoryComponent>(ModalDeleteCategoryComponent, {});
+  public openDeleteCatDialog(id: number, name: string): void {
+    const dialogRef = this.dialog.open<ModalDeleteCategoryComponent>(ModalDeleteCategoryComponent, {
+      data: { name, id }
+    });
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
         this.profileInfoService.deleteCategory(id).subscribe(

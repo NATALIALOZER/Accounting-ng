@@ -1,7 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, Inject, NgIterable } from '@angular/core';
 import { Subject } from 'rxjs';
 import { DbProfileInfoService } from '../../../shared/services/db-profile-info.service';
-import { MatDialogRef } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { ICategory } from '../../../shared/models/interfaces';
 
 @Component({
   selector: 'app-modal-delete-category',
@@ -12,7 +13,8 @@ export class ModalDeleteCategoryComponent {
   private destroy$: Subject<void> = new Subject<void>();
   constructor(
     private profileInfoService: DbProfileInfoService,
-    private dialogRef: MatDialogRef<ModalDeleteCategoryComponent>
+    private dialogRef: MatDialogRef<ModalDeleteCategoryComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: { name: string, id: number }
   ) { }
 
   public ngOnDestroy(): void {
