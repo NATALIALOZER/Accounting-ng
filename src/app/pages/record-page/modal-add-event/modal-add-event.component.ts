@@ -45,7 +45,7 @@ export class ModalAddEventComponent implements OnInit {
     event.amount = +event.amount;
     event.category = +event.category;
     event.date = String(`${moment().format('l')} ${moment().format('LTS')}`);
-    this.profileInfoService.postNewEvent(event)
+    this.profileInfoService.createEvent(event)
       .pipe(takeUntil(this.destroy$))
       .subscribe(() => this.closeDialog(true));
   }

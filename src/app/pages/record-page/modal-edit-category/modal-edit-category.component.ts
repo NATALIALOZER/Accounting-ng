@@ -42,7 +42,7 @@ export class ModalEditCategoryComponent implements OnInit {
       return;
     }
     this.form.value.id = (this.data.categories.find(category => category.name === this.form.value.id) as ICategory).id;
-    this.profileInfoService.patchCategory( this.form.value )
+    this.profileInfoService.updateCategory( this.form.value )
       .pipe(takeUntil(this.destroy$))
       .subscribe(() => this.closeDialog(true));
   }

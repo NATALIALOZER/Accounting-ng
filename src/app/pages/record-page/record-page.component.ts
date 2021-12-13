@@ -72,7 +72,7 @@ export class RecordPageComponent implements OnInit {
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        this.profileInfoService.deleteCategory(id).subscribe(
+        this.profileInfoService.removeCategory(id).subscribe(
           () => this.getCat()
         );
       }

@@ -70,7 +70,6 @@ export class HistoryPageComponent implements OnInit, OnDestroy {
       .subscribe(
         (response: IEventInfo[]) => {
           this.data = response;
-          console.log(this.data)
           this.dataSource = new MatTableDataSource<IEventInfo>(this.data);
           this.dataSource.paginator = this.paginator;
         });

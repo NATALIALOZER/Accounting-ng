@@ -23,7 +23,8 @@
     padding: 0;
     .layout-text {
       width: 100%;
-      text-align: center;
+      text-align: start;
+      justify-content: flex-start;
       ::ng-deep tbody tr:last-child td{
         border-bottom-width: 0;
       }
@@ -32,10 +33,22 @@
         min-width: 10px;
         padding: 0;
       }
+      .mat-column-position{
+        min-width: 100px;
+        width: 250px;
+      }
+      .mat-column-capacity{
+        min-width: 100px;
+        width: 250px;
+      }
+      .mat-column-action{
+        width: 50px;
+      }
     }
   }
   th.mat-header-cell {
-    text-align: center;
+    text-align: start;
+    justify-content: flex-start;
   }
 }
 
