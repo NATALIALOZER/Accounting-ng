@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { ICategory, IChartData, IEventInfo } from '../../../shared/models/interfaces';
 import * as Highcharts from 'highcharts';
 
@@ -7,7 +7,8 @@ import * as Highcharts from 'highcharts';
   templateUrl: './chart.component.html',
   styleUrls: ['./chart.component.scss']
 })
-export class ChartComponent implements OnInit {
+export class ChartComponent implements OnInit, OnChanges {
+
   @Input() public categoriesArray: ICategory[] = [];
   @Input() public data: IEventInfo[] = [];
   public chartData: IChartData[] = [];
@@ -15,6 +16,16 @@ export class ChartComponent implements OnInit {
   public ngOnInit(): void {
       this.calculateChartData();
       this.getData();
+  }
+
+  public ngOnChanges(changes: SimpleChanges): void {
+    if (changes['data'].previousValue) {
+      if (changes['data'].currentValue.length !== changes['data'].previousValue.length) {
+        this.calculateChartData();
+        this.getData();
+      }
+    }
+
   }
 
   private getData (): void {
