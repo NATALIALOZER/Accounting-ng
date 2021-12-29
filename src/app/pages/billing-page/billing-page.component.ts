@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Subject, takeUntil } from 'rxjs';
+import { concat, map, Subject, takeUntil } from 'rxjs';
 import { RateApiService } from '../../shared/services/rate-api.service';
-import { IBill, IRateApiData, IRateTableData } from '../../shared/models/interfaces';
+import { IBill, ICurrencyIcons, IRateApiData, IRateTableData } from '../../shared/models/interfaces';
 import { DbProfileInfoService } from '../../shared/services/db-profile-info.service';
 
 @Component({
@@ -14,7 +14,11 @@ export class BillingPageComponent implements OnInit, OnDestroy {
   public dataSource!: IRateTableData[];
   public value: number = 0;
   private destroy$: Subject<void> = new Subject<void>();
-
+  private currencyIcons: ICurrencyIcons[] = [
+    {currency: 'EUR', icon : 'euro'},
+    {currency: 'USD', icon : 'attach_money'},
+    {currency: 'UAH', customIcon : 'uah'}
+  ];
 
   constructor(
     private rateApiService: RateApiService,
@@ -23,6 +27,7 @@ export class BillingPageComponent implements OnInit, OnDestroy {
 
   public ngOnInit(): void {
     this.resetTables();
+    this.getData();
   }
 
   public ngOnDestroy(): void {
@@ -32,37 +37,24 @@ export class BillingPageComponent implements OnInit, OnDestroy {
 
   public resetTables(): void {
     this.loading = true;
-    this.getBalance();
+    this.getData();
   }
 
-  private getBalance(): void {
-    this.profileInfoService.getUserBalance()
-      .pipe(takeUntil(this.destroy$))
-      .subscribe(
-        (res: IBill) => {
-          this.value = res.value;
-          this.getRate();
+  private getData(): void {
+    const balance$ = this.profileInfoService.getUserBalance().pipe(
+        map((res: IBill) => this.value = res.value ));
+    const rate$ = this.rateApiService.getRate().pipe(
+      map( (response: IRateApiData) => {
+        this.dataSource = this.currencyIcons.map( (el: any) => {
+          const obj: IRateTableData = {currency: el.currency, rate: response.rates[el.currency] , date: response.date, icon: el.icon,
+            balance: this.value * response.rates[el.currency], customIcon: el.customIcon};
+          return obj;
         });
-  }
-
-  private getRate(): void {
-    this.rateApiService.getRate()
-      .pipe(takeUntil(this.destroy$))
-      .subscribe(
-        (response: IRateApiData) => {
-          this.dataSource = [
-            {
-              currency: 'EUR', rate: response.rates.EUR, date: response.date, icon: 'euro',
-              balance: this.value * response.rates.EUR, customIcon: ''},
-            {
-              currency: 'USD', rate: response.rates.USD, date: response.date, icon: 'attach_money',
-              balance: this.value * response.rates.USD, customIcon: ''
-            },
-            {
-              currency: 'UAH', rate: response.rates.UAH, date: response.date, icon: '',
-              balance: this.value * response.rates.UAH, customIcon: 'uah'},
-          ];
-          this.loading = false;
-        });
+      })
+    );
+    const result$ = concat(balance$, rate$);
+    result$
+      .pipe( takeUntil(this.destroy$))
+      .subscribe(() => this.loading = false);
   }
 }
