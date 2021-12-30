@@ -42,12 +42,17 @@ export class BillingPageComponent implements OnInit, OnDestroy {
 
   private getData(): void {
     const balance$ = this.profileInfoService.getUserBalance().pipe(
-        map((res: IBill) => this.value = res.value ));
+      map((res: IBill) => this.value = res.value ));
     const rate$ = this.rateApiService.getRate().pipe(
       map( (response: IRateApiData) => {
         this.dataSource = this.currencyIcons.map( (el: any) => {
-          const obj: IRateTableData = {currency: el.currency, rate: response.rates[el.currency] , date: response.date, icon: el.icon,
-            balance: this.value * response.rates[el.currency], customIcon: el.customIcon};
+          const obj: IRateTableData = {
+            currency: el.currency,
+            rate: response.rates[el.currency],
+            date: response.date,
+            icon: el.icon,
+            balance: this.value * response.rates[el.currency],
+            customIcon: el.customIcon};
           return obj;
         });
       })

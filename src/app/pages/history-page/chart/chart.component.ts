@@ -19,13 +19,15 @@ export class ChartComponent implements OnInit, OnChanges {
   }
 
   public ngOnChanges(changes: SimpleChanges): void {
+    if (!changes['data']) {
+      return;
+    }
     if (changes['data'].previousValue) {
       if (changes['data'].currentValue.length !== changes['data'].previousValue.length) {
         this.calculateChartData();
         this.getData();
       }
     }
-
   }
 
   private getData (): void {

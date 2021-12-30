@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { Subject, takeUntil } from 'rxjs';
+import { concat, map, Observable, Subject, takeUntil } from 'rxjs';
 import { DbProfileInfoService } from '../../shared/services/db-profile-info.service';
 import { ICategory, IEventInfo } from '../../shared/models/interfaces';
 import { MatTableDataSource } from '@angular/material/table';
@@ -19,7 +19,6 @@ export class HistoryPageComponent implements OnInit, OnDestroy {
   public data: IEventInfo[] = [];
   public categoriesArray: ICategory[] = [];
   public eventId: number = 0;
-
   private destroy$: Subject<void> = new Subject<void>();
 
 
@@ -45,13 +44,13 @@ export class HistoryPageComponent implements OnInit, OnDestroy {
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        this.getEvents();
+        this.getEventQueryParam();
       }
     });
   }
 
   public back(): void {
-    this.router.navigate([], {queryParams: {event: null}, queryParamsHandling: 'merge'});
+    this.router.navigate([], { queryParams: {event: null}, queryParamsHandling: 'merge'});
     this.eventId = 0;
   }
 
@@ -60,27 +59,27 @@ export class HistoryPageComponent implements OnInit, OnDestroy {
       .pipe(takeUntil(this.destroy$))
       .subscribe(params => {
         this.eventId = params['event'];
-        this.getCategories();
+        const categories$ = this.getCategories();
+        const events$ = this.getEvents();
+        concat( categories$, events$).pipe(takeUntil(this.destroy$)).subscribe();
       });
   }
 
-  private getEvents(): void {
-    this.profileInfoService.getUserEvents()
-      .pipe(takeUntil(this.destroy$))
-      .subscribe(
-        (response: IEventInfo[]) => {
+  private getEvents(): Observable<void> {
+    return this.profileInfoService.getUserEvents().pipe(
+      map((response: IEventInfo[]) => {
           this.data = response;
           this.dataSource = new MatTableDataSource<IEventInfo>(this.data);
           this.dataSource.paginator = this.paginator;
-        });
+        })
+      );
   }
 
-  private getCategories(): void {
-    this.profileInfoService.getCategories()
-      .pipe(takeUntil(this.destroy$))
-      .subscribe((response: ICategory[]) => {
-        this.categoriesArray = response;
-        this.getEvents();
-      });
+  private getCategories(): Observable<void> {
+    return this.profileInfoService.getCategories().pipe(
+        map((response: ICategory[]) => {
+          this.categoriesArray = response;
+      })
+    );
   }
 }
