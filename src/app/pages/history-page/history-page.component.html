@@ -14,7 +14,7 @@
     <app-event [id]="eventId" [categoriesArray] = categoriesArray></app-event>
   </ng-template>
   <ng-template #historyStatBlock>
-    <div fxLayout="column" >
+    <div fxLayout="column" *ngIf="dataSource && categoriesArray; else loading">
       <app-chart [data]="data" [categoriesArray] = categoriesArray></app-chart>
       <app-table [dataSource]="dataSource" [categoriesArray] = categoriesArray></app-table>
     </div>

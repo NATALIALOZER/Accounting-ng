@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { concat, map, Observable, Subject, takeUntil } from 'rxjs';
+import { map, merge, Observable, Subject, takeUntil } from 'rxjs';
 import { DbProfileInfoService } from '../../shared/services/db-profile-info.service';
 import { ICategory, IEventInfo } from '../../shared/models/interfaces';
 import { MatTableDataSource } from '@angular/material/table';
@@ -30,7 +30,7 @@ export class HistoryPageComponent implements OnInit, OnDestroy {
   ) { }
 
   public ngOnInit(): void {
-    this.getEventQueryParam();
+    this.initSubscriptions();
   }
 
   public ngOnDestroy(): void {
@@ -44,7 +44,7 @@ export class HistoryPageComponent implements OnInit, OnDestroy {
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        this.getEventQueryParam();
+        this.initSubscriptions();
       }
     });
   }
@@ -52,34 +52,42 @@ export class HistoryPageComponent implements OnInit, OnDestroy {
   public back(): void {
     this.router.navigate([], { queryParams: {event: null}, queryParamsHandling: 'merge'});
     this.eventId = 0;
+    this.initSubscriptions();
   }
 
-  private getEventQueryParam(): void {
-    this.activatedRoute.queryParams
-      .pipe(takeUntil(this.destroy$))
-      .subscribe(params => {
-        this.eventId = params['event'];
-        const categories$ = this.getCategories();
-        const events$ = this.getEvents();
-        concat( categories$, events$).pipe(takeUntil(this.destroy$)).subscribe();
-      });
+  public initSubscriptions(): void {
+    const params$ = this.getEventQueryParam();
+    const events$ = this.getEvents();
+    const categories$ = this.getCategories();
+
+    merge(params$, categories$, events$)
+      .pipe(
+        takeUntil(this.destroy$)
+      ).subscribe();
+  }
+
+  private getEventQueryParam(): Observable<void> {
+    return this.activatedRoute.queryParams
+      .pipe(map(params => {
+          this.eventId = params['event'];
+        }
+      ));
   }
 
   private getEvents(): Observable<void> {
-    return this.profileInfoService.getUserEvents().pipe(
-      map((response: IEventInfo[]) => {
+    return this.profileInfoService.getUserEvents()
+      .pipe(map(
+        (response: IEventInfo[]) => {
           this.data = response;
           this.dataSource = new MatTableDataSource<IEventInfo>(this.data);
           this.dataSource.paginator = this.paginator;
-        })
-      );
+        }));
   }
 
   private getCategories(): Observable<void> {
-    return this.profileInfoService.getCategories().pipe(
-        map((response: ICategory[]) => {
-          this.categoriesArray = response;
-      })
-    );
+    return this.profileInfoService.getCategories()
+      .pipe(map((response: ICategory[]) => {
+        this.categoriesArray = response;
+      }));
   }
 }

@@ -5,62 +5,6 @@
       "email": "user@user.com",
       "password": "12345678",
       "name": "Администратор"
-    },
-    {
-      "email": "user@user.com",
-      "password": "asdasdasd",
-      "name": "test",
-      "checkRequired": true,
-      "id": 2
-    },
-    {
-      "email": "user@user.com",
-      "password": "asdadas",
-      "name": "test",
-      "checkRequired": true,
-      "id": 3
-    },
-    {
-      "email": "user@user.com",
-      "password": "asdasd",
-      "name": "test",
-      "checkRequired": true,
-      "id": 4
-    },
-    {
-      "email": "user3@dasd.asd",
-      "password": "asdsada",
-      "name": "test",
-      "checkRequired": true,
-      "id": 5
-    },
-    {
-      "email": "useqqqqr@user.com",
-      "password": "adadsasda",
-      "name": "test",
-      "checkRequired": true,
-      "id": 6
-    },
-    {
-      "email": "ussdfsdfer@user.com",
-      "password": "fdsafasdf",
-      "name": "test",
-      "checkRequired": true,
-      "id": 7
-    },
-    {
-      "email": "usadasder@user.com",
-      "password": "asdasd",
-      "name": "adasd",
-      "checkRequired": true,
-      "id": 8
-    },
-    {
-      "email": "useqweqr@user.com",
-      "password": "asdasdas",
-      "name": "asdasd",
-      "checkRequired": true,
-      "id": 9
     }
   ],
   "rateApi": {
@@ -148,14 +92,6 @@
       "description": "Высадка роз",
       "date": "13.12.2021 15:59:03",
       "id": 6
-    },
-    {
-      "category": 2,
-      "type": "outcome",
-      "amount": 1000,
-      "description": "test",
-      "date": "13.12.2021 16:10:01",
-      "id": 7
     }
   ]
 }
