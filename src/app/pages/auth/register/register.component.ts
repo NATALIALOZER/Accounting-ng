@@ -1,7 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {IProfile} from '../../../shared/models/interfaces';
-import {Subject, takeUntil} from 'rxjs';
+import {
+  concatMap,
+  of,
+  Subject,
+  switchMap,
+  takeUntil,
+  throwError,
+  timer
+} from 'rxjs';
 import {Router} from '@angular/router';
 import {AuthService} from '../../../shared/services/auth.service';
 
@@ -31,26 +39,25 @@ export class RegisterComponent implements OnInit {
       return;
     }
     const user: IProfile = this.form.value;
+    const checkUser$ = this.jsonDBService.getUser(user);
     this.isSubmitted = true;
-    setTimeout(() => {
-      this.jsonDBService.getUser(user)
-        .pipe(takeUntil(this.destroy$))
-        .subscribe( (response: IProfile[] ) => {
-          if (response.length === 0 ) {
-            this.jsonDBService.setUser(user)
-              .pipe(takeUntil(this.destroy$))
-              .subscribe(
-                (res: IProfile) => {
-
-                  this.router.navigate(['/auth/login']);
-                }
-              );
-            this.isSubmitted = false;
-          } else {
-            this.handleError('Этот пользователь уже зарегистрирован');
-          }
-        });
-    }, 2000);
+    checkUser$.pipe(
+      concatMap((response: IProfile[]) => {
+        if ( response.length !== 0) {
+          return throwError('Этот пользователь уже зарегистрирован');
+        } else {
+          return this.jsonDBService.setUser(user);
+        }
+      }),
+      takeUntil(this.destroy$)
+    ).subscribe(
+      () => this.router.navigate(['/auth/login']),
+      error => {
+        this.isSubmitted = false;
+        this.handleError(error);
+      },
+      () => this.isSubmitted = false
+    );
   }
 
   private buildForm(): void {
@@ -64,6 +71,9 @@ export class RegisterComponent implements OnInit {
 
   private handleError(error: string): void {
     this.message = error;
-    setTimeout( () => this.message = '' , 5000);
+    timer(5000).pipe(
+      switchMap(() => of('')),
+      takeUntil(this.destroy$)
+    ).subscribe(n => this.message = n);
   }
 }
