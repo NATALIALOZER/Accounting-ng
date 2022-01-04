@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { map, merge, Observable, Subject, takeUntil } from 'rxjs';
+import { concatMap, map, Observable, Subject, takeUntil } from 'rxjs';
 import { DbProfileInfoService } from '../../shared/services/db-profile-info.service';
 import { ICategory, IEventInfo } from '../../shared/models/interfaces';
 import { MatTableDataSource } from '@angular/material/table';
@@ -30,7 +30,7 @@ export class HistoryPageComponent implements OnInit, OnDestroy {
   ) { }
 
   public ngOnInit(): void {
-    this.initSubscriptions();
+    this.getEventQueryParam().pipe(takeUntil(this.destroy$)).subscribe();
   }
 
   public ngOnDestroy(): void {
@@ -42,9 +42,11 @@ export class HistoryPageComponent implements OnInit, OnDestroy {
     const dialogRef = this.dialog.open<ModalAddEventComponent>(ModalAddEventComponent, {
       data: this.categoriesArray
     });
-    dialogRef.afterClosed().subscribe(result => {
+    dialogRef.afterClosed().pipe(takeUntil(this.destroy$)).subscribe(result => {
       if (result) {
-        this.initSubscriptions();
+        this.getCategories().pipe(concatMap(() => this.getEvents()))
+          .pipe(takeUntil(this.destroy$))
+          .subscribe();
       }
     });
   }
@@ -52,24 +54,21 @@ export class HistoryPageComponent implements OnInit, OnDestroy {
   public back(): void {
     this.router.navigate([], { queryParams: {event: null}, queryParamsHandling: 'merge'});
     this.eventId = 0;
-    this.initSubscriptions();
-  }
-
-  public initSubscriptions(): void {
-    const params$ = this.getEventQueryParam();
-    const events$ = this.getEvents();
-    const categories$ = this.getCategories();
-
-    merge(params$, categories$, events$)
-      .pipe(
-        takeUntil(this.destroy$)
-      ).subscribe();
+    this.getCategories().pipe(concatMap(() => this.getEvents()))
+      .pipe(takeUntil(this.destroy$))
+      .subscribe();
   }
 
   private getEventQueryParam(): Observable<void> {
     return this.activatedRoute.queryParams
       .pipe(map(params => {
-          this.eventId = params['event'];
+          if (params['event']) {
+            this.eventId = params['event'];
+          } else {
+            this.getCategories().pipe(concatMap(() => this.getEvents()))
+              .pipe(takeUntil(this.destroy$))
+              .subscribe();
+          }
         }
       ));
   }
