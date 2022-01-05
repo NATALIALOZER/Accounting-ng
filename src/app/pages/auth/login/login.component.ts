@@ -3,7 +3,7 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {IProfile} from '../../../shared/models/interfaces';
 import {Router} from '@angular/router';
 import {AuthService} from '../../../shared/services/auth.service';
-import { delay, map, of, Subject, takeUntil } from 'rxjs';
+import { delay, map, of, Subject, switchMap, takeUntil } from 'rxjs';
 
 
 @Component({
@@ -48,7 +48,7 @@ export class LoginComponent implements OnInit {
             const existUser = response.find( (profile: IProfile) => {
               return profile.password === user.password;
             });
-            if (existUser) {
+            if (response[0].password === user.password) {
               localStorage.setItem('user', JSON.stringify(response));
               this.authService.isAuthenticated();
               this.router.navigate(['/billing-page']);
@@ -70,9 +70,10 @@ export class LoginComponent implements OnInit {
 
   private handleError(error: string): void {
     this.message = error;
-    of().pipe(
+    of(error).pipe(
       delay(5000),
+      switchMap(() => of('')),
       takeUntil(this.destroy$)
-    ).subscribe(() => this.message = '');
+    ).subscribe(n => this.message = n);
   }
 }
