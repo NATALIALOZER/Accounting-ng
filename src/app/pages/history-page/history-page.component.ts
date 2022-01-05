@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { concatMap, map, Observable, Subject, takeUntil } from 'rxjs';
+import { concatMap, map, Subject, takeUntil } from 'rxjs';
 import { DbProfileInfoService } from '../../shared/services/db-profile-info.service';
 import { ICategory, IEventInfo } from '../../shared/models/interfaces';
 import { MatTableDataSource } from '@angular/material/table';
@@ -58,9 +58,22 @@ export class HistoryPageComponent implements OnInit, OnDestroy {
   }
 
   private getData(): void {
-    this.getCategories().pipe(concatMap(() => this.getEvents()))
-      .pipe(takeUntil(this.destroy$))
-      .subscribe();
+    this.profileInfoService.getCategories()
+      .pipe(
+        map((response: ICategory[]) => {
+          this.categoriesArray = response;
+        }),
+        concatMap(() => this.profileInfoService.getUserEvents()
+          .pipe(
+            map(
+            (response: IEventInfo[]) => {
+              this.data = response;
+              this.dataSource = new MatTableDataSource<IEventInfo>(this.data);
+              this.dataSource.paginator = this.paginator;
+            })
+          )),
+        takeUntil(this.destroy$)
+      ).subscribe();
   }
 
   private getEventQueryParam(): void {
@@ -74,22 +87,5 @@ export class HistoryPageComponent implements OnInit, OnDestroy {
           }}),
         takeUntil(this.destroy$)
       ).subscribe();
-  }
-
-  private getEvents(): Observable<void> {
-    return this.profileInfoService.getUserEvents()
-      .pipe(map(
-        (response: IEventInfo[]) => {
-          this.data = response;
-          this.dataSource = new MatTableDataSource<IEventInfo>(this.data);
-          this.dataSource.paginator = this.paginator;
-        }));
-  }
-
-  private getCategories(): Observable<void> {
-    return this.profileInfoService.getCategories()
-      .pipe(map((response: ICategory[]) => {
-        this.categoriesArray = response;
-      }));
   }
 }
