@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { concat, map, Subject, takeUntil } from 'rxjs';
+import { concat, map, Subject, takeUntil, tap } from 'rxjs';
 import { RateApiService } from '../../shared/services/rate-api.service';
 import { IBill, ICurrencyIcons, IRateApiData, IRateTableData } from '../../shared/models/interfaces';
 import { DbProfileInfoService } from '../../shared/services/db-profile-info.service';
@@ -17,7 +17,7 @@ export class BillingPageComponent implements OnInit, OnDestroy {
   private currencyIcons: ICurrencyIcons[] = [
     {currency: 'EUR', icon : 'euro'},
     {currency: 'USD', icon : 'attach_money'},
-    {currency: 'UAH', customIcon : 'uah'}
+    {currency: 'UAH', svgIcon : 'uah'}
   ];
 
   constructor(
@@ -41,25 +41,22 @@ export class BillingPageComponent implements OnInit, OnDestroy {
   }
 
   private getData(): void {
-    const balance$ = this.profileInfoService.getUserBalance().pipe(
-      map((res: IBill) => this.value = res.value ));
-    const rate$ = this.rateApiService.getRate().pipe(
-      map( (response: IRateApiData) => {
-        this.dataSource = this.currencyIcons.map( (el: any) => {
-          const obj: IRateTableData = {
-            currency: el.currency,
-            rate: response.rates[el.currency],
-            date: response.date,
-            icon: el.icon,
-            balance: this.value * response.rates[el.currency],
-            customIcon: el.customIcon};
-          return obj;
-        });
-      })
-    );
-    const result$ = concat(balance$, rate$);
-    result$
-      .pipe( takeUntil(this.destroy$))
-      .subscribe(() => this.loading = false);
+    concat(
+      this.profileInfoService.getUserBalance()
+        .pipe( map((res: IBill) => this.value = res.value )),
+      this.rateApiService.getRate().pipe(
+        map((response: IRateApiData) => {
+          this.dataSource = this.currencyIcons
+            .map( (currencyItem: any) => {
+              return { ...currencyItem,
+                balance: this.value * response.rates[currencyItem.currency],
+                rate: response.rates[currencyItem.currency],
+                date: response.date
+              };
+            });
+        }))).pipe(
+          tap(() => this.loading = false),
+          takeUntil(this.destroy$))
+      .subscribe();
   }
 }

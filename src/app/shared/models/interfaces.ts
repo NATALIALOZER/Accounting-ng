@@ -8,7 +8,7 @@ export interface IProfile {
 export interface ICurrencyIcons {
   currency: string;
   icon?: string;
-  customIcon?: string;
+  svgIcon?: string;
 }
 
 export interface IBalance {
@@ -35,7 +35,7 @@ export interface IRateTableData {
   date: string;
   icon: string;
   balance: number;
-  customIcon: string;
+  svgIcon: string;
 }
 
 export interface IBill {

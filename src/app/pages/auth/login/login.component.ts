@@ -3,7 +3,7 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {IProfile} from '../../../shared/models/interfaces';
 import {Router} from '@angular/router';
 import {AuthService} from '../../../shared/services/auth.service';
-import { map, of, Subject, switchMap, takeUntil, timer } from 'rxjs';
+import { delay, map, of, Subject, takeUntil } from 'rxjs';
 
 
 @Component({
@@ -56,9 +56,9 @@ export class LoginComponent implements OnInit {
               this.handleError('Неправильный пароль');
             }
           }
-        }
-        )
-      ).subscribe(() => this.isSubmitted = false );
+        })
+      ).pipe(takeUntil(this.destroy$))
+      .subscribe(() => this.isSubmitted = false );
   }
 
   private buildForm(): void {
@@ -70,9 +70,9 @@ export class LoginComponent implements OnInit {
 
   private handleError(error: string): void {
     this.message = error;
-    timer(5000).pipe(
-      switchMap(() => of('')),
+    of().pipe(
+      delay(5000),
       takeUntil(this.destroy$)
-    ).subscribe(n => this.message = n);
+    ).subscribe(() => this.message = '');
   }
 }

@@ -15,7 +15,6 @@ export class ModalEditCategoryComponent implements OnInit {
   public currentCat: ICategory = {capacity: 0, name: '', id: 0};
   private destroy$: Subject<void> = new Subject<void>();
 
-
   constructor(
     private formBuilder: FormBuilder,
     private profileInfoService: DbProfileInfoService,
@@ -53,7 +52,8 @@ export class ModalEditCategoryComponent implements OnInit {
     this.profileInfoService.updateCategory({
       id: this.form.value.id,
       name: this.form.value.name,
-      capacity: +this.form.value.capacity} )
+      capacity: +this.form.value.capacity
+    })
       .pipe(takeUntil(this.destroy$))
       .subscribe(() => this.closeDialog(true));
   }
