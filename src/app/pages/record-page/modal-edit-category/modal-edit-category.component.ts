@@ -4,6 +4,7 @@ import { Subject, takeUntil } from 'rxjs';
 import { DbProfileInfoService } from '../../../shared/services/db-profile-info.service';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { ICategory } from '../../../shared/models/interfaces';
+import { toNumbers } from '@angular/compiler-cli/src/diagnostics/typescript_version';
 
 @Component({
   selector: 'app-modal-edit-category',
@@ -49,10 +50,10 @@ export class ModalEditCategoryComponent implements OnInit {
     if (this.form.invalid) {
       return;
     }
+    delete this.form.value['currentCategory'];
     this.profileInfoService.updateCategory({
-      id: this.form.value.id,
-      name: this.form.value.name,
-      capacity: +this.form.value.capacity
+      ...this.form.value,
+      capacity: Number(this.form.value.capacity)
     })
       .pipe(takeUntil(this.destroy$))
       .subscribe(() => this.closeDialog(true));
@@ -66,5 +67,4 @@ export class ModalEditCategoryComponent implements OnInit {
       capacity: [ this.data.currentCategory.capacity, [Validators.required, Validators.pattern('^[0-9]+$')]],
     });
   }
-
 }

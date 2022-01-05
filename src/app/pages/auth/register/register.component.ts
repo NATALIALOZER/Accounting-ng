@@ -38,14 +38,14 @@ export class RegisterComponent implements OnInit {
     if (this.form.invalid) {
       return;
     }
-    const user: IProfile = this.form.value;
     this.isSubmitted = true;
-    this.jsonDBService.getUser(user)
+    delete this.form.value.checkRequired;
+    this.jsonDBService.getUser(this.form.value)
       .pipe( switchMap((response: IProfile[]) => {
         if ( response.length !== 0) {
           return throwError('Этот пользователь уже зарегистрирован');
         } else {
-          return this.jsonDBService.setUser(user);
+          return this.jsonDBService.setUser(this.form.value);
         }
       }),
       takeUntil(this.destroy$)

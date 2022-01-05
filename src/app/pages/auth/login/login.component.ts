@@ -37,18 +37,14 @@ export class LoginComponent implements OnInit {
     if (this.form.invalid) {
       return;
     }
-    const user: IProfile = this.form.value;
     this.isSubmitted = true;
-    this.authService.getUser(user)
+    this.authService.getUser(this.form.value)
       .pipe(
         map( (response: IProfile[] ) => {
           if (response.length === 0 ) {
             this.handleError('Такого пользователя не существует');
           } else {
-            const existUser = response.find( (profile: IProfile) => {
-              return profile.password === user.password;
-            });
-            if (response[0].password === user.password) {
+            if (response[0].password === this.form.value.password) {
               localStorage.setItem('user', JSON.stringify(response));
               this.authService.isAuthenticated();
               this.router.navigate(['/billing-page']);

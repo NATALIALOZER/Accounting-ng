@@ -7,8 +7,8 @@ export interface IProfile {
 
 export interface ICurrencyIcons {
   currency: string;
-  icon?: string;
-  svgIcon?: string;
+  icon: string;
+  svgIcon: string;
 }
 
 export interface IBalance {

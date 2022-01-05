@@ -30,8 +30,9 @@ export class HistoryPageComponent implements OnInit, OnDestroy {
   ) { }
 
   public ngOnInit(): void {
-    this.getEventQueryParam().pipe(takeUntil(this.destroy$)).subscribe();
+   this.getEventQueryParam();
   }
+
 
   public ngOnDestroy(): void {
     this.destroy$.next();
@@ -44,33 +45,35 @@ export class HistoryPageComponent implements OnInit, OnDestroy {
     });
     dialogRef.afterClosed().pipe(takeUntil(this.destroy$)).subscribe(result => {
       if (result) {
-        this.getCategories().pipe(concatMap(() => this.getEvents()))
-          .pipe(takeUntil(this.destroy$))
-          .subscribe();
+        this.getData();
       }
     });
   }
 
   public back(): void {
-    this.router.navigate([], { queryParams: {event: null}, queryParamsHandling: 'merge'});
+    this.router.navigate([],
+      { queryParams: {event: null}, queryParamsHandling: 'merge'});
     this.eventId = 0;
+    this.getData();
+  }
+
+  private getData(): void {
     this.getCategories().pipe(concatMap(() => this.getEvents()))
       .pipe(takeUntil(this.destroy$))
       .subscribe();
   }
 
-  private getEventQueryParam(): Observable<void> {
-    return this.activatedRoute.queryParams
-      .pipe(map(params => {
+  private getEventQueryParam(): void {
+    this.activatedRoute.queryParams
+      .pipe(
+        map(params => {
           if (params['event']) {
             this.eventId = params['event'];
           } else {
-            this.getCategories().pipe(concatMap(() => this.getEvents()))
-              .pipe(takeUntil(this.destroy$))
-              .subscribe();
-          }
-        }
-      ));
+            this.getData();
+          }}),
+        takeUntil(this.destroy$)
+      ).subscribe();
   }
 
   private getEvents(): Observable<void> {

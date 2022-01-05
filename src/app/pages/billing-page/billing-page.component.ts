@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { concat, map, Subject, takeUntil, tap } from 'rxjs';
+import { concatMap, map, Subject, takeUntil, tap } from 'rxjs';
 import { RateApiService } from '../../shared/services/rate-api.service';
 import { IBill, ICurrencyIcons, IRateApiData, IRateTableData } from '../../shared/models/interfaces';
 import { DbProfileInfoService } from '../../shared/services/db-profile-info.service';
@@ -15,9 +15,9 @@ export class BillingPageComponent implements OnInit, OnDestroy {
   public value: number = 0;
   private destroy$: Subject<void> = new Subject<void>();
   private currencyIcons: ICurrencyIcons[] = [
-    {currency: 'EUR', icon : 'euro'},
-    {currency: 'USD', icon : 'attach_money'},
-    {currency: 'UAH', svgIcon : 'uah'}
+    {currency: 'EUR', icon : 'euro', svgIcon : ''},
+    {currency: 'USD', icon : 'attach_money', svgIcon : ''},
+    {currency: 'UAH', svgIcon : 'uah', icon: ''}
   ];
 
   constructor(
@@ -41,22 +41,21 @@ export class BillingPageComponent implements OnInit, OnDestroy {
   }
 
   private getData(): void {
-    concat(
-      this.profileInfoService.getUserBalance()
-        .pipe( map((res: IBill) => this.value = res.value )),
-      this.rateApiService.getRate().pipe(
-        map((response: IRateApiData) => {
-          this.dataSource = this.currencyIcons
-            .map( (currencyItem: any) => {
-              return { ...currencyItem,
-                balance: this.value * response.rates[currencyItem.currency],
-                rate: response.rates[currencyItem.currency],
-                date: response.date
-              };
-            });
-        }))).pipe(
-          tap(() => this.loading = false),
-          takeUntil(this.destroy$))
-      .subscribe();
+    this.profileInfoService.getUserBalance().pipe(
+        map((res: IBill) => this.value = res.value ),
+        concatMap(() => this.rateApiService.getRate()
+          .pipe( map((response: IRateApiData) => {
+              this.dataSource = this.currencyIcons
+                .map( (currencyItem: ICurrencyIcons) => {
+                  return { ...currencyItem,
+                    balance: this.value * response.rates[currencyItem.currency],
+                    rate: response.rates[currencyItem.currency],
+                    date: response.date
+                  };
+                });
+            }))),
+        tap(() => this.loading = false),
+        takeUntil(this.destroy$)
+    ).subscribe();
   }
 }
