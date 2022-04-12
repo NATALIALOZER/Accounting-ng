@@ -1,0 +1,9 @@
+<mat-card>
+  <mat-card-subtitle>Счет</mat-card-subtitle>
+  <mat-card-content *ngFor="let item of data">
+      <span fxLayout="row" class="value-space">
+        <mat-icon [svgIcon]="item.customIcon">{{ item.icon }}</mat-icon>
+        <span>{{ item.balance | number: '3.2-3'}}</span>
+      </span>
+  </mat-card-content>
+</mat-card>

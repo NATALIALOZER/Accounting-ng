@@ -1,0 +1,17 @@
+form{
+  width: 100%;
+  span.mat-error{
+    background-color: red;
+    color: #EAF1FF;
+    padding: 10px 20px;
+    margin-bottom: 20px;
+  }
+}
+::ng-deep .mat-form-field-wrapper {
+  width: 100%;
+  button{
+    color: #3F51B5;
+  }
+}
+
+

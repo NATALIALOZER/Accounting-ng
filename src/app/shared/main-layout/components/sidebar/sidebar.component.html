@@ -1,0 +1,11 @@
+<div class="side-bar">
+  <h1>{{name}}</h1>
+  <a>{{email}}</a>
+  <img class="account-photo" src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="account_photo" >
+</div>
+<div class="sidenav-menu">
+  <p>Страницы</p>
+  <a [routerLink]="['/billing-page']" routerLinkActive="active-link">Страница счета</a>
+  <a [routerLink]="['/history-page']" routerLinkActive="active-link">Страница истории</a>
+  <a [routerLink]="['/record-page']" routerLinkActive="active-link">Страница записей</a>
+</div>

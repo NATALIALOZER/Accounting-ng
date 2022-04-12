@@ -1,0 +1,15 @@
+.event-card{
+  display: flex;
+  flex-direction: column;
+  margin: 20px 0;
+  padding: 30px 40px;
+}
+.red{
+  mat-card-title{color: #f44336;}
+  box-shadow: 7px 7px 4px 5px rgba(255,29,80,0.32);
+}
+.blue{
+  mat-card-title{color: #3F51B5;}
+  box-shadow: 7px 7px 4px 5px rgba(47,59,255,0.24);
+}
+

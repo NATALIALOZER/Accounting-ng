@@ -1,0 +1,14 @@
+:host{
+  ::ng-deep .mat-drawer-container{
+    min-height: calc(100vh - 64px);
+    background-color: #F8F8FF;
+    overflow: auto;
+    .mat-drawer{
+      min-width: 320px;
+      background-color: #EAF1FF;
+    }
+    .mat-drawer-content {
+      background-color: #f8f8ff;
+    }
+  }
+}

@@ -1,0 +1,19 @@
+mat-card{
+  padding-bottom: 30px;
+  min-height: 236px;
+  mat-card-subtitle{
+    margin-left: 25px;
+    margin-bottom: 30px;
+  }
+  mat-card-content{
+    margin-top: 10px;
+    .value-space{
+      padding: 10px 20px;
+      border-bottom: solid 1px rgba(63, 81, 181,.7);
+      span{
+        margin: 0 30px;
+      }
+    }
+  }
+}
+

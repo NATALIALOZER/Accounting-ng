@@ -1,0 +1,14 @@
+<div fxLayout="column" fxLayoutAlign="center" class="layout">
+  <mat-card class="event-card" *ngIf="event" [ngClass]="event.type=='income' ? 'blue' : 'red'">
+    <mat-card-title fxLayoutAlign="center" *ngIf="event.type == 'income'">Доход</mat-card-title>
+    <mat-card-title fxLayoutAlign="center" *ngIf="event.type == 'outcome'" >Расход</mat-card-title>
+    <mat-card-content>
+      <li>Сумма: <span style="font-weight: bold">{{event.amount}} EUR</span></li>
+      <li>Категория: <span style="font-weight: bold">{{getName(event.category)}}</span></li>
+      <li>Комментария: <span style="font-weight: bold">{{event.description}}</span></li>
+    </mat-card-content>
+    <mat-card-footer>
+      <div>{{event.date}}</div>
+    </mat-card-footer>
+  </mat-card>
+</div>

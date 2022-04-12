@@ -1,23 +1,37 @@
-import {Injectable} from '@angular/core';
-import {HttpClient} from '@angular/common/http';
-import {Observable} from 'rxjs';
-import {Profile} from '../models/interfaces';
+import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
+import { IProfile } from '../models/interfaces';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-  public urlApi = 'http://localhost:3000/';
 
   constructor(
     private http: HttpClient
   ) { }
 
-  public getUser(user: Profile): Observable<Profile[]> {
-    return this.http.get<Profile[]>(`${this.urlApi}users?email=${user.email}`);
+  public getUser(user: IProfile): Observable<IProfile[]> {
+    return this.http.get<IProfile[]>(`users?email=${user.email}`);
   }
 
-  public setUser(user: Profile): Observable<Profile> {
-    return this.http.post<Profile>(`${this.urlApi}users`, user);
+  public setUser(user: IProfile): Observable<IProfile> {
+    return this.http.post<IProfile>('users', user);
+  }
+
+  public getUserData(): IProfile[] {
+    const userData = localStorage.getItem('user') as string;
+    return JSON.parse(userData);
+  }
+
+  public isAuthenticated(): boolean {
+    return !!localStorage.getItem('user');
+  }
+
+  public signOut(): boolean {
+    localStorage.removeItem('user');
+    return this.isAuthenticated();
   }
 }
+

@@ -1,0 +1,29 @@
+<div fxLayout="column" fxLayoutAlign="start" class="layout">
+  <div class="title" fxLayout="row" fxLayoutAlign="start center" *ngIf="!eventId; else eventTitle">
+    <h1>Страница истории</h1>
+  </div>
+  <ng-template #eventTitle>
+    <div class="title" fxLayout="row" fxLayoutAlign="start center">
+      <button mat-button class="arrow-button" (click)="back()"><mat-icon>keyboard_backspace</mat-icon></button>
+      <h1>Страница записи № {{eventId}}</h1>
+    </div>
+  </ng-template>
+  <ng-container *ngIf="eventId; then eventBlock else historyStatBlock">
+  </ng-container>
+  <ng-template #eventBlock>
+    <app-event [id]="eventId" [categoriesArray] = categoriesArray></app-event>
+  </ng-template>
+  <ng-template #historyStatBlock>
+    <div fxLayout="column" *ngIf="dataSource && categoriesArray; else loading">
+      <app-chart [data]="data" [categoriesArray] = categoriesArray></app-chart>
+      <app-table [dataSource]="dataSource" [categoriesArray] = categoriesArray></app-table>
+    </div>
+    <div fxLayout="row" fxLayoutAlign="space-between" class="card-action" [ngStyle]="{'display' : dataSource && categoriesArray && !eventId? 'flex' : 'none'}">
+      <button mat-raised-button color="primary" (click)="openAddEventDialog()"> Добавить событие </button>
+      <mat-paginator #paginator pageSize=4 hidePageSize showFirstLastButtons></mat-paginator>
+    </div>
+    <ng-template #loading>
+      <div fxLayout="row" fxLayoutAlign="center center"><p class="text-center">Loading...</p></div>
+    </ng-template>
+  </ng-template>
+</div>

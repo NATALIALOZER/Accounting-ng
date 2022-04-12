@@ -1,0 +1,22 @@
+mat-card{
+  padding-bottom: 30px;
+  mat-card-subtitle{
+    margin-left: 25px;
+  }
+  table {
+    width: 100%;
+    .mat-column-rate{
+      min-width: 50px;
+      width: 150px;
+    }
+    .mat-column-currency{
+      min-width: 50px;
+      width: 150px;
+    }
+    .mat-column-date{
+      width: 50px;
+    }
+  }
+}
+
+

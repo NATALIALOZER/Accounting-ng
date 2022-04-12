@@ -1,0 +1,17 @@
+<div fxLayout="column" fxLayoutAlign="start" class="layout">
+  <div class="title" fxLayout="row" fxLayoutAlign="space-between center">
+    <h1>Страница счета</h1>
+    <button (click)="resetTables()" mat-icon-button class="toolbar-icon">
+      <mat-icon>refresh</mat-icon>
+    </button>
+  </div>
+  <div fxLayout="row" fxFlex='100' class="tables-layout" *ngIf="dataSource && value && !loading; else loader">
+    <app-current-account-balance fxFlex="50" [data]="dataSource"></app-current-account-balance>
+    <app-current-exchange-rate fxFlex="50" [dataSource]="dataSource"></app-current-exchange-rate>
+  </div>
+  <ng-template #loader>
+    <div fxLayout="row" fxLayoutAlign="center center">Loading...</div>
+  </ng-template>
+</div>
+
+
