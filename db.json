@@ -108,6 +108,14 @@
       "description": "test",
       "date": "13.12.2021 16:11:50",
       "id": 8
+    },
+    {
+      "category": 3,
+      "type": "income",
+      "amount": 1000,
+      "description": "test",
+      "date": "2022-04-13T12:15:35.187Z",
+      "id": 9
     }
   ]
 }

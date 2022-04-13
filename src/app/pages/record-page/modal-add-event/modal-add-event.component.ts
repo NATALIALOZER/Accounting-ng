@@ -55,7 +55,8 @@ export class ModalAddEventComponent implements OnInit {
       type: [ 'income', [Validators.required]],
       amount: [ '', [Validators.required, Validators.pattern('^[0-9]+$')]],
       description: ['', [Validators.required]],
-      date: [moment(new Date()).format('DD.MM.YYYY HH:mm:ss')]
+      //date: [moment(new Date()).format('DD.MM.YYYY HH:mm:ss')]
+      date: [new Date()]
     });
   }
 }
