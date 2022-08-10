@@ -42,8 +42,9 @@ export class ModalAddEventComponent implements OnInit {
       return;
     }
     const event: IEventInfo = { ...this.form.value,
-      amount: +this.form.value.amount,
-      category: +this.form.value.category};
+      amount: Number(this.form.value.amount),
+      category: Number(this.form.value.category)
+    };
     this.profileInfoService.createEvent(event)
       .pipe(takeUntil(this.destroy$))
       .subscribe(() => this.closeDialog(true));

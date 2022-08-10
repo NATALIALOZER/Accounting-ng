@@ -37,11 +37,6 @@
       "name": "Еда",
       "capacity": 10000,
       "id": 2
-    },
-    {
-      "name": "Сад",
-      "capacity": 10000,
-      "id": 4
     }
   ],
   "events": [
@@ -84,30 +79,6 @@
       "date": "10.06.2019 14:01:58",
       "id": 5,
       "description": "Заправка + проход ТО"
-    },
-    {
-      "category": 4,
-      "type": "outcome",
-      "amount": 1000,
-      "description": "Высадка роз",
-      "date": "13.12.2021 15:59:03",
-      "id": 6
-    },
-    {
-      "category": 2,
-      "type": "outcome",
-      "amount": 1000,
-      "description": "test",
-      "date": "13.12.2021 16:10:01",
-      "id": 7
-    },
-    {
-      "category": 4,
-      "type": "outcome",
-      "amount": 1000,
-      "description": "test",
-      "date": "13.12.2021 16:11:50",
-      "id": 8
     }
   ]
 }

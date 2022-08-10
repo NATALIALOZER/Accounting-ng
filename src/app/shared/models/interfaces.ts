@@ -5,10 +5,20 @@ export interface IProfile {
   name?: string;
 }
 
+export interface ICurrencyIcons {
+  currency: string;
+  icon: string;
+  svgIcon: string;
+}
+
 export interface IBalance {
-  EUR: number;
-  USD: number;
-  UAH: number;
+  'EUR': number;
+  'USD': number;
+  'UAH': number;
+}
+
+export interface INewKey extends IBalance {
+  [key: string]: number;
 }
 
 export interface IRateApiData {
@@ -16,7 +26,7 @@ export interface IRateApiData {
   timestamp: number;
   base: string;
   date: string;
-  rates: IBalance;
+  rates: INewKey;
 }
 
 export interface IRateTableData {
@@ -25,7 +35,7 @@ export interface IRateTableData {
   date: string;
   icon: string;
   balance: number;
-  customIcon: string;
+  svgIcon: string;
 }
 
 export interface IBill {

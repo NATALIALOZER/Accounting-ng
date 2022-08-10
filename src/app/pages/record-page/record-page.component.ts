@@ -44,7 +44,9 @@ export class RecordPageComponent implements OnInit {
     const dialogRef = this.dialog.open<ModalAddCategoryComponent>(ModalAddCategoryComponent, {
       data: this.dataSource.data
     });
-    dialogRef.afterClosed().subscribe(result => {
+    dialogRef.afterClosed()
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(result => {
       if (result) {
         this.getCat();
       }
@@ -58,7 +60,9 @@ export class RecordPageComponent implements OnInit {
         currentCategory: id
       }
     });
-    dialogRef.afterClosed().subscribe(result => {
+    dialogRef.afterClosed()
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(result => {
       if (result) {
         this.getCat();
       }
@@ -70,7 +74,9 @@ export class RecordPageComponent implements OnInit {
     const dialogRef = this.dialog.open<ModalDeleteCategoryComponent>(ModalDeleteCategoryComponent, {
       data: { name, id }
     });
-    dialogRef.afterClosed().subscribe(result => {
+    dialogRef.afterClosed()
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(result => {
       if (result) {
         this.profileInfoService.removeCategory(id).subscribe(
           () => this.getCat()

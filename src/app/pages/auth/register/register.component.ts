@@ -1,7 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {IProfile} from '../../../shared/models/interfaces';
-import {Subject, takeUntil} from 'rxjs';
+import {
+  delay,
+  of,
+  Subject,
+  switchMap,
+  takeUntil,
+  throwError
+} from 'rxjs';
 import {Router} from '@angular/router';
 import {AuthService} from '../../../shared/services/auth.service';
 
@@ -15,6 +22,7 @@ export class RegisterComponent implements OnInit {
   public message: string = '';
   public isSubmitted: boolean = false;
   private destroy$: Subject<void> = new Subject<void>();
+
 
   constructor(
     private formBuilder: FormBuilder,
@@ -30,27 +38,24 @@ export class RegisterComponent implements OnInit {
     if (this.form.invalid) {
       return;
     }
-    const user: IProfile = this.form.value;
     this.isSubmitted = true;
-    setTimeout(() => {
-      this.jsonDBService.getUser(user)
-        .pipe(takeUntil(this.destroy$))
-        .subscribe( (response: IProfile[] ) => {
-          if (response.length === 0 ) {
-            this.jsonDBService.setUser(user)
-              .pipe(takeUntil(this.destroy$))
-              .subscribe(
-                (res: IProfile) => {
-
-                  this.router.navigate(['/auth/login']);
-                }
-              );
-            this.isSubmitted = false;
-          } else {
-            this.handleError('Этот пользователь уже зарегистрирован');
-          }
-        });
-    }, 2000);
+    delete this.form.value.checkRequired;
+    this.jsonDBService.getUser(this.form.value)
+      .pipe( switchMap((response: IProfile[]) => {
+        if ( response.length !== 0) {
+          return throwError('Этот пользователь уже зарегистрирован');
+        } else {
+          return this.jsonDBService.setUser(this.form.value);
+        }
+      }),
+      takeUntil(this.destroy$)
+    ).subscribe(
+      () => this.router.navigate(['/auth/login']),
+      error => {
+        this.isSubmitted = false;
+        this.handleError(error);
+      }
+    );
   }
 
   private buildForm(): void {
@@ -64,6 +69,10 @@ export class RegisterComponent implements OnInit {
 
   private handleError(error: string): void {
     this.message = error;
-    setTimeout( () => this.message = '' , 5000);
+    of(error).pipe(
+      delay(5000),
+      switchMap(() => of('')),
+      takeUntil(this.destroy$)
+    ).subscribe(n => this.message = n);
   }
 }

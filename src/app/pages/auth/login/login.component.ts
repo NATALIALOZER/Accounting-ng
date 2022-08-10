@@ -3,7 +3,7 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {IProfile} from '../../../shared/models/interfaces';
 import {Router} from '@angular/router';
 import {AuthService} from '../../../shared/services/auth.service';
-import {Subject, takeUntil} from 'rxjs';
+import { delay, map, of, Subject, switchMap, takeUntil } from 'rxjs';
 
 
 @Component({
@@ -37,31 +37,24 @@ export class LoginComponent implements OnInit {
     if (this.form.invalid) {
       return;
     }
-    const user: IProfile = this.form.value;
     this.isSubmitted = true;
-    setTimeout(() => {
-      this.authService.getUser(user)
-        .pipe(takeUntil(this.destroy$))
-        .subscribe( (response: IProfile[] ) => {
-            if (response.length === 0 ) {
-              this.handleError('Такого пользователя не существует');
+    this.authService.getUser(this.form.value)
+      .pipe(
+        map( (response: IProfile[] ) => {
+          if (response.length === 0 ) {
+            this.handleError('Такого пользователя не существует');
+          } else {
+            if (response[0].password === this.form.value.password) {
+              localStorage.setItem('user', JSON.stringify(response));
+              this.authService.isAuthenticated();
+              this.router.navigate(['/billing-page']);
             } else {
-              const existUser = response.find( (profile: IProfile) => {
-                return profile.password === user.password;
-              });
-              if (existUser) {
-                localStorage.setItem('user', JSON.stringify(response));
-                this.authService.isAuthenticated();
-                this.router.navigate(['/billing-page']);
-              } else {
-                this.handleError('Неправильный пароль');
-              }
+              this.handleError('Неправильный пароль');
             }
           }
-        );
-      this.isSubmitted = false;
-    }, 2000);
-
+        })
+      ).pipe(takeUntil(this.destroy$))
+      .subscribe(() => this.isSubmitted = false );
   }
 
   private buildForm(): void {
@@ -73,6 +66,10 @@ export class LoginComponent implements OnInit {
 
   private handleError(error: string): void {
     this.message = error;
-    setTimeout( () => this.message = '' , 5000);
+    of(error).pipe(
+      delay(5000),
+      switchMap(() => of('')),
+      takeUntil(this.destroy$)
+    ).subscribe(n => this.message = n);
   }
 }

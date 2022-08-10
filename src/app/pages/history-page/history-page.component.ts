@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { Subject, takeUntil } from 'rxjs';
+import { concatMap, map, Subject, takeUntil } from 'rxjs';
 import { DbProfileInfoService } from '../../shared/services/db-profile-info.service';
 import { ICategory, IEventInfo } from '../../shared/models/interfaces';
 import { MatTableDataSource } from '@angular/material/table';
@@ -19,7 +19,6 @@ export class HistoryPageComponent implements OnInit, OnDestroy {
   public data: IEventInfo[] = [];
   public categoriesArray: ICategory[] = [];
   public eventId: number = 0;
-
   private destroy$: Subject<void> = new Subject<void>();
 
 
@@ -31,8 +30,9 @@ export class HistoryPageComponent implements OnInit, OnDestroy {
   ) { }
 
   public ngOnInit(): void {
-    this.getEventQueryParam();
+   this.getEventQueryParam();
   }
+
 
   public ngOnDestroy(): void {
     this.destroy$.next();
@@ -43,44 +43,49 @@ export class HistoryPageComponent implements OnInit, OnDestroy {
     const dialogRef = this.dialog.open<ModalAddEventComponent>(ModalAddEventComponent, {
       data: this.categoriesArray
     });
-    dialogRef.afterClosed().subscribe(result => {
+    dialogRef.afterClosed().pipe(takeUntil(this.destroy$)).subscribe(result => {
       if (result) {
-        this.getEvents();
+        this.getData();
       }
     });
   }
 
   public back(): void {
-    this.router.navigate([], {queryParams: {event: null}, queryParamsHandling: 'merge'});
+    this.router.navigate([],
+      { queryParams: {event: null}, queryParamsHandling: 'merge'});
     this.eventId = 0;
+    this.getData();
+  }
+
+  private getData(): void {
+    this.profileInfoService.getCategories()
+      .pipe(
+        map((response: ICategory[]) => {
+          this.categoriesArray = response;
+        }),
+        concatMap(() => this.profileInfoService.getUserEvents()
+          .pipe(
+            map(
+            (response: IEventInfo[]) => {
+              this.data = response;
+              this.dataSource = new MatTableDataSource<IEventInfo>(this.data);
+              this.dataSource.paginator = this.paginator;
+            })
+          )),
+        takeUntil(this.destroy$)
+      ).subscribe();
   }
 
   private getEventQueryParam(): void {
     this.activatedRoute.queryParams
-      .pipe(takeUntil(this.destroy$))
-      .subscribe(params => {
-        this.eventId = params['event'];
-        this.getCategories();
-      });
-  }
-
-  private getEvents(): void {
-    this.profileInfoService.getUserEvents()
-      .pipe(takeUntil(this.destroy$))
-      .subscribe(
-        (response: IEventInfo[]) => {
-          this.data = response;
-          this.dataSource = new MatTableDataSource<IEventInfo>(this.data);
-          this.dataSource.paginator = this.paginator;
-        });
-  }
-
-  private getCategories(): void {
-    this.profileInfoService.getCategories()
-      .pipe(takeUntil(this.destroy$))
-      .subscribe((response: ICategory[]) => {
-        this.categoriesArray = response;
-        this.getEvents();
-      });
+      .pipe(
+        map(params => {
+          if (params['event']) {
+            this.eventId = params['event'];
+          } else {
+            this.getData();
+          }}),
+        takeUntil(this.destroy$)
+      ).subscribe();
   }
 }

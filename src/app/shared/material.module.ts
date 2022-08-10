@@ -37,7 +37,7 @@ const COMPONENTS = [
   MatCheckboxModule,
   MatDialogModule,
   MatSelectModule,
-  MatRadioModule
+  MatRadioModule,
 ];
 
 @NgModule({
